@@ -7,6 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.internal.CallbackManagerImpl;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -15,6 +22,7 @@ import com.google.android.gms.auth.api.signin.SignInAccount;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.facebook.FacebookSdk;
 
 public class LogInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
@@ -24,6 +32,8 @@ public class LogInActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private SignInButton signInButton;
     private TextView mStatusTextView;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
 
 
     private static final String TAG = "LogInActivity";
@@ -33,11 +43,38 @@ public class LogInActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_log_in);
 
         mStatusTextView = (TextView) findViewById(R.id.status);
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email");
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                mStatusTextView.setText("SIGNED IN WITH FACE");
+
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                mStatusTextView.setText("FAILED SIGNED IN WITH FACE");
+            }
+        });
 
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -76,6 +113,8 @@ public class LogInActivity extends AppCompatActivity implements
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
