@@ -61,7 +61,8 @@ public class LogInActivity extends AppCompatActivity implements
             public void onSuccess(LoginResult loginResult) {
                 // App code
                 mStatusTextView.setText("SIGNED IN WITH FACE");
-
+                Intent mainActivityIntent = new Intent(LogInActivity.this, MainActivity.class);
+                startActivity(mainActivityIntent);
             }
 
             @Override
