@@ -1,4 +1,4 @@
-package com.example.margonari.tdp2_frontend;
+package com.example.margonari.tdp2_frontend.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
+
+import com.example.margonari.tdp2_frontend.ImageAdapter;
+import com.example.margonari.tdp2_frontend.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

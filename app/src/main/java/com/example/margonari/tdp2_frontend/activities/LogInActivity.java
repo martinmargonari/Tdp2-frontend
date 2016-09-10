@@ -1,4 +1,4 @@
-package com.example.margonari.tdp2_frontend;
+package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.margonari.tdp2_frontend.test_rest_api.Test_api_rest;
+import com.example.margonari.tdp2_frontend.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -105,7 +105,7 @@ public class LogInActivity extends AppCompatActivity implements
         Button btn = (Button) findViewById(R.id.button_rest);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(), Test_api_rest.class);
+                Intent intent = new Intent (v.getContext(), TestApiRestActivity.class);
                 startActivityForResult(intent, 0); } });
     }
 

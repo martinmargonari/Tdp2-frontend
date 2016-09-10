@@ -3,7 +3,7 @@ package com.example.margonari.tdp2_frontend.rest_dto;
 /**
  * Created by aranc on 21/8/2016.
  */
-public class DummyDTO {
+public class LoginDTO {
     public String id;
     public String api_token;
 

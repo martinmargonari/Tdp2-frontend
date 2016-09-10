@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_services_address">http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/api/login?api_security=85d8b4ccd607dde1753fa9293d694c03&amp;email=admin@admin.com</string>
+</resources>

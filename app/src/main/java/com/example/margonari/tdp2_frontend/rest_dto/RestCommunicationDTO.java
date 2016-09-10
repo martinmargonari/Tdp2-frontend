@@ -5,17 +5,17 @@ import java.util.List;
 /**
  * Created by luis on 10/09/16.
  */
-public class JsonDataDTO {
+public class RestCommunicationDTO {
 
-    private DummyDTO data;
+    private LoginDTO data;
     private List<String> errors;
 
 
-    public DummyDTO getData() {
+    public LoginDTO getData() {
         return data;
     }
 
-    public void setData(DummyDTO data) {
+    public void setData(LoginDTO data) {
         this.data = data;
     }
 
