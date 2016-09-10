@@ -29,6 +29,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".test_rest_api.Test_api_rest"
+            android:label="@string/title_activity_test_api_rest"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
