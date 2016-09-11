@@ -1,4 +1,4 @@
-package com.example.margonari.tdp2_frontend;
+package com.example.margonari.tdp2_frontend.adapters;
 
 
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
@@ -47,7 +48,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_category_adapter, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_rest_category_adapter, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;

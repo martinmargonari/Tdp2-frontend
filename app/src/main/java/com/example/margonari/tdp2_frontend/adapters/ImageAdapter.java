@@ -1,4 +1,4 @@
-package com.example.margonari.tdp2_frontend;
+package com.example.margonari.tdp2_frontend.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
 
 /**

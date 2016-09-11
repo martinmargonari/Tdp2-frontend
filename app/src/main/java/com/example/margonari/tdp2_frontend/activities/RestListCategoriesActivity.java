@@ -1,4 +1,4 @@
-package com.example.margonari.tdp2_frontend;
+package com.example.margonari.tdp2_frontend.activities;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -7,17 +7,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.margonari.tdp2_frontend.R;
+import com.example.margonari.tdp2_frontend.adapters.CategoryAdapter;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
-import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.rest_dto.CategoriesDTO;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ListCategoriesActivity extends AppCompatActivity {
+public class RestListCategoriesActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -25,7 +25,7 @@ public class ListCategoriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_categories);
+        setContentView(R.layout.activity_rest_list_categories);
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);

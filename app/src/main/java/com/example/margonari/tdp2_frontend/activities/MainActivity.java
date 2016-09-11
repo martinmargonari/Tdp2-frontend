@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
-import com.example.margonari.tdp2_frontend.ImageAdapter;
+import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.R;
 
 public class MainActivity extends AppCompatActivity

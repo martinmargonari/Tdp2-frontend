@@ -37,10 +37,17 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rest test"
-        android:id="@+id/button_rest"
+        android:text="Rest Login"
+        android:id="@+id/button_rest_login"
         android:layout_above="@+id/login_button"
         android:layout_centerHorizontal="true" />
 
-
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rest Categories"
+        android:id="@+id/button_rest_categories"
+        android:layout_above="@+id/button_rest_login"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

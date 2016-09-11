@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.margonari.tdp2_frontend.ListCategoriesActivity;
 import com.example.margonari.tdp2_frontend.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -103,10 +102,16 @@ public class LogInActivity extends AppCompatActivity implements
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
 
-        Button btn = (Button) findViewById(R.id.button_rest);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button btn_rest_login = (Button) findViewById(R.id.button_rest_login);
+        btn_rest_login.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(), ListCategoriesActivity.class);
+                Intent intent = new Intent (v.getContext(), RestLoginActivity.class);
+                startActivityForResult(intent, 0); } });
+
+        Button btn_rest_categories = (Button) findViewById(R.id.button_rest_categories);
+        btn_rest_categories.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), RestListCategoriesActivity.class);
                 startActivityForResult(intent, 0); } });
     }
 
