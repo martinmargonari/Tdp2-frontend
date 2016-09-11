@@ -1,25 +1,19 @@
 package com.example.margonari.tdp2_frontend.rest_dto;
 
+import com.example.margonari.tdp2_frontend.domain.Login;
+
+import java.util.List;
+
 /**
- * Created by aranc on 21/8/2016.
+ * Created by luis on 10/09/16.
  */
-public class LoginDTO {
-    public String id;
-    public String api_token;
+public class LoginDTO extends AbstractDTO {
 
-    public String getId() {
-        return id;
+    public Login getData() { return (Login) data; }
+
+    public void setData(Login data) {
+        this.data = data;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
-    public String getApi_token() {
-        return api_token;
-    }
-
-    public void setApi_token(String api_token) {
-        this.api_token = api_token;
-    }
 }

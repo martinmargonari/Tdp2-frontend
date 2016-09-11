@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.margonari.tdp2_frontend.domain.Categoria;
 
 /**
  * Created by Margonari on 05/09/2016.
@@ -32,7 +33,7 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return getItem(position).getId();
+        return getItem(position).getIdHash();
     }
 
     @Override
@@ -49,9 +50,9 @@ public class ImageAdapter extends BaseAdapter {
 
         final Categoria item = getItem(position);
         Glide.with(imagenCategoria.getContext())
-                .load(item.getIdDrawable())
+                .load(item.getId())
                 .into(imagenCategoria);
-        nombreCategoria.setText(item.getNombre());
+        nombreCategoria.setText(item.getName());
 
         return view;
     }

@@ -33,7 +33,9 @@
         <activity
             android:name=".activities.TestApiRestActivity"
             android:label="@string/title_activity_test_api_rest"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ListCategoriesActivity" />
+        <activity android:name=".CategoryAdapter"></activity>
     </application>
 
 </manifest>

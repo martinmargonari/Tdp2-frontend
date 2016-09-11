@@ -1,23 +1,16 @@
 package com.example.margonari.tdp2_frontend.rest_dto;
 
+import com.example.margonari.tdp2_frontend.domain.Login;
+
 import java.util.List;
 
 /**
  * Created by luis on 10/09/16.
  */
-public class RestCommunicationDTO {
+public abstract class AbstractDTO {
 
-    private LoginDTO data;
-    private List<String> errors;
-
-
-    public LoginDTO getData() {
-        return data;
-    }
-
-    public void setData(LoginDTO data) {
-        this.data = data;
-    }
+    protected Object data;
+    protected List<String> errors;
 
     public List<String> getErrors() {
         return errors;
@@ -26,4 +19,5 @@ public class RestCommunicationDTO {
     public void setErrors(List<String> errors) {
         this.errors = errors;
     }
+
 }

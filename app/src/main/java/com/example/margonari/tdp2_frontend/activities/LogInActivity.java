@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.margonari.tdp2_frontend.ListCategoriesActivity;
 import com.example.margonari.tdp2_frontend.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -105,7 +106,7 @@ public class LogInActivity extends AppCompatActivity implements
         Button btn = (Button) findViewById(R.id.button_rest);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(), TestApiRestActivity.class);
+                Intent intent = new Intent (v.getContext(), ListCategoriesActivity.class);
                 startActivityForResult(intent, 0); } });
     }
 
