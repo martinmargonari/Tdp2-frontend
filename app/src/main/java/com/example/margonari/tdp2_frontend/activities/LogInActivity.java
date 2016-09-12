@@ -32,6 +32,8 @@ public class LogInActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private SignInButton signInButton;
     private TextView mStatusTextView;
+
+    //Facebook Login
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
@@ -51,12 +53,13 @@ public class LogInActivity extends AppCompatActivity implements
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
+        //Faceboook Login setup Button
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
-
-        // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
