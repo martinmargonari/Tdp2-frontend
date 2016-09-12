@@ -40,7 +40,7 @@ public class RestLoginActivity extends AppCompatActivity {
         @Override
         protected Login doInBackground(Void... params) {
             try {
-                final String url = getResources().getString(R.string.login_services_address);;
+                final String url = getResources().getString(R.string.login_services_address);
                 LoginDTO loginDTO = (LoginDTO) geDataOftDTO(url, LoginDTO.class);
                 return loginDTO.getData();
             } catch (Exception e) {

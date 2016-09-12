@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/username_input"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -91,11 +91,11 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/password_input"
         android:layout_alignBottom="@+id/user_password_login"
         android:layout_toEndOf="@+id/sign_in_button"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText" />
+        android:layout_alignLeft="@+id/username_input"
+        android:layout_alignStart="@+id/username_input" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:text="Sign In"
         android:id="@+id/button_rest_signIn"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/password_input"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="73dp" />
 
