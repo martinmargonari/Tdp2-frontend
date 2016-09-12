@@ -56,10 +56,6 @@ public class LogInActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_log_in);
 
         mStatusTextView = (TextView) findViewById(R.id.status);
-        mUserView = (EditText) findViewById(R.id.username_input);
-
-        mpasswordView = (EditText) findViewById(R.id.password_input);
-        mpasswordView.getText().toString();
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         //Faceboook Login setup Button
@@ -85,7 +81,7 @@ public class LogInActivity extends AppCompatActivity implements
         });
 
         googleLoginSetup();
-        butonsRestTestSetup();
+
 
     }
 
@@ -176,101 +172,6 @@ public class LogInActivity extends AppCompatActivity implements
         }
     }
 
-
-    private void butonsRestTestSetup() {
-        Button btn_rest_login = (Button) findViewById(R.id.button_rest_login);
-        btn_rest_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), RestLoginActivity.class);
-                startActivityForResult(intent, 0);
-            }
-        });
-
-        Button btn_rest_categories = (Button) findViewById(R.id.button_rest_categories);
-        btn_rest_categories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), RestListCategoriesActivity.class);
-                startActivityForResult(intent, 0);
-            }
-        });
-
-        Button button_rest_signIn = (Button) findViewById(R.id.button_rest_signIn);
-        button_rest_signIn.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View v) {
-
-                HttpRequestTask httpRequestTask =new HttpRequestTask();
-                //TODO Eliminar este seteo de parametros, y las constantes del archivo strings.xml
-                mUserView.setText(R.string.testing_user_email);
-                mpasswordView.setText(R.string.testing_user_password);
-
-                httpRequestTask.execute(mUserView.getText().toString(), mpasswordView.getText().toString());
-                try {
-                    Login login= (Login)httpRequestTask.get();
-                    if(login!=null){
-                        Intent intent = new Intent(v.getContext(), MainActivity.class);
-                        startActivityForResult(intent, 0);
-                    }
-
-                    } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
 
-
-    private class HttpRequestTask extends AsyncTask<String, Void, Login> {
-        @Override
-        protected Login doInBackground(String... params) {
-            try {
-                String user= params[0];
-                String password= params[1];
-                String loginQuery = getLoginQueryBy(user, password);
-                LoginDTO loginDTO = (LoginDTO) geDataOftDTO(loginQuery, LoginDTO.class);
-                return loginDTO.getData();
-            } catch (Exception e) {
-                Log.e("LoginActivity", e.getMessage(), e);
-            }
-
-            return null;
-        }
-
-        @NonNull
-        private String getLoginQueryBy(String user, String password) {
-            String url = getResources().getString(R.string.login_services_address_first);
-            StringBuffer urlStringBuffer=new StringBuffer(url);
-            urlStringBuffer.append("?");
-            urlStringBuffer.append("api_security=");
-            urlStringBuffer.append(password);
-            urlStringBuffer.append("&email=");
-            urlStringBuffer.append(user);
-
-            return  urlStringBuffer.toString();
-        }
-
-
-        private Object geDataOftDTO(String url, Class object) {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            return restTemplate.getForObject(url, object);
-        }
-
-        @Override
-        protected void onPostExecute(Login greeting) {
-
-        }
-
-    }
-
-
-
-
-}
