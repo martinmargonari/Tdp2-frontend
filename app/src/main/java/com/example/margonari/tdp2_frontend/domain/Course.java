@@ -11,7 +11,7 @@ public class Course {
     private String name;
     private String description;
     private String file_extension;
-    private List<SessionCourse> sessionCourseList;
+    private List<SessionCourse> sessions;
 
     public String getId() {
         return id;
@@ -45,11 +45,22 @@ public class Course {
         this.file_extension = file_extension;
     }
 
-    public List<SessionCourse> getSessionCourseList() {
-        return sessionCourseList;
+    public List<SessionCourse> getSessions() {
+        return sessions;
     }
 
-    public void setSessionCourseList(List<SessionCourse> sessionCourseList) {
-        this.sessionCourseList = sessionCourseList;
+    public void setSessions(List<SessionCourse> sessions) {
+        this.sessions = sessions;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", file_extension='" + file_extension + '\'' +
+                ", sessionCourseList=" + sessions +
+                '}';
     }
 }
