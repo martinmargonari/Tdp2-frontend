@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity
 
     private GridView grillaCategorias;
     private ImageAdapter adapterCategorias;
+    private String  api_token;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        api_token = getIntent().getStringExtra("API_TOKEN");
+        System.out.println("APITOKEN: " + api_token);
         setContentView(R.layout.activity_main);
 
         if (AccessToken.getCurrentAccessToken() == null) {
@@ -165,5 +169,14 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this,LogInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         startActivity(intent);
+    }
+
+    public void startActivity(Intent intent) {
+        // check if search intent
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            intent.putExtra("API_TOKEN", api_token);
+        }
+
+        super.startActivity(intent);
     }
 }

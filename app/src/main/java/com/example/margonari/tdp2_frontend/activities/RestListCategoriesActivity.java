@@ -16,6 +16,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RestListCategoriesActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -32,7 +33,15 @@ public class RestListCategoriesActivity extends AppCompatActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        new HttpRequestTask().execute();
+        HttpRequestTask  httpRequestTask= new HttpRequestTask();
+        httpRequestTask.execute();
+        try {
+            ArrayList<Categoria> categorias= (ArrayList<Categoria>) httpRequestTask.get();
+        }catch (Exception e){
+
+        }
+
+
     }
 
         private class HttpRequestTask extends AsyncTask<Void, Void, ArrayList<Categoria> > {

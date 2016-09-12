@@ -29,12 +29,10 @@ public class Categoria {
     }
 
     public static Categoria[] ITEMS = {
-            new Categoria("Arte", R.drawable.arte),
             new Categoria("Informática", R.drawable.computacion),
-            new Categoria("Literatura", R.drawable.literatura),
+            new Categoria("Idiomas", R.drawable.literatura),
             new Categoria("Matemáticas", R.drawable.matematica),
-            new Categoria("Química", R.drawable.quimica),
-            new Categoria("Medicina", R.drawable.salud)
+            new Categoria("Ciencias Biologicas", R.drawable.salud)
     };
 
     /**

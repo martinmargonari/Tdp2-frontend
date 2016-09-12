@@ -45,6 +45,7 @@ public class LogInActivity extends AppCompatActivity implements
     private TextView mStatusTextView;
     private EditText mUserView;
     private EditText mpasswordView;
+    private String userEmail;
 
     //Facebook Login
     private LoginButton loginButton;
@@ -57,6 +58,7 @@ public class LogInActivity extends AppCompatActivity implements
 
         mStatusTextView = (TextView) findViewById(R.id.status);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+        userEmail = "martinmargonari@hotmail.com";
 
         //Faceboook Login setup Button
         callbackManager = CallbackManager.Factory.create();
@@ -129,8 +131,25 @@ public class LogInActivity extends AppCompatActivity implements
 
 
     private void goToMainActivity() {
-        Intent mainActivityIntent = new Intent(LogInActivity.this, MainActivity.class);
-        startActivity(mainActivityIntent);
+
+        HttpRequestTask httpRequestTask = new HttpRequestTask();
+
+        httpRequestTask.execute(userEmail);
+        try {
+            Login login = (Login) httpRequestTask.get();
+            if (login != null) {
+                Intent mainActivityIntent = new Intent(LogInActivity.this, MainActivity.class);
+               // this.getApplication().setApiToken(login.api_token);
+                mainActivityIntent.putExtra("API_TOKEN", login.getApi_token());
+                startActivity(mainActivityIntent);
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void googleLoginSetup() {
@@ -166,12 +185,50 @@ public class LogInActivity extends AppCompatActivity implements
             GoogleSignInAccount acct = result.getSignInAccount();
             mStatusTextView.setText("SIGNED IN");
             updateUI(true);
+            goToMainActivity();
         } else {
             // Signed out, show unauthenticated UI.
             updateUI(false);
         }
     }
 
+    private class HttpRequestTask extends AsyncTask<String, Void, Login> {
+        @Override
+        protected Login doInBackground(String... params) {
+            try {
+                String user = params[0];
+                String loginQuery = getLoginQueryBy(user);
+                LoginDTO loginDTO = (LoginDTO) geDataOftDTO(loginQuery, LoginDTO.class);
+                return loginDTO.getData();
+            } catch (Exception e) {
+                Log.e("LoginActivity", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+        @NonNull
+        private String getLoginQueryBy(String user) {
+            String url = getResources().getString(R.string.login_services_address_first);
+            StringBuffer urlStringBuffer = new StringBuffer(url);
+            urlStringBuffer.append("?");
+            urlStringBuffer.append("api_security=");
+            urlStringBuffer.append(getResources().getString(R.string.api_hash));
+            urlStringBuffer.append("&email=");
+            urlStringBuffer.append(user);
+
+            return urlStringBuffer.toString();
+        }
+
+
+        private Object geDataOftDTO(String url, Class object) {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            return restTemplate.getForObject(url, object);
+        }
     }
+}
+
+
 
 
