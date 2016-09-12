@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="login_services_address">http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/api/login?
-        api_security=85d8b4ccd607dde1753fa9293d694c03
-        &amp;
-        email=admin@admin.com</string>
     <string name="category_services_address">http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/api/categories?api_token=Je2fEMma8U60rGaZOKYF1TE4aQs5BPtN0cPlD6PmuDWYeBE1pFh1jH7Ji5Q7</string>
     <string name="login_services_address_first">http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/api/login</string>
+
+    <!--Seteo de usuario y contraseña a mano ( la password es una muerte) Eliminar antes de hacer el merge-->
+    <string name="testing_user_email">admin@admin.com</string>
+    <string name="testing_user_password">85d8b4ccd607dde1753fa9293d694c03</string>
 </resources>

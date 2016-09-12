@@ -204,15 +204,18 @@ public class LogInActivity extends AppCompatActivity implements
             public void onClick(View v) {
 
                 HttpRequestTask httpRequestTask =new HttpRequestTask();
-                mUserView.setText("admin@admin.com");
-                mpasswordView.setText("85d8b4ccd607dde1753fa9293d694c03");
+                //TODO Eliminar este seteo de parametros, y las constantes del archivo strings.xml
+                mUserView.setText(R.string.testing_user_email);
+                mpasswordView.setText(R.string.testing_user_password);
+
                 httpRequestTask.execute(mUserView.getText().toString(), mpasswordView.getText().toString());
                 try {
                     Login login= (Login)httpRequestTask.get();
-                    Toast.makeText(v.getContext(), (String)login.toString(),
-                            Toast.LENGTH_LONG).show();
-                    //Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    //startActivityForResult(intent, 0);
+                    if(login!=null){
+                        Intent intent = new Intent(v.getContext(), MainActivity.class);
+                        startActivityForResult(intent, 0);
+                    }
+
                     } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
