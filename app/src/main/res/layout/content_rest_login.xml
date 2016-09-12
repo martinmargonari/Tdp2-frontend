@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/id_label"
-        android:text="@string/id_label"
+        android:text="@string/user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -29,7 +29,7 @@
 
     <TextView
         android:id="@+id/id_value"
-        android:text="@string/id_value"
+        android:text="@string/user_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

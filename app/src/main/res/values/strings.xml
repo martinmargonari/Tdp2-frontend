@@ -12,11 +12,15 @@
 
 
 <!--Strings de la pantalla de ejemplo de la api rest-->
-    <string name="title_activity_test_api_rest">activity_test_api_rest</string>
-    <string name="id_label">The ID is</string>
-    <string name="id_value">[id]</string>
+    <string name="rest_login_activity">Login</string>
+    <string name="user">User</string>
+    <string name="user_value">[id]</string>
     <string name="content_label">The Content is</string>
     <string name="content_value">[content]</string>
     <string name="title_activity_list_of_categories">ListOfCategories</string>
+
+    <string name="facebook_login_succes">SIGNED IN WITH FACE</string>
+    <string name="facebook_login_fail">FAILED SIGNED IN WITH FACE</string>
+    <string name="facebook_login_cancel">ABORT FACE LOGIN</string>
 
 </resources>
