@@ -2,18 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.margonari.tdp2_frontend.LogInActivity">
+    tools:context=".activities.LogInActivity">
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -27,12 +27,84 @@
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|top"
+        android:layout_above="@+id/sign_in_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_above="@+id/sign_in_button"
-        android:layout_centerHorizontal="true" />
+        android:text="Rest Login"
+        android:id="@+id/button_rest_login"
+        android:layout_alignTop="@+id/button_rest_categories"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rest Categories"
+        android:id="@+id/button_rest_categories"
+        android:layout_above="@+id/login_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usuario"
+        android:id="@+id/user_email_login"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp"
+        android:layout_alignRight="@+id/user_password_login"
+        android:layout_alignEnd="@+id/user_password_login" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:id="@+id/user_password_login"
+        android:layout_below="@+id/user_email_login"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/username_input"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/password_input"
+        android:layout_alignBottom="@+id/user_password_login"
+        android:layout_toEndOf="@+id/sign_in_button"
+        android:layout_alignLeft="@+id/username_input"
+        android:layout_alignStart="@+id/username_input" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign In"
+        android:id="@+id/button_rest_signIn"
+        android:layout_below="@+id/password_input"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="73dp" />
 
 </RelativeLayout>
