@@ -197,8 +197,8 @@ public class LogInActivity extends AppCompatActivity implements
         protected Login doInBackground(String... params) {
             try {
                 String user = params[0];
-                String loginQuery = getLoginQueryBy(user);
-                LoginDTO loginDTO = (LoginDTO) geDataOftDTO(loginQuery, LoginDTO.class);
+                String loginQuery = HttpRequestTaskImpl.getLoginQueryBy(user);
+                LoginDTO loginDTO = (LoginDTO) HttpRequestTaskImpl.geDataOftDTO(loginQuery, LoginDTO.class);
                 return loginDTO.getData();
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);
@@ -207,25 +207,7 @@ public class LogInActivity extends AppCompatActivity implements
             return null;
         }
 
-        @NonNull
-        private String getLoginQueryBy(String user) {
-            String url = getResources().getString(R.string.login_services_address_first);
-            StringBuffer urlStringBuffer = new StringBuffer(url);
-            urlStringBuffer.append("?");
-            urlStringBuffer.append("api_security=");
-            urlStringBuffer.append(getResources().getString(R.string.api_hash));
-            urlStringBuffer.append("&email=");
-            urlStringBuffer.append(user);
 
-            return urlStringBuffer.toString();
-        }
-
-
-        private Object geDataOftDTO(String url, Class object) {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            return restTemplate.getForObject(url, object);
-        }
     }
 }
 
