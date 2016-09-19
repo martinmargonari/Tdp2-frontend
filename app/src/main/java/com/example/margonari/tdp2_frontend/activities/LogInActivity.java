@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.rest_dto.LoginDTO;
+import com.example.margonari.tdp2_frontend.util.RestServiceName;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -43,8 +44,6 @@ public class LogInActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private SignInButton signInButton;
     private TextView mStatusTextView;
-    private EditText mUserView;
-    private EditText mpasswordView;
     private String userEmail;
 
     //Facebook Login
@@ -134,7 +133,7 @@ public class LogInActivity extends AppCompatActivity implements
 
         HttpRequestTask httpRequestTask = new HttpRequestTask();
 
-        httpRequestTask.execute(userEmail);
+        httpRequestTask.execute(RestServiceName.login.toString(),userEmail);
         try {
             Login login = (Login) httpRequestTask.get();
             if (login != null) {
@@ -197,7 +196,7 @@ public class LogInActivity extends AppCompatActivity implements
         protected Login doInBackground(String... params) {
             try {
                 String user = params[0];
-                String loginQuery = HttpRequestTaskImpl.getLoginQueryBy(user);
+                String loginQuery = HttpRequestTaskImpl.getQueryBy(new Login(),user);
                 LoginDTO loginDTO = (LoginDTO) HttpRequestTaskImpl.geDataOftDTO(loginQuery, LoginDTO.class);
                 return loginDTO.getData();
             } catch (Exception e) {

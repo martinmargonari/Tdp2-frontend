@@ -2,7 +2,7 @@ package com.example.margonari.tdp2_frontend.activities;
 
 import android.support.annotation.NonNull;
 
-import com.example.margonari.tdp2_frontend.R;
+import com.example.margonari.tdp2_frontend.domain.IRestEntity;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -11,18 +11,14 @@ import org.springframework.web.client.RestTemplate;
  * Created by luis on 18/09/16.
  */
 public class HttpRequestTaskImpl  {
-     public static final String url= "http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/api/login";
+     private static final String baseUrl= "http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/api/";
+     private static final String api_security= "85d8b4ccd607dde1753fa9293d694c03";
 
     @NonNull
-    public static String getLoginQueryBy(String user) {
-        StringBuffer urlStringBuffer = new StringBuffer(url);
-        urlStringBuffer.append("?");
-        urlStringBuffer.append("api_security=");
-        urlStringBuffer.append("85d8b4ccd607dde1753fa9293d694c03");
-        urlStringBuffer.append("&email=");
-        urlStringBuffer.append(user);
+    public static String getQueryBy(IRestEntity restEntity, String... params ) {
+        String service= params[0];
+        return restEntity.getQueryByParams(baseUrl,service,api_security,params);
 
-        return urlStringBuffer.toString();
     }
 
     public static Object geDataOftDTO(String url, Class object) {
