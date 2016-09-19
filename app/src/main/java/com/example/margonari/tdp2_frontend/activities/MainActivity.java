@@ -11,17 +11,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.R;
+import com.example.margonari.tdp2_frontend.domain.Categoria;
 import com.facebook.AccessToken;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
 
     private GridView grillaCategorias;
     private ImageAdapter adapterCategorias;
@@ -58,6 +61,8 @@ public class MainActivity extends AppCompatActivity
         grillaCategorias = (GridView) findViewById(R.id.grilla_categorias);
         adapterCategorias = new ImageAdapter(this);
         grillaCategorias.setAdapter(adapterCategorias);
+        grillaCategorias.setOnItemClickListener(this);
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -178,5 +183,27 @@ public class MainActivity extends AppCompatActivity
         }
 
         super.startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Categoria item = (Categoria) parent.getItemAtPosition(position);
+
+        Intent intent = new Intent(this, CoursesActivity.class);
+        /*
+        intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getId());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            ActivityOptionsCompat activityOptions =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            this,
+                            new Pair<View, String>(view.findViewById(R.id.imagen_coche),
+                                    ActividadDetalle.VIEW_NAME_HEADER_IMAGE)
+                    );
+
+            ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
+        } else*/
+            startActivity(intent);
     }
 }

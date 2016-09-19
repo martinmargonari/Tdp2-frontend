@@ -13,8 +13,7 @@
     <string name="action_search">Buscar</string>
 
 
-
-<!--Strings de la pantalla de ejemplo de la api rest-->
+    <!--Strings de la pantalla de ejemplo de la api rest-->
     <string name="rest_login_activity">Login</string>
     <string name="user">User</string>
     <string name="user_value">[id]</string>
@@ -25,7 +24,6 @@
     <string name="facebook_login_succes">SIGNED IN WITH FACE</string>
     <string name="facebook_login_fail">FAILED SIGNED IN WITH FACE</string>
     <string name="facebook_login_cancel">ABORT FACE LOGIN</string>
-
 
 
 </resources>
