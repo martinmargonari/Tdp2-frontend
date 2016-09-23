@@ -18,11 +18,4 @@ public class CourselandApp extends Application {
         AppEventsLogger.activateApp(this);
     }
 
-    public static String getApi_token() {
-        return api_token;
-    }
-
-    public static void setApi_token(String api_token) {
-        api_token = api_token;
-    }
-}
+  }

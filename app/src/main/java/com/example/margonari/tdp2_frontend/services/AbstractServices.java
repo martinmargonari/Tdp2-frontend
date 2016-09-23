@@ -9,8 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public abstract class AbstractServices {
 
     public static final String urlBase="http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/api/";
-    public static final String api_security="85d8b4ccd607dde1753fa9293d694c03";
-
+    protected String api_security;
 
     protected Object geDataOftDTO(String url, Class object) {
         RestTemplate restTemplate = new RestTemplate();
@@ -19,4 +18,12 @@ public abstract class AbstractServices {
     }
 
     protected  abstract String getQueryBy(String... params);
+
+    public String getApi_security() {
+        return api_security;
+    }
+
+    public void setApi_security(String api_security) {
+        this.api_security = api_security;
+    }
 }

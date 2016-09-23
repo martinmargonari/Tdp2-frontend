@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
  */
 public class LoginServices extends AbstractServices{
     private static final String service_name="login";
+    public static final String api_security="85d8b4ccd607dde1753fa9293d694c03";
 
     public Login getLoginBy(String user) {
         String loginQuery = this.getQueryBy(user);

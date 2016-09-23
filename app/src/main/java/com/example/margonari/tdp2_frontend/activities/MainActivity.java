@@ -2,6 +2,7 @@ package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +20,17 @@ import android.widget.GridView;
 import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
+import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.domain.Login;
+import com.example.margonari.tdp2_frontend.services.ListCoursesByCategoriesServices;
+import com.example.margonari.tdp2_frontend.services.LoginServices;
 import com.facebook.AccessToken;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
@@ -191,8 +200,20 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Categoria item = (Categoria) parent.getItemAtPosition(position);
+            int item_id= Categoria.getCategoryByIdView(item.getId());
 
-        Intent intent = new Intent(this, CoursesActivity.class);
+
+        HttpRequestTask  httpRequestTask= new HttpRequestTask();
+        httpRequestTask.execute(String.valueOf(item_id));
+        try {
+            ArrayList<Course> categorias= (ArrayList<Course>) httpRequestTask.get();
+            Intent intent = new Intent(this, CoursesActivity.class);
+            intent.putExtra("LIST_CATEGORIES", categorias);
+            startActivity( intent);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         /*
         intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getId());
 
@@ -207,6 +228,26 @@ public class MainActivity extends AppCompatActivity
 
             ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
         } else*/
-            startActivity(intent);
     }
+
+
+    private class HttpRequestTask extends AsyncTask<String, Void, ArrayList<Course>> {
+        @Override
+        protected ArrayList<Course> doInBackground(String... params) {
+            try {
+                String id_categorie = params[0];
+                ListCoursesByCategoriesServices listCoursesByCategoriesServices= new ListCoursesByCategoriesServices();
+                listCoursesByCategoriesServices.setApi_security(api_token);
+                ArrayList<Course>  listCourses= (ArrayList<Course>) listCoursesByCategoriesServices.getListCoursesBy(id_categorie);
+
+                return listCourses;
+            } catch (Exception e) {
+                Log.e("ListCoursesByCategories", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+    }
+
 }

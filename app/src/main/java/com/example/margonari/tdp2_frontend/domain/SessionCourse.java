@@ -1,9 +1,11 @@
 package com.example.margonari.tdp2_frontend.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by luis on 12/09/16.
  */
-public class SessionCourse {
+public class SessionCourse implements Serializable{
 
 
     private String id;

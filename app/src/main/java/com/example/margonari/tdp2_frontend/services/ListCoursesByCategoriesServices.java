@@ -9,11 +9,11 @@ import java.util.List;
  * Created by luis on 23/09/16.
  */
 public class ListCoursesByCategoriesServices extends AbstractServices {
-    private static final String service_name = "coursesByCategories";
+    private static final String service_name = "courses";
 
 
-    public List<Course> getListCoursesBy(String courseCategorie) {
-        String coursesQuery = this.getQueryBy(courseCategorie);
+    public List<Course> getListCoursesBy(String courseCategory) {
+        String coursesQuery = this.getQueryBy(courseCategory);
         CoursesDTO coursesDTO = (CoursesDTO) geDataOftDTO(coursesQuery, CoursesDTO.class);
         return coursesDTO.getData();
     }
@@ -24,10 +24,11 @@ public class ListCoursesByCategoriesServices extends AbstractServices {
 
         String url = urlBase;
         StringBuffer urlStringBuffer = new StringBuffer(url);
+        urlStringBuffer.append(service_name);
         urlStringBuffer.append("?");
         urlStringBuffer.append("api_token=");
         urlStringBuffer.append(api_security);
-        urlStringBuffer.append("&category=");
+        urlStringBuffer.append("&categories_id=");
         urlStringBuffer.append(courseCategory);
 
         return urlStringBuffer.toString();

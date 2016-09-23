@@ -49,4 +49,24 @@ public class Categoria {
         }
         return null;
     }
+
+    public static int getCategoryByIdView(int id_view) {
+
+                switch (id_view) {
+                    case R.drawable.computacion:
+                        return 4;
+                    case R.drawable.salud:
+                        return 6;
+                    case R.drawable.matematica:
+                        return 5;
+
+                    case R.drawable.literatura:
+                        return 3;
+                    default:
+                        System.out.println("error");
+                        break;
+                }
+        return 0;
+
+    }
 }

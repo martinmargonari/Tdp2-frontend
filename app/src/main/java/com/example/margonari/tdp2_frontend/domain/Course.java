@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by luis on 12/09/16.
  */
-public class Course {
+public class Course implements java.io.Serializable {
 
     private String id;
     private String name;
@@ -19,6 +19,7 @@ public class Course {
         this.description = description;
         this.photo_id = photo_id;
     }
+    public Course(){}
 
     public String getId() {
         return id;
