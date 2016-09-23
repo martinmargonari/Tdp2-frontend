@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.rest_dto.LoginDTO;
+import com.example.margonari.tdp2_frontend.services.LoginServices;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -64,6 +65,7 @@ public class LogInActivity extends AppCompatActivity implements
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -139,7 +141,7 @@ public class LogInActivity extends AppCompatActivity implements
             Login login = (Login) httpRequestTask.get();
             if (login != null) {
                 Intent mainActivityIntent = new Intent(LogInActivity.this, MainActivity.class);
-               // this.getApplication().setApiToken(login.api_token);
+                // this.getApplication().setApiToken(login.api_token);
                 mainActivityIntent.putExtra("API_TOKEN", login.getApi_token());
                 startActivity(mainActivityIntent);
             }
@@ -197,9 +199,8 @@ public class LogInActivity extends AppCompatActivity implements
         protected Login doInBackground(String... params) {
             try {
                 String user = params[0];
-                String loginQuery = getLoginQueryBy(user);
-                LoginDTO loginDTO = (LoginDTO) geDataOftDTO(loginQuery, LoginDTO.class);
-                return loginDTO.getData();
+                Login login=  new LoginServices().getLoginBy(user);
+                return login;
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);
             }
@@ -207,25 +208,6 @@ public class LogInActivity extends AppCompatActivity implements
             return null;
         }
 
-        @NonNull
-        private String getLoginQueryBy(String user) {
-            String url = getResources().getString(R.string.login_services_address_first);
-            StringBuffer urlStringBuffer = new StringBuffer(url);
-            urlStringBuffer.append("?");
-            urlStringBuffer.append("api_security=");
-            urlStringBuffer.append(getResources().getString(R.string.api_hash));
-            urlStringBuffer.append("&email=");
-            urlStringBuffer.append(user);
-
-            return urlStringBuffer.toString();
-        }
-
-
-        private Object geDataOftDTO(String url, Class object) {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            return restTemplate.getForObject(url, object);
-        }
     }
 }
 

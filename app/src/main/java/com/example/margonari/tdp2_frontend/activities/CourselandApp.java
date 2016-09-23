@@ -9,6 +9,7 @@ import com.facebook.appevents.AppEventsLogger;
  * Created by luis on 11/09/16.
  */
 public class CourselandApp extends Application {
+    private static String api_token;
 
     @Override
     public void onCreate() {
@@ -16,4 +17,5 @@ public class CourselandApp extends Application {
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
     }
-}
+
+  }

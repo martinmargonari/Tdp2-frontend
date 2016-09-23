@@ -1,4 +1,4 @@
-package com.example.margonari.tdp2_frontend;
+package com.example.margonari.tdp2_frontend.activities;
 
 import android.app.ListActivity;
 import android.app.SearchManager;
@@ -9,8 +9,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.rest_dto.CoursesDTO;
+import com.example.margonari.tdp2_frontend.services.ListCourseServices;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -77,9 +79,7 @@ public class SearchableActivity extends ListActivity {
         protected List<Course> doInBackground(String... params) {
             try {
                 String user = params[0];
-                String coursesQuery = getCoursesQuery(user);
-                CoursesDTO coursesDTO = (CoursesDTO) geDataOftDTO(coursesQuery, CoursesDTO.class);
-                return coursesDTO.getData();
+                return new ListCourseServices().getListCoursesBy(user);
             } catch (Exception e) {
                 Log.e("SearcheableAcivity", e.getMessage(), e);
             }
@@ -87,25 +87,7 @@ public class SearchableActivity extends ListActivity {
             return null;
         }
 
-        @NonNull
-        private String getCoursesQuery(String courseName) {
-            String url = getResources().getString(R.string.courses_services_address);
-            StringBuffer urlStringBuffer = new StringBuffer(url);
-            urlStringBuffer.append("?");
-            urlStringBuffer.append("api_token=");
-            urlStringBuffer.append(api_token);
-            urlStringBuffer.append("&name=");
-            urlStringBuffer.append(courseName);
 
-            return urlStringBuffer.toString();
-        }
-
-
-        private Object geDataOftDTO(String url, Class object) {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            return restTemplate.getForObject(url, object);
-        }
     }
 
 
