@@ -28,9 +28,9 @@ public class ListCoursesByCategoriesServices extends AbstractServices {
         urlStringBuffer.append("?");
         urlStringBuffer.append("api_token=");
         urlStringBuffer.append(api_security);
-        urlStringBuffer.append("&categories_id=");
+        urlStringBuffer.append("&category_id=");
         urlStringBuffer.append(courseCategory);
-
+        System.out.println(urlStringBuffer.toString());
         return urlStringBuffer.toString();
     }
 }
