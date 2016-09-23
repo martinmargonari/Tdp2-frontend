@@ -10,8 +10,15 @@ public class Course {
     private String id;
     private String name;
     private String description;
+    private int photo_id;
     private String file_extension;
     private List<SessionCourse> sessions;
+
+    public Course(String name, String description, int photo_id) {
+        this.name = name;
+        this.description = description;
+        this.photo_id = photo_id;
+    }
 
     public String getId() {
         return id;
@@ -35,6 +42,14 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getPhoto_id() {
+        return photo_id;
+    }
+
+    public void setPhoto_id(int photo_id) {
+        this.photo_id = photo_id;
     }
 
     public String getFile_extension() {
@@ -63,4 +78,6 @@ public class Course {
                 ", sessionCourseList=" + sessions +
                 '}';
     }
+
+
 }
