@@ -83,7 +83,9 @@ public class LogInActivity extends AppCompatActivity implements
                 mStatusTextView.setText(R.string.facebook_login_fail);
             }
         });
-
+        if(CourselandApp.getApi_token()!=null){
+            goToMainActivity();
+        }
         googleLoginSetup();
 
 
@@ -141,8 +143,9 @@ public class LogInActivity extends AppCompatActivity implements
             Login login = (Login) httpRequestTask.get();
             if (login != null) {
                 Intent mainActivityIntent = new Intent(LogInActivity.this, MainActivity.class);
-               // this.getApplication().setApiToken(login.api_token);
-                mainActivityIntent.putExtra("API_TOKEN", login.getApi_token());
+                CourselandApp.setApi_token(login.getApi_token());
+                // this.getApplication().setApiToken(login.api_token);
+                //mainActivityIntent.putExtra("API_TOKEN", login.getApi_token());
                 startActivity(mainActivityIntent);
             }
 

@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         api_token = getIntent().getStringExtra("API_TOKEN");
         System.out.println("APITOKEN: " + api_token);
+
+        // api_token = getIntent().getStringExtra("API_TOKEN");
+
         setContentView(R.layout.activity_main);
 
         if (AccessToken.getCurrentAccessToken() == null) {

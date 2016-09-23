@@ -1,5 +1,7 @@
 package com.example.margonari.tdp2_frontend.services;
 
+import android.support.annotation.NonNull;
+
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.rest_dto.LoginDTO;
@@ -14,12 +16,15 @@ public class LoginServices extends AbstractServices{
     private static final String service_name="login";
 
     public Login getLoginBy(String user) {
-        String loginQuery = getLoginQueryBy(user);
+        String loginQuery = this.getQueryBy(user);
         LoginDTO loginDTO = (LoginDTO) geDataOftDTO(loginQuery, LoginDTO.class);
         return loginDTO.getData();
     }
 
-    private String getLoginQueryBy(String user) {
+    @NonNull
+    protected String getQueryBy(String... params) {
+        String user=params[0];
+
         String url = urlBase;
         StringBuffer urlStringBuffer = new StringBuffer(url);
         urlStringBuffer.append(service_name);
