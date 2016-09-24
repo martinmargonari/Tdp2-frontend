@@ -35,7 +35,7 @@
         <!-- enable the search dialog to send searches to SearchableActivity -->
         <meta-data
             android:name="android.app.default_searchable"
-            android:value=".SearchableActivity" />
+            android:value=".activities.SearchableActivity" />
 
         <activity android:name=".activities.SearchableActivity">
             <intent-filter>
