@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         if (AccessToken.getCurrentAccessToken() == null) {
-            gotToLoginScreen();
+            goToLoginScreen();
         }
         else{
 
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.cerrar_sesion) {
             LoginManager.getInstance().logOut();
-            gotToLoginScreen();
+            goToLoginScreen();
 
         }
 
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity
         client.disconnect();
     }
 
-    private void gotToLoginScreen() {
+    private void goToLoginScreen() {
         Intent intent = new Intent(this,LogInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         startActivity(intent);

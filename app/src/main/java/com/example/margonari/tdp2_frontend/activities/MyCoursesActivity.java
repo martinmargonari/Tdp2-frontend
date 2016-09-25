@@ -19,6 +19,7 @@ import android.widget.Spinner;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 
@@ -107,18 +108,22 @@ public class MyCoursesActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.mis_cursos) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (id == R.id.cursos_destacados) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.todos_los_cursos) {
+            Intent intent = new Intent(this,MainActivity.class);
+            intent.putExtra("API_TOKEN", api_token);
+            startActivity(intent);
+        } else if (id == R.id.notificaciones) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.ajustes) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.cerrar_sesion) {
+            LoginManager.getInstance().logOut();
+            goToLoginScreen();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -149,5 +154,11 @@ public class MyCoursesActivity extends AppCompatActivity
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    private void goToLoginScreen() {
+        Intent intent = new Intent(this,LogInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        startActivity(intent);
     }
 }
