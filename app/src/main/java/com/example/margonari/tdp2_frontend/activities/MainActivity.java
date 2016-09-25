@@ -167,9 +167,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.cursos_destacados) {
 
         } else if (id == R.id.todos_los_cursos) {
-            Intent intent = new Intent(this,CourseChooseActivity.class);
-            startActivity(intent);
-
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.notificaciones) {
 
         } else if (id == R.id.ajustes) {
@@ -244,6 +243,7 @@ public class MainActivity extends AppCompatActivity
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Categoria item = (Categoria) parent.getItemAtPosition(position);
             int item_id= Categoria.getCategoryByIdView(item.getId());
+            String category_name = item.getName();
 
 
         HttpRequestTask  httpRequestTask= new HttpRequestTask();
@@ -253,6 +253,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, CoursesActivity.class);
             intent.putExtra("API_TOKEN", api_token);
             intent.putExtra("LIST_CATEGORIES", categorias);
+            intent.putExtra("CATEGORY_NAME",category_name);
             startActivity( intent);
 
         }catch (Exception e){

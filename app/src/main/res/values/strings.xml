@@ -4,7 +4,7 @@
     <string name="facebook_app_id_luis">1784425185166350</string>
 
 
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Encontrar cursos</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="search_hint">Buscar en todos los cursos</string>
@@ -30,7 +30,7 @@
         <item>Cursos futuros</item>
         <item>Cursos pasados</item>
     </string-array>
-    <string name="title_activity_my_courses_bis">MyCoursesBisActivity</string>
+    <string name="title_activity_my_courses">Mis Cursos</string>
 
 
 </resources>

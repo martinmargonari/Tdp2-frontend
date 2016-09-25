@@ -27,6 +27,7 @@ public class CoursesActivity extends AppCompatActivity {
     private static String LOG_TAG = "CoursesActivity";
     private  ArrayList<Course> coursesList;
     private String api_token;
+    private String category_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,8 @@ public class CoursesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         api_token = getIntent().getStringExtra("API_TOKEN");
         coursesList= (ArrayList<Course>)intent.getSerializableExtra("LIST_CATEGORIES");
+        category_name = intent.getStringExtra("CATEGORY_NAME");
+        this.setTitle("Cursos de " + category_name);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_courses);
         mRecyclerView.setHasFixedSize(true);
@@ -42,9 +45,6 @@ public class CoursesActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new CoursesAdapter(coursesList);
         mRecyclerView.setAdapter(mAdapter);
-
-
-
     }
 
     @Override
