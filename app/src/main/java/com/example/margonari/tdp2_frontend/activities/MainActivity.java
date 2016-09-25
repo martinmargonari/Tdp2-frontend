@@ -27,6 +27,7 @@ import com.example.margonari.tdp2_frontend.services.LoginServices;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -179,6 +180,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.ajustes) {
 
         } else if (id == R.id.cerrar_sesion) {
+            LoginManager.getInstance().logOut();
+            gotToLoginScreen();
 
         }
 
