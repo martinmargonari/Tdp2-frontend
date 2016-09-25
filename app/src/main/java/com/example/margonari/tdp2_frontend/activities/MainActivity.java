@@ -171,6 +171,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.cursos_destacados) {
 
         } else if (id == R.id.todos_los_cursos) {
+            Intent intent = new Intent(this,CourseChooseActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.notificaciones) {
 
