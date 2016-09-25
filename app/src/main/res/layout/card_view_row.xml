@@ -37,7 +37,12 @@
                 android:id="@+id/course_name"
                 android:layout_toRightOf="@+id/layout_photo"
                 android:layout_alignParentTop="true"
-                android:textSize="30sp"
+                android:textSize="15dp"
+                android:textColor="@android:color/black"
+                android:maxLines="2"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
                 />
 
             <TextView
@@ -46,6 +51,19 @@
                 android:id="@+id/course_description"
                 android:layout_toRightOf="@+id/layout_photo"
                 android:layout_below="@+id/course_name"
+                android:layout_marginTop="10dp"
+                android:maxLines="2"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/course_next_session"
+                android:layout_toRightOf="@+id/layout_photo"
+                android:layout_alignParentBottom="true"
                 />
 
         </RelativeLayout>

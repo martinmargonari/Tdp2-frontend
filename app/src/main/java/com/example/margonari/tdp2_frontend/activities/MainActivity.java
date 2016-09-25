@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity
         api_token = getIntent().getStringExtra("API_TOKEN");
         System.out.println("APITOKEN: " + api_token);
 
-        // api_token = getIntent().getStringExtra("API_TOKEN");
-
         setContentView(R.layout.activity_main);
 
         if (AccessToken.getCurrentAccessToken() == null) {
@@ -168,7 +166,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.mis_cursos) {
-            // Handle the camera action
+            Intent intent = new Intent(this,MyCoursesActivity.class);
+            intent.putExtra("API_TOKEN", api_token);
+            startActivity(intent);
         } else if (id == R.id.cursos_destacados) {
 
         } else if (id == R.id.todos_los_cursos) {

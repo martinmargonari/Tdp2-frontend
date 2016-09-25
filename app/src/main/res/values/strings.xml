@@ -25,5 +25,11 @@
     <string name="facebook_login_fail">FAILED SIGNED IN WITH FACE</string>
     <string name="facebook_login_cancel">ABORT FACE LOGIN</string>
 
+    <string-array name="type_of_courses_array">
+        <item>Cursos actuales</item>
+        <item>Cursos futuros</item>
+        <item>Cursos pasados</item>
+    </string-array>
+
 
 </resources>
