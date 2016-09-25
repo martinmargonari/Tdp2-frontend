@@ -24,6 +24,7 @@ public class ListCourseServices extends AbstractServices {
 
         String url = urlBase;
         StringBuffer urlStringBuffer = new StringBuffer(url);
+        urlStringBuffer.append(service_name);
         urlStringBuffer.append("?");
         urlStringBuffer.append("api_token=");
         urlStringBuffer.append(api_security);

@@ -48,10 +48,14 @@ public class CoursesActivity extends AppCompatActivity {
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
+                Course obj = coursesList.get(position);
+                //obj.
                 Log.i(LOG_TAG, " Clicked on Item " + position);
             }
         });
     }
+
+
 
     private ArrayList<Course> getDataSet() {
 

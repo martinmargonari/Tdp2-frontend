@@ -25,12 +25,17 @@ import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.services.ListCoursesByCategoriesServices;
 import com.example.margonari.tdp2_frontend.services.LoginServices;
 import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
@@ -38,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     private GridView grillaCategorias;
     private ImageAdapter adapterCategorias;
     private String  api_token;
-
+    private String userEmail;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -57,6 +62,15 @@ public class MainActivity extends AppCompatActivity
 
         if (AccessToken.getCurrentAccessToken() == null) {
             gotToLoginScreen();
+        }
+        else{
+
+            InitUserEmailFromFacebook();
+            if(api_token==null){
+                InitApiTokenFromServer(userEmail);
+            }
+
+
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,6 +94,35 @@ public class MainActivity extends AppCompatActivity
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    private void InitApiTokenFromServer(String userEmail) {
+        HttpRequestTaskLogin httpRequestTask = new HttpRequestTaskLogin();
+
+        httpRequestTask.execute(userEmail);
+        try {
+            Login login = (Login) httpRequestTask.get();
+            api_token=login.getApi_token();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void InitUserEmailFromFacebook() {
+        GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject me, GraphResponse response) {
+                        if (response.getError() != null) {
+                            // handle error
+                        } else {
+                            userEmail = me.optString("email");
+
+
+                        }
+                    }
+                }).executeAsync();
+    }
 
 
     @Override
@@ -243,6 +286,23 @@ public class MainActivity extends AppCompatActivity
                 return listCourses;
             } catch (Exception e) {
                 Log.e("ListCoursesByCategories", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+    }
+
+
+    private class HttpRequestTaskLogin extends AsyncTask<String, Void, Login> {
+        @Override
+        protected Login doInBackground(String... params) {
+            try {
+                String user = params[0];
+                Login login=  new LoginServices().getLoginBy(user);
+                return login;
+            } catch (Exception e) {
+                Log.e("LoginActivity", e.getMessage(), e);
             }
 
             return null;

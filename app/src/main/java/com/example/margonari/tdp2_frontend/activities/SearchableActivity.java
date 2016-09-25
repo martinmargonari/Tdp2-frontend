@@ -79,7 +79,10 @@ public class SearchableActivity extends ListActivity {
         protected List<Course> doInBackground(String... params) {
             try {
                 String user = params[0];
-                return new ListCourseServices().getListCoursesBy(user);
+                ListCourseServices listCourseServices= new ListCourseServices();
+                listCourseServices.setApi_security(api_token);
+                return listCourseServices.getListCoursesBy(user);
+
             } catch (Exception e) {
                 Log.e("SearcheableAcivity", e.getMessage(), e);
             }

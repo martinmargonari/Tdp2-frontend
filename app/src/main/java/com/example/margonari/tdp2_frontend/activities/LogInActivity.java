@@ -19,6 +19,8 @@ import com.example.margonari.tdp2_frontend.services.LoginServices;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -29,6 +31,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONObject;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -59,7 +62,6 @@ public class LogInActivity extends AppCompatActivity implements
 
         mStatusTextView = (TextView) findViewById(R.id.status);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-        userEmail = "martinmargonari@hotmail.com";
 
         //Faceboook Login setup Button
         callbackManager = CallbackManager.Factory.create();
@@ -70,6 +72,20 @@ public class LogInActivity extends AppCompatActivity implements
             @Override
             public void onSuccess(LoginResult loginResult) {
                 mStatusTextView.setText(R.string.facebook_login_succes);
+
+                GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject me, GraphResponse response) {
+                                if (response.getError() != null) {
+                                    // handle error
+                                } else {
+                                    userEmail = me.optString("email");
+
+
+                                }
+                            }
+                        }).executeAsync();
                 goToMainActivity();
             }
 
@@ -99,6 +115,7 @@ public class LogInActivity extends AppCompatActivity implements
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         } else {
+
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -141,6 +158,7 @@ public class LogInActivity extends AppCompatActivity implements
             Login login = (Login) httpRequestTask.get();
             if (login != null) {
                 Intent mainActivityIntent = new Intent(LogInActivity.this, MainActivity.class);
+                mainActivityIntent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK) ;
                 // this.getApplication().setApiToken(login.api_token);
                 mainActivityIntent.putExtra("API_TOKEN", login.getApi_token());
                 startActivity(mainActivityIntent);
