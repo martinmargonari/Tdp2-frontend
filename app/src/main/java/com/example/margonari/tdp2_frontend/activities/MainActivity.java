@@ -256,6 +256,7 @@ public class MainActivity extends AppCompatActivity
         try {
             ArrayList<Course> categorias= (ArrayList<Course>) httpRequestTask.get();
             Intent intent = new Intent(this, CoursesActivity.class);
+            intent.putExtra("API_TOKEN", api_token);
             intent.putExtra("LIST_CATEGORIES", categorias);
             startActivity( intent);
 
@@ -279,7 +280,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private class HttpRequestTask extends AsyncTask<String, Void, ArrayList<Course>> {
+    class HttpRequestTask extends AsyncTask<String, Void, ArrayList<Course>> {
         @Override
         protected ArrayList<Course> doInBackground(String... params) {
             try {

@@ -29,6 +29,8 @@ public class CourseChooseActivity extends AppCompatActivity {
     
     private static String LOG_TAG = "CourseChooseActivity";
     private  ArrayList<Unit> unitsList;
+    private String api_token;
+    private Course courseFullData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,9 @@ public class CourseChooseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_choose);
 
         Intent intent = getIntent();
+        api_token = getIntent().getStringExtra("API_TOKEN");
+        courseFullData= (Course)intent.getSerializableExtra("COURSE_FULL_DATA");
+
         //unitsList = getDataSet();
 
 
@@ -59,11 +64,14 @@ public class CourseChooseActivity extends AppCompatActivity {
 
     private ArrayList<Unit> getDataSetUnits() {
         ArrayList results = new ArrayList<Unit>();
-        for (int index = 0; index < 5; index++) {
-            Unit obj = new Unit("Nombre de Unidad", R.drawable.arte);
-            results.add(obj);
+        if (courseFullData.getUnities().size() != 0){
+            //TODO Quitar hardcoding en el index<5 ¿que pasa si tenemos mas de 5 unidades?
+            for (int index = 0; index < 5; index++) {
+                Unit obj = new Unit(courseFullData.getUnities().get( index ).getName(), R.drawable.arte);
+                results.add(obj);
+            }
         }
-        return results;
+            return results;
 
     }
 

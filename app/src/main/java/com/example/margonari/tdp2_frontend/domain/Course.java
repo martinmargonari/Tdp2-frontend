@@ -1,5 +1,6 @@
 package com.example.margonari.tdp2_frontend.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,9 +11,12 @@ public class Course implements java.io.Serializable {
     private String id;
     private String name;
     private String description;
-    private int photo_id;
     private String file_extension;
-    private List<SessionCourse> sessions;
+    private List<SessionCourse> sessions=new ArrayList<SessionCourse>();
+    private List<Unit> unities= new ArrayList<Unit>();
+    private List<User> users=new ArrayList<User>();
+    private int photo_id;
+
 
     public Course(String name, String description, int photo_id) {
         this.name = name;
@@ -69,6 +73,22 @@ public class Course implements java.io.Serializable {
         this.sessions = sessions;
     }
 
+    public List<Unit> getUnities() {
+        return unities;
+    }
+
+    public void setUnities(List<Unit> unities) {
+        this.unities = unities;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -76,9 +96,10 @@ public class Course implements java.io.Serializable {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", file_extension='" + file_extension + '\'' +
-                ", sessionCourseList=" + sessions +
+                ", sessions=" + sessions +
+                ", unities=" + unities +
+                ", users=" + users +
+                ", photo_id=" + photo_id +
                 '}';
     }
-
-
 }

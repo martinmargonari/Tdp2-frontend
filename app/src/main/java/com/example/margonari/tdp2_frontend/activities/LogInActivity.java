@@ -159,7 +159,6 @@ public class LogInActivity extends AppCompatActivity implements
             if (login != null) {
                 Intent mainActivityIntent = new Intent(LogInActivity.this, MainActivity.class);
                 mainActivityIntent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK) ;
-                // this.getApplication().setApiToken(login.api_token);
                 mainActivityIntent.putExtra("API_TOKEN", login.getApi_token());
                 startActivity(mainActivityIntent);
             }
