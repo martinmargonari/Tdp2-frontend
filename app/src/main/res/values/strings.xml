@@ -30,6 +30,7 @@
         <item>Cursos futuros</item>
         <item>Cursos pasados</item>
     </string-array>
+    <string name="title_activity_my_courses_bis">MyCoursesBisActivity</string>
 
 
 </resources>

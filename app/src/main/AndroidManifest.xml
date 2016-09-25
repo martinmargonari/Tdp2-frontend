@@ -62,7 +62,10 @@
 
         <activity android:name=".activities.CoursesActivity" />
         <activity android:name=".activities.CourseChooseActivity" />
-        <activity android:name=".activities.MyCoursesActivity"></activity>
+        <activity
+            android:name=".activities.MyCoursesActivity"
+            android:label="@string/title_activity_my_courses_bis"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
