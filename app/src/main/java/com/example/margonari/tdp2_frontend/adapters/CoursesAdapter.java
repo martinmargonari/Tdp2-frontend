@@ -71,7 +71,7 @@ public class CoursesAdapter extends RecyclerView
         holder.course_name.setText(mDataset.get(position).getName());
         holder.course_description.setText(mDataset.get(position).getDescription());
         holder.course_photo.setImageResource(mDataset.get(position).getPhoto_id());
-        holder.course_session_start.setText("El curso inicia: " + mDataset.get(position).getSessions().get(0).getStart().substring(0,10));
+        holder.course_session_start.setText("El curso inicia: " + mDataset.get(position).getCurrent_sessions().get(0).getStart().substring(0,10));
     }
 
     public void addItem(Course course, int index) {

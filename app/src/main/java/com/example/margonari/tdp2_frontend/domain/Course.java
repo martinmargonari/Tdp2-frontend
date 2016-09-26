@@ -12,7 +12,7 @@ public class Course implements java.io.Serializable {
     private String name;
     private String description;
     private String file_extension;
-    private List<SessionCourse> sessions=new ArrayList<SessionCourse>();
+    private List<SessionCourse> current_sessions =new ArrayList<SessionCourse>();
     private List<Unit> unities= new ArrayList<Unit>();
     private List<User> users=new ArrayList<User>();
     private int photo_id;
@@ -65,12 +65,12 @@ public class Course implements java.io.Serializable {
         this.file_extension = file_extension;
     }
 
-    public List<SessionCourse> getSessions() {
-        return sessions;
+    public List<SessionCourse> getCurrent_sessions() {
+        return current_sessions;
     }
 
-    public void setSessions(List<SessionCourse> sessions) {
-        this.sessions = sessions;
+    public void setCurrent_sessions(List<SessionCourse> current_sessions) {
+        this.current_sessions = current_sessions;
     }
 
     public List<Unit> getUnities() {
@@ -96,7 +96,7 @@ public class Course implements java.io.Serializable {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", file_extension='" + file_extension + '\'' +
-                ", sessions=" + sessions +
+                ", current_sessions=" + current_sessions +
                 ", unities=" + unities +
                 ", users=" + users +
                 ", photo_id=" + photo_id +
