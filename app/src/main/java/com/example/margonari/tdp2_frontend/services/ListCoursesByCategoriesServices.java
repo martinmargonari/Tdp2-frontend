@@ -14,8 +14,8 @@ public class ListCoursesByCategoriesServices extends AbstractServices {
 
     public List<Course> getListCoursesBy(String courseCategory) {
         String coursesQuery = this.getQueryBy(courseCategory);
-        CoursesDTO[] coursesDTO = (CoursesDTO[]) geDataOftDTO(coursesQuery, CoursesDTO[].class);
-        return coursesDTO[0].getData();
+        CoursesDTO coursesDTO = (CoursesDTO) geDataOftDTO(coursesQuery, CoursesDTO.class);
+        return coursesDTO.getData();
     }
 
     @Override
