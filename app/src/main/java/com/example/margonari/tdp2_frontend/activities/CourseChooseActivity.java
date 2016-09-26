@@ -117,7 +117,11 @@ public class CourseChooseActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
             try {
                 String sessionId = params[0];
-                 boolean ifExistsErrors=  new CourseInscriptionServices().ifExistsErrors(sessionId);
+
+
+                CourseInscriptionServices courseInscriptionServices=new CourseInscriptionServices();
+                courseInscriptionServices.setApi_security(api_token);
+                 boolean ifExistsErrors=  courseInscriptionServices.ifExistsErrors(sessionId);
                 return new Boolean( ifExistsErrors );
             } catch (Exception e) {
                 Log.e("CourseChooseActivity", e.getMessage(), e);

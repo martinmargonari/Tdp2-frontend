@@ -21,6 +21,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.internal.ImageRequest;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -50,6 +51,9 @@ public class LogInActivity extends AppCompatActivity implements
     private EditText mUserView;
     private EditText mpasswordView;
     private String userEmail;
+    private String firstName;
+    private String lastName;
+    private String profilePicture;
 
     //Facebook Login
     private LoginButton loginButton;
@@ -60,7 +64,6 @@ public class LogInActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        mStatusTextView = (TextView) findViewById(R.id.status);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         //Faceboook Login setup Button
@@ -71,7 +74,6 @@ public class LogInActivity extends AppCompatActivity implements
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                mStatusTextView.setText(R.string.facebook_login_succes);
 
                 GraphRequest.newMeRequest(
                         loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -81,8 +83,9 @@ public class LogInActivity extends AppCompatActivity implements
                                     // handle error
                                 } else {
                                     userEmail = me.optString("email");
-
-
+                                    firstName = me.optString("first_name");
+                                    lastName = me.optString("last_name");
+                                    profilePicture = ImageRequest.getProfilePictureUri(me.optString("id"), 500, 500).toString();
                                 }
                             }
                         }).executeAsync();
@@ -91,12 +94,11 @@ public class LogInActivity extends AppCompatActivity implements
 
             @Override
             public void onCancel() {
-                mStatusTextView.setText(R.string.facebook_login_cancel);
+
             }
 
             @Override
             public void onError(FacebookException exception) {
-                mStatusTextView.setText(R.string.facebook_login_fail);
             }
         });
 
@@ -115,7 +117,6 @@ public class LogInActivity extends AppCompatActivity implements
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         } else {
-
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -135,7 +136,6 @@ public class LogInActivity extends AppCompatActivity implements
 
     private void updateUI(boolean signedIn) {
         if (!signedIn) {
-            mStatusTextView.setText("FAILED SIGN IN");
         }
     }
 
@@ -160,6 +160,10 @@ public class LogInActivity extends AppCompatActivity implements
                 Intent mainActivityIntent = new Intent(LogInActivity.this, MainActivity.class);
                 mainActivityIntent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK) ;
                 mainActivityIntent.putExtra("API_TOKEN", login.getApi_token());
+                mainActivityIntent.putExtra("EMAIL",userEmail);
+                mainActivityIntent.putExtra("FIRST_NAME",firstName);
+                mainActivityIntent.putExtra("LAST_NAME",lastName);
+                mainActivityIntent.putExtra("PROFILE_PICTURE",profilePicture);
                 startActivity(mainActivityIntent);
             }
 
@@ -202,7 +206,6 @@ public class LogInActivity extends AppCompatActivity implements
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText("SIGNED IN");
             updateUI(true);
             goToMainActivity();
         } else {
