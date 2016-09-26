@@ -18,7 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.margonari.tdp2_frontend.R;
+import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.domain.CourseLocoIntern;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class MyCoursesActivity extends AppCompatActivity
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "MyCoursesActivity";
-    private ArrayList<Course> coursesList;
+    private ArrayList<CourseLocoIntern> coursesList;
     private String api_token;
 
     @Override
@@ -41,7 +43,6 @@ public class MyCoursesActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_courses);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -61,6 +62,8 @@ public class MyCoursesActivity extends AppCompatActivity
 
 
         intent = getIntent();
+        coursesList= (ArrayList<CourseLocoIntern>)intent.getSerializableExtra("LIST_CATEGORIES");
+
         api_token = getIntent().getStringExtra("API_TOKEN");
         System.out.println("APITOKEN EN MY COURSES: "+ api_token);
 
@@ -136,11 +139,16 @@ public class MyCoursesActivity extends AppCompatActivity
         switch (position) {
             case 0:
                 // CURSOS ACTUALES
-                /*coursesList= (ArrayList<Course>)intent.getSerializableExtra("LIST_CATEGORIES");
+                coursesList= (ArrayList<CourseLocoIntern>)intent.getSerializableExtra("LIST_CATEGORIES");
+                ArrayList<Course> listCourses= new ArrayList<Course>( );
+                for (CourseLocoIntern courseLocoIntern: coursesList){
+                    listCourses.add( new Course(courseLocoIntern.getName(), courseLocoIntern.getDescription(), 0  ) );
+
+                }
                 //TODO Pedir la info según lo que corresponda, por el momento en esta solapa poner
                 // unicamente lo que devuelva la request de mis cursos, luego agregaremos mas logica
-                mAdapter = new CoursesAdapter(coursesList);
-                mRecyclerView.setAdapter(mAdapter);*/
+                mAdapter = new CoursesAdapter(listCourses);
+                mRecyclerView.setAdapter(mAdapter);
                 break;
             case 1:
                 // CURSOS FUTUROS

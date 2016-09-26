@@ -17,6 +17,9 @@ public class Course implements java.io.Serializable {
     private List<User> users=new ArrayList<User>();
     private int photo_id;
 
+    private String created_at;
+    private String updated_at;
+    private String deleted_at;
 
     public Course(String name, String description, int photo_id) {
         this.name = name;
@@ -27,6 +30,30 @@ public class Course implements java.io.Serializable {
 
     public String getId() {
         return id;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public String getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(String deleted_at) {
+        this.deleted_at = deleted_at;
     }
 
     public void setId(String id) {

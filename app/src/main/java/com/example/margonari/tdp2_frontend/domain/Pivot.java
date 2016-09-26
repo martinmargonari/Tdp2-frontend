@@ -12,7 +12,24 @@ public class Pivot implements Serializable {
     private String created_at;
     private String updated_at;
 
+    private String student_id;
+    private  String session_id;
 
+    public String getStudent_id() {
+        return student_id;
+    }
+
+    public void setStudent_id(String student_id) {
+        this.student_id = student_id;
+    }
+
+    public String getSession_id() {
+        return session_id;
+    }
+
+    public void setSession_id(String session_id) {
+        this.session_id = session_id;
+    }
 
     public String getCourse_id() {
         return course_id;

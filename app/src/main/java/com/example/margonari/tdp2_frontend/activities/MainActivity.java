@@ -25,8 +25,10 @@ import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.domain.CourseLocoIntern;
 import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.services.ListCoursesByCategoriesServices;
+import com.example.margonari.tdp2_frontend.services.ListMyCoursesServices;
 import com.example.margonari.tdp2_frontend.services.LoginServices;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -183,7 +185,18 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.mis_cursos) {
+            HttpRequestTaskMyCourses httpRequestTaskMyCourses= new HttpRequestTaskMyCourses();
+            httpRequestTaskMyCourses.execute();
+            ArrayList<CourseLocoIntern> listCourses= new ArrayList<>();
+            try {
+                 listCourses= httpRequestTaskMyCourses.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
             Intent intent = new Intent(this,MyCoursesActivity.class);
+            intent.putExtra("LIST_CATEGORIES", listCourses);
             intent.putExtra("API_TOKEN", api_token);
             startActivity(intent);
         } else if (id == R.id.cursos_destacados) {
@@ -313,6 +326,29 @@ public class MainActivity extends AppCompatActivity
             }
 
             return null;
+        }
+
+    }
+
+
+
+    class HttpRequestTaskMyCourses extends AsyncTask<String, Void, ArrayList<CourseLocoIntern>> {
+
+        ArrayList<CourseLocoIntern> listaCursos;
+        @Override
+        protected ArrayList<CourseLocoIntern> doInBackground(String... params) {
+            try {
+
+                ListMyCoursesServices listMyCoursesServices= new ListMyCoursesServices();
+                listMyCoursesServices.setApi_security(api_token);
+                listaCursos= (ArrayList<CourseLocoIntern>) listMyCoursesServices.getListCoursesBy();
+
+
+            } catch (Exception e) {
+                Log.e("ListCoursesByCategories", e.getMessage(), e);
+            }
+
+            return listaCursos;
         }
 
     }
