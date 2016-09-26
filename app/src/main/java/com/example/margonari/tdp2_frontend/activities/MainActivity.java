@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         /*
-        intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getId());
+        intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getCourse_id());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 

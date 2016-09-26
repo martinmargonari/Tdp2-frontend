@@ -131,7 +131,8 @@
                 android:layout_gravity="center_horizontal|center"
                 android:text="INSCRIBIRSE"
                 android:textColor="#ffffff"
-                android:backgroundTint="#3146cc" />
+                android:backgroundTint="#3146cc"
+                android:onClick="inscribirse"/>
 
         </LinearLayout>
     </LinearLayout>
