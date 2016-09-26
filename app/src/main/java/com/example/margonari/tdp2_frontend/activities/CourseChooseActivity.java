@@ -9,19 +9,18 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.margonari.tdp2_frontend.R;
-import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.adapters.ProfessorAdapter;
 import com.example.margonari.tdp2_frontend.adapters.UnitAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
-import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.domain.Professor;
 import com.example.margonari.tdp2_frontend.domain.Unit;
-import com.example.margonari.tdp2_frontend.services.LoginServices;
+import com.example.margonari.tdp2_frontend.services.CourseInscriptionServices;
 
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class CourseChooseActivity extends AppCompatActivity {
 
@@ -42,6 +41,7 @@ public class CourseChooseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_choose);
+        //final Button inscribirse = (Button) findViewById(R.id.button_inscribirse);
 
         Intent intent = getIntent();
         api_token = getIntent().getStringExtra("API_TOKEN");
@@ -71,6 +71,9 @@ public class CourseChooseActivity extends AppCompatActivity {
         professorsRecyclerView.setFocusable(false);
         professorsAdapter = new ProfessorAdapter(getDataSetProfessors());
         professorsRecyclerView.setAdapter(professorsAdapter);
+
+
+
     }
 
     private ArrayList<Unit> getDataSetUnits() {
@@ -96,18 +99,26 @@ public class CourseChooseActivity extends AppCompatActivity {
 
     public void inscribirse(View view){
         HttpRequestTask httpRequestTask= new HttpRequestTask();
-        //TODO Ver el tema de la consulta al server para la inscripcion
-        httpRequestTask.execute( "ACA VA EL SESSION ID QUE NOS DIGAN" );
+        //TODO devolvemos la primera sesion de la lista, deberiamos devolver la mas proxima.
+        httpRequestTask.execute( courseFullData.getCurrent_sessions().get(0).getId());
+        try {
+            Boolean ifExistsErrors= (Boolean) httpRequestTask.get();
+            if(ifExistsErrors==true) {Toast.makeText( CourseChooseActivity.this,"Hay un error en la inscripcion , intente mas tarde",Toast.LENGTH_SHORT).show();}
+            else{Toast.makeText( CourseChooseActivity.this,"Inscripcion realizada con exito",Toast.LENGTH_SHORT).show();}
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
-    //TODO arreglar con el session id que nos pase leandro.
-    private class HttpRequestTask extends AsyncTask<String, Void, Login> {
+    private class HttpRequestTask extends AsyncTask<String, Void, Boolean> {
         @Override
-        protected Login doInBackground(String... params) {
+        protected Boolean doInBackground(String... params) {
             try {
                 String sessionId = params[0];
-                 Login login=  new LoginServices().getLoginBy(sessionId);
-                return login;
+                 boolean ifExistsErrors=  new CourseInscriptionServices().ifExistsErrors(sessionId);
+                return new Boolean( ifExistsErrors );
             } catch (Exception e) {
                 Log.e("CourseChooseActivity", e.getMessage(), e);
             }
