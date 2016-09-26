@@ -89,8 +89,8 @@ public class CourseChooseActivity extends AppCompatActivity {
 
     private ArrayList<Professor> getDataSetProfessors() {
         ArrayList results = new ArrayList<Professor>();
-        results.add(new Professor("Nombre Profesor", true));
-        for (int index = 0; index < 5; index++) {
+        results.add(new Professor(courseFullData.getUsers().get( 0 ).getName()+courseFullData.getUsers().get( 0 ).getLast_name(), true));
+        for (int index = 0; index < 2; index++) {
             Professor obj = new Professor("Nombre Asistente", false);
             results.add(obj);
         }
@@ -113,6 +113,7 @@ public class CourseChooseActivity extends AppCompatActivity {
     }
 
     private class HttpRequestTask extends AsyncTask<String, Void, Boolean> {
+        Boolean result;
         @Override
         protected Boolean doInBackground(String... params) {
             try {
@@ -122,12 +123,13 @@ public class CourseChooseActivity extends AppCompatActivity {
                 CourseInscriptionServices courseInscriptionServices=new CourseInscriptionServices();
                 courseInscriptionServices.setApi_security(api_token);
                  boolean ifExistsErrors=  courseInscriptionServices.ifExistsErrors(sessionId);
-                return new Boolean( ifExistsErrors );
+                 result= new Boolean( ifExistsErrors );
+
             } catch (Exception e) {
                 Log.e("CourseChooseActivity", e.getMessage(), e);
             }
 
-            return null;
+            return result;
         }
 
     }

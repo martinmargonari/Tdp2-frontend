@@ -15,7 +15,7 @@ public class CourseInscriptionServices extends AbstractServices {
         String coursesQuery = this.getQueryBy(course_id);
         System.out.println("Course query" +coursesQuery);
         InscriptionDTO coursesDTO = (InscriptionDTO) geDataOftDTO(coursesQuery, InscriptionDTO.class);
-        return coursesDTO.getErrors().get( 0 ).length()>0;
+        return  !coursesDTO.getErrors().isEmpty() ;
     }
 
 
