@@ -1,5 +1,6 @@
 package com.example.margonari.tdp2_frontend.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ public class CoursesAdapter extends RecyclerView
         TextView course_description;
         ImageView course_photo;
         TextView course_session_start;
+        Context context;
 
         public CourseHolder(View itemView) {
             super(itemView);
@@ -38,6 +41,7 @@ public class CoursesAdapter extends RecyclerView
             course_description = (TextView) itemView.findViewById(R.id.course_description);
             course_photo = (ImageView) itemView.findViewById(R.id.course_photo);
             course_session_start = (TextView) itemView.findViewById(R.id.course_next_session);
+            context = itemView.getContext();
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -70,8 +74,10 @@ public class CoursesAdapter extends RecyclerView
     public void onBindViewHolder(CourseHolder holder, int position) {
         holder.course_name.setText(mDataset.get(position).getName());
         holder.course_description.setText(mDataset.get(position).getDescription());
-        holder.course_photo.setImageResource(mDataset.get(position).getPhoto_id());
-        holder.course_session_start.setText("El curso inicia: " + mDataset.get(position).getSessions().get(0).getStart().substring(0,10));
+        String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getId() + "." + mDataset.get(position).getFile_extension();
+        Picasso.with(holder.context).load(urlImage).into(holder.course_photo);
+
+        holder.course_session_start.setText("El curso inicia: " + mDataset.get(position).getCurrent_sessions().get(0).getStart().substring(0,10));
     }
 
     public void addItem(Course course, int index) {

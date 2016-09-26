@@ -16,7 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
@@ -27,6 +31,7 @@ import com.example.margonari.tdp2_frontend.services.LoginServices;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.internal.ImageRequest;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -44,6 +49,9 @@ public class MainActivity extends AppCompatActivity
     private ImageAdapter adapterCategorias;
     private String  api_token;
     private String userEmail;
+    private String firstName;
+    private String lastName;
+    private String profilePicture;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -55,6 +63,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         api_token = getIntent().getStringExtra("API_TOKEN");
         System.out.println("APITOKEN: " + api_token);
+        userEmail = getIntent().getStringExtra("EMAIL");
+        firstName = getIntent().getStringExtra("FIRST_NAME");
+        lastName = getIntent().getStringExtra("LAST_NAME");
+        profilePicture = getIntent().getStringExtra("PROFILE_PICTURE");
 
         setContentView(R.layout.activity_main);
 
@@ -79,8 +91,17 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_main);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView userNameText = (TextView) headerView.findViewById(R.id.user_name);
+        TextView emailText = (TextView) headerView.findViewById(R.id.user_email);
+        ImageView imageProfile = (ImageView) headerView.findViewById(R.id.profile_picture);
+        userNameText.setText(firstName + " " + lastName);
+        emailText.setText(userEmail);
+        Glide.with(this).load(profilePicture).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageProfile);
+
 
         grillaCategorias = (GridView) findViewById(R.id.grilla_categorias);
         adapterCategorias = new ImageAdapter(this);
@@ -115,8 +136,9 @@ public class MainActivity extends AppCompatActivity
                             // handle error
                         } else {
                             userEmail = me.optString("email");
-
-
+                            firstName = me.optString("first_name");
+                            lastName = me.optString("last_name");
+                            profilePicture = ImageRequest.getProfilePictureUri(me.optString("id"), 500, 500).toString();
                         }
                     }
                 }).executeAsync();

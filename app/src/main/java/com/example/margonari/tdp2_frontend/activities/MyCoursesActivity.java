@@ -38,7 +38,7 @@ public class MyCoursesActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_courses_bis);
+        setContentView(R.layout.activity_my_courses);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,7 +48,7 @@ public class MyCoursesActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_my_courses);
         navigationView.setNavigationItemSelectedListener(this);
 
         spinnerCoursesType = (Spinner) findViewById(R.id.spinner_type_of_courses);
