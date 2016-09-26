@@ -5,22 +5,26 @@ package com.example.margonari.tdp2_frontend.domain;
  */
 public class Unit implements java.io.Serializable {
 
-    private String id;
+    private String course_id;
     private String name;
+    private String number;
     private int photo_id;
     private String file_extension;
+
+    public Unit() {
+    }
 
     public Unit(String name, int photo_id) {
         this.name = name;
         this.photo_id = photo_id;
     }
 
-    public String getId() {
-        return id;
+    public String getCourse_id() {
+        return course_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCourse_id(String course_id) {
+        this.course_id = course_id;
     }
 
     public String getName() {
@@ -45,6 +49,14 @@ public class Unit implements java.io.Serializable {
 
     public void setFile_extension(String file_extension) {
         this.file_extension = file_extension;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     @Override
