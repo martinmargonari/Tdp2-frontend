@@ -25,7 +25,6 @@ import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
 import com.example.margonari.tdp2_frontend.domain.Course;
-import com.example.margonari.tdp2_frontend.domain.CourseLocoIntern;
 import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.services.ListCoursesByCategoriesServices;
 import com.example.margonari.tdp2_frontend.services.ListMyCoursesServices;
@@ -187,7 +186,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.mis_cursos) {
             HttpRequestTaskMyCourses httpRequestTaskMyCourses= new HttpRequestTaskMyCourses();
             httpRequestTaskMyCourses.execute();
-            ArrayList<CourseLocoIntern> listCourses= new ArrayList<>();
+            ArrayList<Course> listCourses= new ArrayList<>();
             try {
                  listCourses= httpRequestTaskMyCourses.get();
             } catch (InterruptedException e) {
@@ -332,16 +331,16 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    class HttpRequestTaskMyCourses extends AsyncTask<String, Void, ArrayList<CourseLocoIntern>> {
+    class HttpRequestTaskMyCourses extends AsyncTask<String, Void, ArrayList<Course>> {
 
-        ArrayList<CourseLocoIntern> listaCursos;
+        ArrayList<Course> listaCursos;
         @Override
-        protected ArrayList<CourseLocoIntern> doInBackground(String... params) {
+        protected ArrayList<Course> doInBackground(String... params) {
             try {
 
                 ListMyCoursesServices listMyCoursesServices= new ListMyCoursesServices();
                 listMyCoursesServices.setApi_security(api_token);
-                listaCursos= (ArrayList<CourseLocoIntern>) listMyCoursesServices.getListCoursesBy();
+                listaCursos= (ArrayList<Course>) listMyCoursesServices.getListCoursesBy();
 
 
             } catch (Exception e) {

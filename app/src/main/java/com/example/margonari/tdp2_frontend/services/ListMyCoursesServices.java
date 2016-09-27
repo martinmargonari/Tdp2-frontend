@@ -1,8 +1,8 @@
 package com.example.margonari.tdp2_frontend.services;
 
-import com.example.margonari.tdp2_frontend.domain.CourseLocoIntern;
-import com.example.margonari.tdp2_frontend.domain.Course_Loco;
-import com.example.margonari.tdp2_frontend.rest_dto.CourseLocoDTO;
+import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.domain.MyCourseBox;
+import com.example.margonari.tdp2_frontend.rest_dto.CourseBoxDTO;
 
 import java.util.ArrayList;
 
@@ -15,15 +15,15 @@ public class ListMyCoursesServices extends AbstractServices{
     private static final String service_name = "courses/currents";
 
 
-    public ArrayList<CourseLocoIntern> getListCoursesBy() {
+    public ArrayList<Course> getListCoursesBy() {
         String coursesQuery = this.getQueryBy();
         System.out.println("QUERY " + coursesQuery.toString());
-        CourseLocoDTO coursesDTO = (CourseLocoDTO) geDataOftDTO(coursesQuery, CourseLocoDTO.class);
-        ArrayList<CourseLocoIntern> listCourses= new ArrayList<>( );
+        CourseBoxDTO coursesDTO = (CourseBoxDTO) geDataOftDTO(coursesQuery, CourseBoxDTO.class);
+        ArrayList<Course> listCourses= new ArrayList<>( );
 
-        ArrayList<Course_Loco> listCourseLoco= coursesDTO.getData()[0];
-        for(  Course_Loco course_loco: listCourseLoco){
-            listCourses.add( course_loco.getCourse());
+        ArrayList<MyCourseBox> listCourseLoco= coursesDTO.getData()[0];
+        for(  MyCourseBox myCourse_box : listCourseLoco){
+            listCourses.add( myCourse_box.getCourse());
         }
         return listCourses;
     }

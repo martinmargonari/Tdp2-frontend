@@ -52,8 +52,8 @@ public class CourseChooseActivity extends AppCompatActivity {
         TextView nameCourseTextView = (TextView)findViewById(R.id.name_course_choose);
         nameCourseTextView.setText(courseFullData.getName());
 
-        TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
-        descriptionTextView.setText(courseFullData.getDescription());
+       // TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
+       // descriptionTextView.setText(courseFullData.getDescription());
 
 
         unitsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_units);
