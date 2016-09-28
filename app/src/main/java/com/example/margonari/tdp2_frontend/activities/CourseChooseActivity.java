@@ -58,8 +58,8 @@ public class CourseChooseActivity extends AppCompatActivity {
         TextView nameCourseTextView = (TextView)findViewById(R.id.name_course_choose);
         nameCourseTextView.setText(courseFullData.getName());
 
-        TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
-        descriptionTextView.setText(courseFullData.getDescription());
+       // TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
+       // descriptionTextView.setText(courseFullData.getDescription());
 
         final RelativeLayout layoutBackgroundCourse = (RelativeLayout) findViewById(R.id.background_course_choose);
         String urlImage = getResources().getString(R.string.imagesURL) + courseFullData.getId() + "." + courseFullData.getFile_extension();
