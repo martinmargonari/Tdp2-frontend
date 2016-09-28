@@ -1,5 +1,6 @@
 package com.example.margonari.tdp2_frontend.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Unit;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -29,11 +31,13 @@ public class UnitAdapter extends RecyclerView
             .OnClickListener {
         TextView unit_name;
         ImageView unit_photo;
+        Context context;
 
         public UnitHolder(View itemView) {
             super(itemView);
             unit_name = (TextView) itemView.findViewById(R.id.unit_name);
             unit_photo = (ImageView) itemView.findViewById(R.id.unit_photo);
+            context = itemView.getContext();
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -65,7 +69,9 @@ public class UnitAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(UnitHolder holder, int position) {
         holder.unit_name.setText(mDataset.get(position).getName());
-        holder.unit_photo.setImageResource(mDataset.get(position).getPhoto_id());
+        String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
+        Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
+        //holder.unit_photo.setImageResource(mDataset.get(position).getPhoto_id());
     }
 
     public void addItem(Unit unit, int index) {
