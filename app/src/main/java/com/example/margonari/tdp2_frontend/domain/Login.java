@@ -1,8 +1,15 @@
 package com.example.margonari.tdp2_frontend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Created by aranc on 21/8/2016.
  */
+
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Login {
     public String id;
     public String api_token;

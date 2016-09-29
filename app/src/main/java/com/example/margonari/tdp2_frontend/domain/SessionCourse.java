@@ -1,10 +1,17 @@
 package com.example.margonari.tdp2_frontend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.io.Serializable;
 
 /**
  * Created by luis on 12/09/16.
  */
+
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionCourse implements Serializable{
 
 
