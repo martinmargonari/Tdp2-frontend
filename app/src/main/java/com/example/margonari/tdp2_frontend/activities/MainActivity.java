@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +38,10 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONObject;
 
@@ -45,6 +50,8 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
+
+    private static final String TAG = "MainActivity";
 
     private GridView grillaCategorias;
     private ImageAdapter adapterCategorias;
@@ -62,27 +69,22 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        api_token = getIntent().getStringExtra("API_TOKEN");
-        System.out.println("APITOKEN: " + api_token);
-        userEmail = getIntent().getStringExtra("EMAIL");
-        firstName = getIntent().getStringExtra("FIRST_NAME");
-        lastName = getIntent().getStringExtra("LAST_NAME");
-        profilePicture = getIntent().getStringExtra("PROFILE_PICTURE");
-
         setContentView(R.layout.activity_main);
-
-        if (AccessToken.getCurrentAccessToken() == null) {
-            goToLoginScreen();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user!= null) {
+            Log.d( TAG, "El emmail es: "+ user.getEmail());
+            userEmail = user.getEmail();
+            firstName = user.getDisplayName();
+            Log.d( TAG, "El nombre  es: "+ firstName);
+            profilePicture = user.getPhotoUrl().toString();
+            Log.d( TAG, "El uni de la foto   es: "+ profilePicture);
+            InitApiTokenFromServer(userEmail);
         }
         else{
-
-            InitUserEmailFromFacebook();
-            if(api_token==null){
-                InitApiTokenFromServer(userEmail);
-            }
+            goToLoginScreen();
+      }
 
 
-        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -126,23 +128,6 @@ public class MainActivity extends AppCompatActivity
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-    }
-
-    private void InitUserEmailFromFacebook() {
-        GraphRequest.newMeRequest(
-                AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject me, GraphResponse response) {
-                        if (response.getError() != null) {
-                            // handle error
-                        } else {
-                            userEmail = me.optString("email");
-                            firstName = me.optString("first_name");
-                            lastName = me.optString("last_name");
-                            profilePicture = ImageRequest.getProfilePictureUri(me.optString("id"), 500, 500).toString();
-                        }
-                    }
-                }).executeAsync();
     }
 
 
@@ -208,6 +193,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.ajustes) {
 
         } else if (id == R.id.cerrar_sesion) {
+            FirebaseAuth.getInstance().signOut();
             LoginManager.getInstance().logOut();
             goToLoginScreen();
 

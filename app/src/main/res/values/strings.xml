@@ -33,6 +33,9 @@
     <string name="title_activity_my_courses">Mis Cursos</string>
 
     <string name="imagesURL">http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/uploads/</string>
+    <string name="firebase_error_login">Error en firebase Login</string>
+    <string name="error_login">Error en login</string>
+    <string name="cancel_login">Se cancela el login</string>
 
 
 </resources>
