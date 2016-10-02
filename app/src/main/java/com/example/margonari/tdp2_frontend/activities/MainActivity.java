@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,9 +36,12 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.internal.ImageRequest;
 import com.facebook.login.LoginManager;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
 
     private static final String TAG = "MainActivity";
+    private static final int RC_SIGN_IN = 0;
 
     private GridView grillaCategorias;
     private ImageAdapter adapterCategorias;
@@ -60,6 +65,7 @@ public class MainActivity extends AppCompatActivity
     private String firstName;
     private String lastName;
     private String profilePicture;
+    private FirebaseAuth auth;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -70,19 +76,27 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user!= null) {
-            Log.d( TAG, "El emmail es: "+ user.getEmail());
-            userEmail = user.getEmail();
-            firstName = user.getDisplayName();
-            Log.d( TAG, "El nombre  es: "+ firstName);
-            profilePicture = user.getPhotoUrl().toString();
-            Log.d( TAG, "El uni de la foto   es: "+ profilePicture);
+
+        auth = FirebaseAuth.getInstance();
+
+        if ( auth.getCurrentUser()!=null){
+            Log.d("AUTH", "User LOGGED IN");
+            userEmail=auth.getCurrentUser().getEmail();
+            firstName=auth.getCurrentUser().getDisplayName();
+            Log.d("hola",auth.getCurrentUser().getProviders().toString());
+            auth.getCurrentUser().getProviderData();
+            profilePicture= auth.getCurrentUser().getPhotoUrl().toString();
             InitApiTokenFromServer(userEmail);
+
+
+        }else{
+            startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setProviders(
+                    AuthUI.FACEBOOK_PROVIDER,
+                    AuthUI.GOOGLE_PROVIDER
+            ).build(),RC_SIGN_IN);
+
         }
-        else{
-            goToLoginScreen();
-      }
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -116,6 +130,23 @@ public class MainActivity extends AppCompatActivity
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if( requestCode == RC_SIGN_IN){
+                if ( resultCode== RESULT_OK){
+                    Log.d("AUTH",auth.getCurrentUser().getEmail());
+                    Log.d("hola",auth.getCurrentUser().getProviders().toString());
+
+                    InitApiTokenFromServer(auth.getCurrentUser().getEmail());
+                    userEmail=auth.getCurrentUser().getEmail();
+                    firstName=auth.getCurrentUser().getDisplayName();
+                    profilePicture= auth.getCurrentUser().getPhotoUrl().toString();
+                }
+        }else{Log.d("AUTH","User not autenticated");}
+    }
+
     private void InitApiTokenFromServer(String userEmail) {
         HttpRequestTaskLogin httpRequestTask = new HttpRequestTaskLogin();
 
@@ -131,6 +162,9 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -143,22 +177,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.general_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         if (id == R.id.action_search) {
             onSearchRequested();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -193,9 +221,16 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.ajustes) {
 
         } else if (id == R.id.cerrar_sesion) {
-            FirebaseAuth.getInstance().signOut();
-            LoginManager.getInstance().logOut();
-            goToLoginScreen();
+            AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Log.d("AUTH", "User LOGGED OUT");
+                    startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setProviders(
+                            AuthUI.FACEBOOK_PROVIDER,
+                            AuthUI.GOOGLE_PROVIDER
+                    ).build(),RC_SIGN_IN);
+                                    }
+            });
 
         }
 

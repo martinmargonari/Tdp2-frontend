@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Courseland</string>
-    <string name="facebook_app_id">1164467050265725</string>
-    <string name="facebook_app_id_luis">1784425185166350</string>
+
+    <string name="facebook_application_id" translatable="false">1784425185166350</string>
 
 
     <string name="title_activity_main">Encontrar cursos</string>

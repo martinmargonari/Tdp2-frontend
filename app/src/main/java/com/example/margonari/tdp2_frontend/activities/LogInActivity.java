@@ -1,6 +1,7 @@
 package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,9 @@ import com.facebook.FacebookException;
 import com.facebook.internal.CallbackManagerImpl;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -56,37 +60,36 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_log_in );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_log_in);
 
-        fb_LoginButton = (LoginButton) findViewById( R.id.login_button );
+        fb_LoginButton = (LoginButton) findViewById(R.id.login_button);
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
 
 
-        findViewById( R.id.sign_in_button ).setOnClickListener( this );
-
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
 
 
         //Faceboook Login
         callbackManager = CallbackManager.Factory.create();
-        fb_LoginButton.setReadPermissions( Arrays.asList( "email" ) );
+        fb_LoginButton.setReadPermissions(Arrays.asList("email"));
 
-        fb_LoginButton.registerCallback( callbackManager, new FacebookCallback<LoginResult>() {
+        fb_LoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken( loginResult.getAccessToken() );
+                handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText( getApplicationContext(), R.string.cancel_login, Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), R.string.cancel_login, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText( getApplicationContext(), R.string.error_login, Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
             }
-        } );
+        });
 
         //Google Login
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -94,10 +97,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 .requestEmail()
                 .build();
 
-        mGoogleApiClient = new GoogleApiClient.Builder( this )
-                .enableAutoManage( this /* FragmentActivity */, this /* OnConnectionFailedListener */ )
-                .addApi( Auth.GOOGLE_SIGN_IN_API, gso )
-                .build();
+        // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(AppIndex.API).build();
 
         signInButton.setScopes(gso.getScopeArray());
 
@@ -128,14 +133,18 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-    private void loginWithCredentails(AuthCredential credential) {
+    private void loginWithCredentails(final AuthCredential credential) {
+
        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
            @Override
            public void onComplete(@NonNull Task<AuthResult> task) {
                if (!task.isSuccessful()) {
                    Toast.makeText( getApplicationContext(), R.string.firebase_error_login, Toast.LENGTH_LONG ).show();
+
                    Log.d( TAG, "Firebase: login unsuccess" );
                } else {
+
+
                    Log.d( TAG, "Firebase: login success" );
                    goToMainActivity();
 
@@ -144,6 +153,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                // fb_LoginButton.setVisibility( View.VISIBLE );
            }
         });
+
     }
 
     @Override
@@ -175,14 +185,24 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onStart() {
-        super.onStart();
-        firebaseAuth.addAuthStateListener( firebaseAuthListener );
+        super.onStart();// ATTENTION: This was auto-generated to implement the App Indexing API.
+// See https://g.co/AppIndexing/AndroidStudio for more information.
+        mGoogleApiClient.connect();
+        firebaseAuth.addAuthStateListener(firebaseAuthListener);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.start(mGoogleApiClient, getIndexApiAction());
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
-        firebaseAuth.removeAuthStateListener( firebaseAuthListener );
+        super.onStop();// ATTENTION: This was auto-generated to implement the App Indexing API.
+// See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(mGoogleApiClient, getIndexApiAction());
+        firebaseAuth.removeAuthStateListener(firebaseAuthListener);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        mGoogleApiClient.disconnect();
     }
 
 
@@ -226,6 +246,22 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("LogIn Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
     }
 
 
