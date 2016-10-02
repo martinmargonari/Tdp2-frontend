@@ -20,7 +20,7 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
@@ -68,7 +68,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.MyCourseActivity" />
         <activity android:name=".activities.CourseInformationActivity" />
-        <activity android:name=".activities.MyCourseUnitActivity"></activity>
+        <activity android:name=".activities.MyCourseUnitActivity" />
     </application>
 
 </manifest>
