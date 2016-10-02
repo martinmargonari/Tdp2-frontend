@@ -19,24 +19,29 @@ import java.util.ArrayList;
 /**
  * Created by Margonari on 23/09/2016.
  */
-public class UnitAdapter extends RecyclerView
-        .Adapter<UnitAdapter
+public class MyCourseUnitAdapter extends RecyclerView
+        .Adapter<MyCourseUnitAdapter
         .UnitHolder> {
-    private static String LOG_TAG = "UnitAdapter";
+    private static String LOG_TAG = "MyCourseUnitAdapter";
     private ArrayList<Unit> mDataset;
     private static MyClickListener myClickListener;
 
     public static class UnitHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
+        TextView week_number;
         TextView unit_name;
         ImageView unit_photo;
+        TextView week_limit;
         Context context;
 
         public UnitHolder(View itemView) {
             super(itemView);
-            unit_name = (TextView) itemView.findViewById(R.id.unit_name);
-            unit_photo = (ImageView) itemView.findViewById(R.id.unit_photo);
+            week_number = (TextView) itemView.findViewById(R.id.week_number);
+            unit_name = (TextView) itemView.findViewById(R.id.unit_course_name);
+            unit_photo = (ImageView) itemView.findViewById(R.id.unit_course_photo);
+            week_limit = (TextView) itemView.findViewById(R.id.week_limit);
+
             context = itemView.getContext();
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
@@ -52,15 +57,15 @@ public class UnitAdapter extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public UnitAdapter(ArrayList<Unit> myDataset) {
+    public MyCourseUnitAdapter(ArrayList<Unit> myDataset) {
         mDataset = myDataset;
     }
 
     @Override
     public UnitHolder onCreateViewHolder(ViewGroup parent,
-                                           int viewType) {
+                                         int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.course_unit, parent, false);
+                .inflate(R.layout.my_course_unit, parent, false);
 
         UnitHolder dataObjectHolder = new UnitHolder(view);
         return dataObjectHolder;
@@ -71,7 +76,9 @@ public class UnitAdapter extends RecyclerView
         holder.unit_name.setText(mDataset.get(position).getName());
         String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
         Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
-        //holder.unit_photo.setImageResource(mDataset.get(position).getPhoto_id());
+        holder.week_number.setText(Integer.toString(position+1));
+        holder.week_limit.setText("FECHA");
+        //TODO tomar la fecha limite del servidor
     }
 
     public void addItem(Unit unit, int index) {

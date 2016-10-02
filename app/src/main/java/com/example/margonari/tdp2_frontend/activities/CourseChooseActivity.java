@@ -1,6 +1,9 @@
 package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +22,8 @@ import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Professor;
 import com.example.margonari.tdp2_frontend.domain.Unit;
 import com.example.margonari.tdp2_frontend.services.CourseInscriptionServices;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -55,6 +61,25 @@ public class CourseChooseActivity extends AppCompatActivity {
        // TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
        // descriptionTextView.setText(courseFullData.getDescription());
 
+        final RelativeLayout layoutBackgroundCourse = (RelativeLayout) findViewById(R.id.background_course_choose);
+        String urlImage = getResources().getString(R.string.imagesURL) + courseFullData.getId() + "." + courseFullData.getFile_extension();
+        //Picasso.with(getBaseContext()).load(urlImage);
+        Picasso.with(this).load(urlImage).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                layoutBackgroundCourse.setBackground(new BitmapDrawable(bitmap));
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
 
         unitsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_units);
         unitsRecyclerView.setHasFixedSize(true);
