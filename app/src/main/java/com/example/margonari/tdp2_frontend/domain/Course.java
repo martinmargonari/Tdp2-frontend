@@ -20,7 +20,7 @@ public class Course implements java.io.Serializable {
     private String file_extension;
     private List<SessionCourse> current_sessions =new ArrayList<SessionCourse>();
     private List<Unit> unities= new ArrayList<Unit>();
-    private List<User> users=new ArrayList<User>();
+    private List<Professor> users=new ArrayList<Professor>();
     private int photo_id;
 
 
@@ -87,11 +87,11 @@ public class Course implements java.io.Serializable {
         this.unities = unities;
     }
 
-    public List<User> getUsers() {
+    public List<Professor> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<Professor> users) {
         this.users = users;
     }
 

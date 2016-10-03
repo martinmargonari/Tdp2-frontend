@@ -21,6 +21,7 @@ public class SessionCourse implements Serializable{
     private String created_at;
     private String updated_at;
     private String deleted_at;
+    private String finish;
 
     public String getId() {
         return id;
@@ -68,5 +69,13 @@ public class SessionCourse implements Serializable{
 
     public void setDeleted_at(String deleted_at) {
         this.deleted_at = deleted_at;
+    }
+
+    public String getFinish() {
+        return finish;
+    }
+
+    public void setFinish(String finish) {
+        this.finish = finish;
     }
 }

@@ -58,12 +58,13 @@ public class CourseChooseActivity extends AppCompatActivity {
         TextView nameCourseTextView = (TextView)findViewById(R.id.name_course_choose);
         nameCourseTextView.setText(courseFullData.getName());
 
-       // TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
-       // descriptionTextView.setText(courseFullData.getDescription());
+        TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
+        descriptionTextView.setText(courseFullData.getDescription());
 
         final RelativeLayout layoutBackgroundCourse = (RelativeLayout) findViewById(R.id.background_course_choose);
         String urlImage = getResources().getString(R.string.imagesURL) + courseFullData.getId() + "." + courseFullData.getFile_extension();
-        //Picasso.with(getBaseContext()).load(urlImage);
+        Picasso.with(getBaseContext()).load(urlImage);
+        Log.d("IMAGEURL", urlImage);
         Picasso.with(this).load(urlImage).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -114,11 +115,14 @@ public class CourseChooseActivity extends AppCompatActivity {
 
     private ArrayList<Professor> getDataSetProfessors() {
         ArrayList results = new ArrayList<Professor>();
-        results.add(new Professor(courseFullData.getUsers().get( 0 ).getName()+courseFullData.getUsers().get( 0 ).getLast_name(), true));
-        for (int index = 0; index < 2; index++) {
-            Professor obj = new Professor("Nombre Asistente", false);
-            results.add(obj);
+
+        for (Professor professor:courseFullData.getUsers()) {
+            if(professor.isProfessor())results.add(professor);
         }
+        for (Professor professor:courseFullData.getUsers()) {
+            if(professor.isAssistent())results.add(professor);
+        }
+
         return results;
     }
 

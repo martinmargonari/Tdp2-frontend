@@ -14,12 +14,15 @@ public class Professor implements java.io.Serializable {
 
     private String id;
     private String name;
+    private String last_name;
     private String type;
+    private String role;
+
     private int photo_id;
     private String file_extension;
 
-    private static String PROFESOR = "Profesor";
-    private static String ASISTENTE = "Asistente";
+    private static String PROFESOR = "PROFESOR";
+    private static String ASISTENTE = "ASISTENTE";
 
     public Professor(String name, boolean isProfessor) {
         this.name = name;
@@ -28,6 +31,17 @@ public class Professor implements java.io.Serializable {
         } else {
             type = ASISTENTE;
         }
+    }
+    public Professor(){
+
+    }
+
+    public boolean isProfessor(){
+        return this.role.equals("teacher");
+    }
+
+    public boolean isAssistent(){
+        return this.role.equals("assistant");
     }
 
     public String getId() {
@@ -47,7 +61,29 @@ public class Professor implements java.io.Serializable {
     }
 
     public String getType() {
-        return type;
+
+        if(this.isAssistent())
+            return ASISTENTE;
+        if(this.isProfessor())
+            return PROFESOR;
+        return "";
+
+    }
+
+    public String getFullName(){
+        StringBuffer fullname= new StringBuffer();
+        if(!name.isEmpty()) fullname.append(name);
+        fullname.append(" ");
+        if(!last_name.isEmpty()) fullname.append(last_name);
+        return fullname.toString();
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public void setType(String type) {
@@ -68,6 +104,14 @@ public class Professor implements java.io.Serializable {
 
     public void setFile_extension(String file_extension) {
         this.file_extension = file_extension;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

@@ -66,10 +66,6 @@ public class MainActivity extends AppCompatActivity
     private String lastName;
     private String profilePicture;
     private FirebaseAuth auth;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     private GoogleApiClient client;
 
     @Override
@@ -78,7 +74,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
-
         if ( auth.getCurrentUser()!=null){
             Log.d("AUTH", "User LOGGED IN");
             userEmail=auth.getCurrentUser().getEmail();
@@ -87,17 +82,12 @@ public class MainActivity extends AppCompatActivity
             auth.getCurrentUser().getProviderData();
             profilePicture= auth.getCurrentUser().getPhotoUrl().toString();
             InitApiTokenFromServer(userEmail);
-
-
         }else{
             startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setProviders(
                     AuthUI.FACEBOOK_PROVIDER,
                     AuthUI.GOOGLE_PROVIDER
             ).build(),RC_SIGN_IN);
-
         }
-
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -119,17 +109,13 @@ public class MainActivity extends AppCompatActivity
         emailText.setText(userEmail);
         Glide.with(this).load(profilePicture).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageProfile);
 
-
         grillaCategorias = (GridView) findViewById(R.id.grilla_categorias);
         adapterCategorias = new ImageAdapter(this);
         grillaCategorias.setAdapter(adapterCategorias);
         grillaCategorias.setOnItemClickListener(this);
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -161,10 +147,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-
-
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -193,7 +175,6 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.mis_cursos) {
@@ -207,6 +188,7 @@ public class MainActivity extends AppCompatActivity
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
+            //TODO agrego un curso porque el servicio esta sin funcionar
             Intent intent = new Intent(this,MyCoursesActivity.class);
             intent.putExtra("LIST_CATEGORIES", listCourses);
             intent.putExtra("API_TOKEN", api_token);
@@ -242,18 +224,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
+                Action.TYPE_VIEW,
+                "Main Page",
+                 Uri.parse("http://host/path"),
                 Uri.parse("android-app://com.example.margonari.tdp2_frontend/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
@@ -262,17 +237,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStop() {
         super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "Main Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
                 Uri.parse("android-app://com.example.margonari.tdp2_frontend/http/host/path")
         );
         AppIndex.AppIndexApi.end(client, viewAction);
@@ -314,22 +282,7 @@ public class MainActivity extends AppCompatActivity
         }catch (Exception e){
             e.printStackTrace();
         }
-        /*
-        intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getCourse_id());
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            ActivityOptionsCompat activityOptions =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            this,
-                            new Pair<View, String>(view.findViewById(R.id.imagen_coche),
-                                    ActividadDetalle.VIEW_NAME_HEADER_IMAGE)
-                    );
-
-            ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
-        } else*/
     }
-
 
     class HttpRequestTask extends AsyncTask<String, Void, ArrayList<Course>> {
         @Override
@@ -349,8 +302,6 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
-
 
     class HttpRequestTaskMyCourses extends AsyncTask<String, Void, ArrayList<Course>> {
 

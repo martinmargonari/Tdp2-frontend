@@ -65,7 +65,7 @@ public class ProfessorAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(ProfessorHolder holder, int position) {
-        holder.professor_name.setText(mDataset.get(position).getName());
+        holder.professor_name.setText(mDataset.get(position).getFullName());
         holder.professor_type.setText(mDataset.get(position).getType());
         //holder.professor_photo.setImageResource(mDataset.get(position).getPhoto_id());
     }

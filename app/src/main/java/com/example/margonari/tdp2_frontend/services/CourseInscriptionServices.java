@@ -9,7 +9,7 @@ import com.example.margonari.tdp2_frontend.rest_dto.InscriptionDTO;
  */
 
 public class CourseInscriptionServices extends AbstractServices {
-    private static final String service_name = "courses/registration";
+    private static final String service_name = "course/register";
 
     public boolean ifExistsErrors(String course_id) {
         String coursesQuery = this.getQueryBy(course_id);

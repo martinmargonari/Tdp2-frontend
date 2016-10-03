@@ -55,8 +55,6 @@ public class CoursesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position, View v) {
                 Course course = coursesList.get(position);
-                //obj.
-
                 HttpRequestTask httpRequestTask= new HttpRequestTask();
                 httpRequestTask.execute(course.getId());
                 try {
