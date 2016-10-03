@@ -1,9 +1,11 @@
 package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,9 +22,11 @@ import android.widget.Spinner;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.services.CourseFullDataServices;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class MyCoursesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Spinner.OnItemSelectedListener {
@@ -63,6 +67,9 @@ public class MyCoursesActivity extends AppCompatActivity
         intent = getIntent();
         coursesList= (ArrayList<Course>)intent.getSerializableExtra("LIST_CATEGORIES");
 
+
+
+
         api_token = getIntent().getStringExtra("API_TOKEN");
         System.out.println("APITOKEN EN MY COURSES: "+ api_token);
 
@@ -70,6 +77,8 @@ public class MyCoursesActivity extends AppCompatActivity
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new CoursesAdapter(coursesList);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -162,5 +171,50 @@ public class MyCoursesActivity extends AppCompatActivity
         Intent intent = new Intent(this,LogInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((CoursesAdapter) mAdapter).setOnItemClickListener(new CoursesAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Course course = coursesList.get(position);
+                HttpRequestTask httpRequestTask= new HttpRequestTask();
+                httpRequestTask.execute(course.getId());
+                try {
+                    Course coursefulldata= (Course)httpRequestTask.get();
+                    Intent intent = new Intent(MyCoursesActivity.this, MyCourseActivity.class);
+                    intent.putExtra("API_TOKEN", api_token);
+                    intent.putExtra("COURSE_FULL_DATA", coursefulldata);
+                    startActivity( intent);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                Log.i(LOG_TAG, " Clicked on Item " + position);
+            }
+        });
+    }
+
+    private class HttpRequestTask extends AsyncTask<String, Void, Course> {
+        @Override
+        protected Course doInBackground(String... params) {
+            try {
+                String course_id = params[0];
+                CourseFullDataServices courseFullDataServices= new CourseFullDataServices();
+                courseFullDataServices.setApi_security(api_token);
+                return courseFullDataServices.getCourseBy(course_id);
+
+            } catch (Exception e) {
+                Log.e("CourseAcivity", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+
     }
 }

@@ -188,6 +188,11 @@ public class MainActivity extends AppCompatActivity
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
+
+            Course course= new Course();
+            course.setName("Algebra");
+            course.setId("4");
+            listCourses.add(course);
             //TODO agrego un curso porque el servicio esta sin funcionar
             Intent intent = new Intent(this,MyCoursesActivity.class);
             intent.putExtra("LIST_CATEGORIES", listCourses);
