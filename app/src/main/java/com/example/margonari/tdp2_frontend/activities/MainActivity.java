@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity
             ).build(),RC_SIGN_IN);
         }
 
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
