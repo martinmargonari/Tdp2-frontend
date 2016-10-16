@@ -12,11 +12,16 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Unit implements java.io.Serializable {
 
+    private String id;
     private String course_id;
-    private String name;
     private String number;
+    private String name;
     private int photo_id;
+    private String questions_amount;
+    private String exam_deadline;
     private String file_extension;
+    private String is_final_exam;
+    private String full_image;
 
     public Unit() {
     }
@@ -64,6 +69,46 @@ public class Unit implements java.io.Serializable {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getQuestions_amount() {
+        return questions_amount;
+    }
+
+    public void setQuestions_amount(String questions_amount) {
+        this.questions_amount = questions_amount;
+    }
+
+    public String getExam_deadline() {
+        return exam_deadline;
+    }
+
+    public void setExam_deadline(String exam_deadline) {
+        this.exam_deadline = exam_deadline;
+    }
+
+    public String getIs_final_exam() {
+        return is_final_exam;
+    }
+
+    public void setIs_final_exam(String is_final_exam) {
+        this.is_final_exam = is_final_exam;
+    }
+
+    public String getFull_image() {
+        return full_image;
+    }
+
+    public void setFull_image(String full_image) {
+        this.full_image = full_image;
     }
 
     @Override

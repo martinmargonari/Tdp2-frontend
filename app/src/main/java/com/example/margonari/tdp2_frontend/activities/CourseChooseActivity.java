@@ -130,8 +130,8 @@ public class CourseChooseActivity extends AppCompatActivity {
         HttpRequestTask httpRequestTask= new HttpRequestTask();
         //TODO devolvemos la primera sesion de la lista, deberiamos devolver la mas proxima.
 
-        httpRequestTask.execute( courseFullData.getCurrent_sessions().get(0).getId());
-        Log.d("SESSION ID : ",courseFullData.getCurrent_sessions().get(0).getId().toString());
+        httpRequestTask.execute( courseFullData.getNext_sessions().get(0).getId());
+        Log.d("SESSION ID : ",courseFullData.getNext_sessions().get(0).getId().toString());
         try {
             Boolean ifExistsErrors= (Boolean) httpRequestTask.get();
             if(ifExistsErrors==true) {Toast.makeText( CourseChooseActivity.this,"Hay un error en la inscripcion , intente mas tarde",Toast.LENGTH_SHORT).show();}

@@ -2,8 +2,8 @@ package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,10 +13,8 @@ import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.services.CourseFullDataServices;
-import com.example.margonari.tdp2_frontend.services.ListCourseServices;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class CoursesActivity extends AppCompatActivity {
@@ -35,7 +33,7 @@ public class CoursesActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         api_token = getIntent().getStringExtra("API_TOKEN");
-        coursesList= (ArrayList<Course>)intent.getSerializableExtra("LIST_CATEGORIES");
+        coursesList= (ArrayList<Course>)intent.getSerializableExtra("LIST_COURSES");
         category_name = intent.getStringExtra("CATEGORY_NAME");
         this.setTitle("Cursos de " + category_name);
 

@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,31 +22,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.R;
+import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.services.ListCoursesByCategoriesServices;
 import com.example.margonari.tdp2_frontend.services.ListMyCoursesServices;
 import com.example.margonari.tdp2_frontend.services.LoginServices;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.internal.ImageRequest;
-import com.facebook.login.LoginManager;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -277,10 +266,10 @@ public class MainActivity extends AppCompatActivity
         HttpRequestTask  httpRequestTask= new HttpRequestTask();
         httpRequestTask.execute(String.valueOf(item_id));
         try {
-            ArrayList<Course> categorias= (ArrayList<Course>) httpRequestTask.get();
+            ArrayList<Course> courses= (ArrayList<Course>) httpRequestTask.get();
             Intent intent = new Intent(this, CoursesActivity.class);
             intent.putExtra("API_TOKEN", api_token);
-            intent.putExtra("LIST_CATEGORIES", categorias);
+            intent.putExtra("LIST_COURSES", courses);
             intent.putExtra("CATEGORY_NAME",category_name);
             startActivity( intent);
 
@@ -345,5 +334,8 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+
+
 
 }

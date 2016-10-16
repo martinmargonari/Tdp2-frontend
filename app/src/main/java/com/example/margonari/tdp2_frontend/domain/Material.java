@@ -1,15 +1,21 @@
 package com.example.margonari.tdp2_frontend.domain;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Created by Margonari on 02/10/2016.
  */
 
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Material implements java.io.Serializable {
 
+    private String id;
     private String name;
     private int type;
+    private String file_extension;
+    private String full_path;
 
     public static final int VIDEO = 1;
     public static final int DOCUMENTO = 2;
@@ -18,6 +24,8 @@ public class Material implements java.io.Serializable {
         this.name = name;
         this.type = type;
     }
+
+    public Material(){}
 
     public String getName() {
         return name;
@@ -39,5 +47,13 @@ public class Material implements java.io.Serializable {
     public String toString() {
         //TODO
         return "";
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

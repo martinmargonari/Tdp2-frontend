@@ -1,9 +1,9 @@
 package com.example.margonari.tdp2_frontend.services;
 
+import android.util.Log;
+
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.rest_dto.CoursesDTO;
-
-import java.util.List;
 
 /**
  * Created by luis on 25/09/16.
@@ -13,10 +13,9 @@ public class CourseFullDataServices extends AbstractServices {
 
     private static final String service_name = "course";
 
-
     public Course getCourseBy(String course_id) {
         String coursesQuery = this.getQueryBy(course_id);
-        System.out.println("Course query" +coursesQuery);
+        Log.d("Course query",coursesQuery);
         CoursesDTO coursesDTO = (CoursesDTO) geDataOftDTO(coursesQuery, CoursesDTO.class);
         return coursesDTO.getData().get( 0 );
     }
@@ -33,7 +32,6 @@ public class CourseFullDataServices extends AbstractServices {
         urlStringBuffer.append(api_security);
         urlStringBuffer.append("&course_id=");
         urlStringBuffer.append(course_id);
-
         return urlStringBuffer.toString();
     }
 }
