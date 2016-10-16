@@ -42,7 +42,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
-public class LogInActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class    LogInActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "LogInActivity";
 
