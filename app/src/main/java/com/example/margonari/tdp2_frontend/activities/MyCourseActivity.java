@@ -83,7 +83,10 @@ public class MyCourseActivity extends AppCompatActivity {
         protected UnityInfo doInBackground(String... params) {
             try {
                 String course_id = params[0];
-                UnityInfo unityInfo=  new UnitServices().getUnityInfo(course_id);
+                UnitServices unitServices= new UnitServices();
+                unitServices.setApi_security(api_token);
+                UnityInfo unityInfo=  unitServices.getUnityInfo(course_id);
+
                 return unityInfo;
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);
