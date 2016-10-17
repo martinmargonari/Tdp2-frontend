@@ -8,12 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.MaterialAdapter;
 import com.example.margonari.tdp2_frontend.adapters.VideoAdapter;
-import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Material;
 import com.example.margonari.tdp2_frontend.domain.Question;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
@@ -58,24 +56,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         materialRecyclerView.setAdapter(materialAdapter);
         materialList = getDataSetMaterial();
 
-        final Button button = (Button) findViewById(R.id.buttonActividades);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
 
-                ArrayList questions = new ArrayList<Question>();
-                for (int i = 0; i < unityInfo.getQuestions().length; i++) {
-                    questions.add(unityInfo.getQuestions()[i]);
-                }
-                Intent intent = new Intent(MyCourseUnitActivity.this,EvaluationActivity.class);
-                intent.putExtra("API_TOKEN",api_token);
-                intent.putExtra("QUESTIONS",questions);
-                intent.putExtra("SESSION_ID", session_id);
-                intent.putExtra("UNITY_ID", unityInfo.getUnity().getId());
-
-
-                startActivity(intent);
-            }
-        });
         videoRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_unit_video);
         videoRecyclerView.setHasFixedSize(true);
         videoLayoutManager = new LinearLayoutManager(this);
@@ -126,6 +107,9 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                     Intent intent = new Intent(MyCourseUnitActivity.this,EvaluationActivity.class);
                     intent.putExtra("API_TOKEN",api_token);
                     intent.putExtra("QUESTIONS",questions);
+                    intent.putExtra("UNITY_ID",unityInfo.getUnity().getId());
+                    intent.putExtra("SESSION_ID",session_id);
+
                     startActivity(intent);
                 } else {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(material.getFull_path()));

@@ -44,7 +44,7 @@ public class ExamResultServices extends AbstractServices{
         urlStringBuffer.append(unit_id);
         urlStringBuffer.append("&questions_amount=");
         urlStringBuffer.append(questions_amount);
-        urlStringBuffer.append("&correct_answers =");
+        urlStringBuffer.append("&correct_answers=");
         urlStringBuffer.append(correct_answers);
         System.out.println(urlStringBuffer.toString());
         return urlStringBuffer.toString();
