@@ -14,9 +14,7 @@ public class UnitServices extends AbstractServices {
 
         private static final String service_name = "course/unity";
         public UnityInfo getUnityInfo(String courseId) {
-            //TODO HARDCODEADO unityQuery
-
-            String unityQuery = "http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/api/course/unity?api_token=70rSdy8qjufNl6edymVac0uuMCuGa9ZeenISjkSnjizoxhZ1bEXZZG5cUjdf&unity_id=10";//this.getQueryBy(courseId);
+            String unityQuery = this.getQueryBy(courseId);
             Log.d("UnitServices", unityQuery);
             UnityInfoDTO unitDTO = (UnityInfoDTO) geDataOftDTO(unityQuery, UnityInfoDTO.class);
             return unitDTO.getData();

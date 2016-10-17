@@ -88,6 +88,15 @@ public class Question implements java.io.Serializable {
         this.answers = answers;
     }
 
+    public int getCorrectAnswerNumber() {
+        for (int i = 0; i < answers.length ; i++) {
+            if (answers[i].getIs_correct().equals("true")){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override
     public String toString() {
         //TODO
