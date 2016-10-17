@@ -18,8 +18,9 @@ import java.io.Serializable;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MyCourseBox implements Serializable {
-
+    private String id;
     private Course course;
+
 
     public Course getCourse() {
         return course;
@@ -27,5 +28,13 @@ public class MyCourseBox implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

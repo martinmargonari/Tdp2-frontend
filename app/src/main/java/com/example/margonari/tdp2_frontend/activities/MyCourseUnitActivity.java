@@ -11,16 +11,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.margonari.tdp2_frontend.R;
-import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.adapters.MaterialAdapter;
-import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Material;
 import com.example.margonari.tdp2_frontend.domain.Question;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
 import com.example.margonari.tdp2_frontend.domain.Video;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class MyCourseUnitActivity extends AppCompatActivity {
 
@@ -28,6 +25,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager materialLayoutManager;
     private RecyclerView.Adapter materialAdapter;
     private String api_token;
+    private String session_id;
     private UnityInfo unityInfo;
     private ArrayList<Material> materialList;
     private ArrayList<Video> videosList;
@@ -40,6 +38,9 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         api_token = getIntent().getStringExtra("API_TOKEN");
+        session_id = getIntent().getStringExtra("SESSION_ID");
+
+
         unityInfo = (UnityInfo)intent.getSerializableExtra("UNITY");
        // unityInfo.getMaterials()[unityInfo.getMaterials().length].setFull_path("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_videos/4/1.mp4");
         /*
@@ -76,6 +77,10 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                 Intent intent = new Intent(MyCourseUnitActivity.this,EvaluationActivity.class);
                 intent.putExtra("API_TOKEN",api_token);
                 intent.putExtra("QUESTIONS",questions);
+                intent.putExtra("SESSION_ID", session_id);
+                intent.putExtra("UNITY_ID", unityInfo.getUnity().getId());
+
+
                 startActivity(intent);
             }
         });
