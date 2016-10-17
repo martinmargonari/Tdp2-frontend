@@ -22,6 +22,7 @@ public class ListMyCoursesServices extends AbstractServices{
 
         ArrayList<MyCourseBox> listCourseLoco= coursesDTO.getData()[0];
         for(  MyCourseBox myCourse_box : listCourseLoco){
+            myCourse_box.getCourse().setSession_id(myCourse_box.getId());
             listCourses.add( myCourse_box.getCourse());
         }
         return listCourses;

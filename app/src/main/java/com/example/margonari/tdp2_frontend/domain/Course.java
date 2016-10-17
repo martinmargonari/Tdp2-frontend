@@ -15,6 +15,7 @@ import java.util.List;
 public class Course implements java.io.Serializable {
 
     private String id;
+    private String session_id;
     private String name;
     private String description;
     private String file_extension;
@@ -97,6 +98,14 @@ public class Course implements java.io.Serializable {
 
     public boolean hasCurrentSessions(){
         return getNext_sessions()!=null & !getNext_sessions().isEmpty();
+    }
+
+    public String getSession_id() {
+        return session_id;
+    }
+
+    public void setSession_id(String session_id) {
+        this.session_id = session_id;
     }
 
     @Override

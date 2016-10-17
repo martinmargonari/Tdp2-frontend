@@ -1,6 +1,7 @@
 package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.QuestionAdapter;
 import com.example.margonari.tdp2_frontend.domain.Question;
+import com.example.margonari.tdp2_frontend.services.ExamResultServices;
 
 import java.util.ArrayList;
 
@@ -24,7 +26,9 @@ public class EvaluationActivity extends AppCompatActivity {
     private static String LOG_TAG = "EvaluationActivity";
     private ArrayList<Question> questionsList;
     private String api_token;
+    private String session_id;
     private ArrayList<Integer> answers;
+    private String unit_id;
     private int correct_answers=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,11 @@ public class EvaluationActivity extends AppCompatActivity {
         Intent intent = getIntent();
         api_token = getIntent().getStringExtra("API_TOKEN");
         questionsList = (ArrayList<Question>) intent.getSerializableExtra("QUESTIONS");
+        session_id = getIntent().getStringExtra("SESSION_ID");
+        unit_id = getIntent().getStringExtra("UNITY_ID");
+
+
+
 
         questionsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_questions);
         questionsRecyclerView.setHasFixedSize(true);
@@ -46,9 +55,17 @@ public class EvaluationActivity extends AppCompatActivity {
         final Button button = (Button) findViewById(R.id.button_send_answers);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               correct_answers= getNumberOfCorrectAnswers();
-               int questionAmount= questionsList.size();
-               String session_id; //TODO
+
+                String mySessionId=  session_id;
+                String myApiToken =  api_token;
+                String myUnit_id=  unit_id;
+                int questionAmount=  questionsList.size();
+                correct_answers   =  getNumberOfCorrectAnswers();
+
+                HttpRequestTaskExamResult httpRequestTaskExamResult= new HttpRequestTaskExamResult();
+                httpRequestTaskExamResult.execute(myApiToken,mySessionId,myUnit_id,String.valueOf(questionAmount),String.valueOf(correct_answers));
+
+
             }
         });
     }
@@ -72,5 +89,31 @@ public class EvaluationActivity extends AppCompatActivity {
         ArrayList results = new ArrayList<Question>();
 
         return results;
+    }
+
+
+    private class HttpRequestTaskExamResult extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+
+                String myApiToken 		=  params[0];
+                String mySessionId		=  params[1];
+                String unit_id          =  params[2];
+                String correct_answers   =  params[3];
+                String questions_amount  =  params[4];
+
+
+
+                ExamResultServices examResultServices=  new ExamResultServices();
+                        examResultServices.make(myApiToken, mySessionId,unit_id,correct_answers,questions_amount);
+
+            } catch (Exception e) {
+                Log.e("LoginActivity", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
     }
 }

@@ -8,28 +8,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.margonari.tdp2_frontend.R;
-import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.adapters.MaterialAdapter;
 import com.example.margonari.tdp2_frontend.adapters.VideoAdapter;
-import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Material;
 import com.example.margonari.tdp2_frontend.domain.Question;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
 import com.example.margonari.tdp2_frontend.domain.Video;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class MyCourseUnitActivity extends AppCompatActivity {
 
-    private String api_token;
-    private UnityInfo unityInfo;
     private RecyclerView materialRecyclerView;
     private RecyclerView.LayoutManager materialLayoutManager;
     private RecyclerView.Adapter materialAdapter;
+    private String api_token;
+    private String session_id;
+    private UnityInfo unityInfo;
+
     private ArrayList<Material> materialList;
     private RecyclerView videoRecyclerView;
     private RecyclerView.LayoutManager videoLayoutManager;
@@ -44,6 +42,9 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         api_token = getIntent().getStringExtra("API_TOKEN");
+        session_id = getIntent().getStringExtra("SESSION_ID");
+
+
         unityInfo = (UnityInfo)intent.getSerializableExtra("UNITY");
 
         materialRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_unit_material);
@@ -55,6 +56,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         materialRecyclerView.setAdapter(materialAdapter);
         materialList = getDataSetMaterial();
 
+
         videoRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_unit_video);
         videoRecyclerView.setHasFixedSize(true);
         videoLayoutManager = new LinearLayoutManager(this);
@@ -63,6 +65,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         videoAdapter = new VideoAdapter(getDataSetVideos());
         videoRecyclerView.setAdapter(videoAdapter);
         videosList = getDataSetVideos();
+
     }
 
     private ArrayList<Material> getDataSetMaterial() {
@@ -104,6 +107,9 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                     Intent intent = new Intent(MyCourseUnitActivity.this,EvaluationActivity.class);
                     intent.putExtra("API_TOKEN",api_token);
                     intent.putExtra("QUESTIONS",questions);
+                    intent.putExtra("UNITY_ID",unityInfo.getUnity().getId());
+                    intent.putExtra("SESSION_ID",session_id);
+
                     startActivity(intent);
                 } else {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(material.getFull_path()));

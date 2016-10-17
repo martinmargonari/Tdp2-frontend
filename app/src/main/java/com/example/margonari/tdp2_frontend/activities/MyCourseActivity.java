@@ -62,12 +62,13 @@ public class MyCourseActivity extends AppCompatActivity {
             public void onItemClick(int position, View v) {
                 Unit unit = unitArrayList.get(position);
                 HttpRequestTaskUnity httpRequestTask = new HttpRequestTaskUnity();
-                httpRequestTask.execute(unit.getCourse_id());
+                httpRequestTask.execute(unit.getId());
                 try {
                     UnityInfo unityInfo = (UnityInfo) httpRequestTask.get();
                     Intent intent = new Intent(MyCourseActivity.this, MyCourseUnitActivity.class);
                     intent.putExtra("API_TOKEN", api_token);
                     intent.putExtra("UNITY", unityInfo);
+                    intent.putExtra("SESSION_ID", courseFullData.getSession_id());
                     startActivity(intent);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

@@ -177,10 +177,12 @@ public class MyCoursesActivity extends AppCompatActivity
             @Override
             public void onItemClick(int position, View v) {
                 Course course = coursesList.get(position);
+
                 HttpRequestTask httpRequestTask= new HttpRequestTask();
                 httpRequestTask.execute(course.getId());
                 try {
                     Course coursefulldata= (Course)httpRequestTask.get();
+                    coursefulldata.setSession_id(course.getSession_id());
                     Intent intent = new Intent(MyCoursesActivity.this, MyCourseActivity.class);
                     intent.putExtra("API_TOKEN", api_token);
                     intent.putExtra("COURSE_FULL_DATA", coursefulldata);
