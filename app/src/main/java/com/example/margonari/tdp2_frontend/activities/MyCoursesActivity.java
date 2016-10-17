@@ -134,7 +134,7 @@ public class MyCoursesActivity extends AppCompatActivity
 
         } else if (id == R.id.cerrar_sesion) {
             LoginManager.getInstance().logOut();
-            goToLoginScreen();
+            //goToLoginScreen();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -167,11 +167,7 @@ public class MyCoursesActivity extends AppCompatActivity
 
     }
 
-    private void goToLoginScreen() {
-        Intent intent = new Intent(this,LogInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-        startActivity(intent);
-    }
+
 
     @Override
     protected void onResume() {

@@ -23,6 +23,10 @@ public class CourselandApp extends Application {
             FirebaseApp.initializeApp(this, FirebaseOptions.fromResource(this));
         }
         AppEventsLogger.activateApp(this);
+
+
     }
+
+
 
   }
