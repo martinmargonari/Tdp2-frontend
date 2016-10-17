@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.QuestionAdapter;
+import com.example.margonari.tdp2_frontend.adapters.QuestionCorrectedAdapter;
 import com.example.margonari.tdp2_frontend.domain.Question;
 import com.example.margonari.tdp2_frontend.services.ExamResultServices;
 
@@ -29,6 +30,7 @@ public class EvaluationActivity extends AppCompatActivity {
     private String api_token;
     private String session_id;
     private ArrayList<Integer> answers;
+    private ArrayList<Integer> questionsResults;
     private String unit_id;
     private int correct_answers=0;
     @Override
@@ -42,9 +44,7 @@ public class EvaluationActivity extends AppCompatActivity {
         session_id = getIntent().getStringExtra("SESSION_ID");
         unit_id = getIntent().getStringExtra("UNITY_ID");
 
-
-
-
+        questionsResults = new ArrayList<>();
         questionsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_questions);
         questionsRecyclerView.setHasFixedSize(true);
         questionsLayoutManager = new LinearLayoutManager(this);
@@ -57,18 +57,21 @@ public class EvaluationActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                String mySessionId=  session_id;
-                String myApiToken =  api_token;
-                String myUnit_id=  unit_id;
-                int questionAmount=  questionsList.size();
-                correct_answers   =  getNumberOfCorrectAnswers();
+                String mySessionId = session_id;
+                String myApiToken = api_token;
+                String myUnit_id = unit_id;
+                int questionAmount =  questionsList.size();
+                correct_answers = getNumberOfCorrectAnswers();
 
-                Toast.makeText(v.getContext(), "Tuviste " + Integer.toString(correct_answers) + " respuestas correctas.",
+                QuestionCorrectedAdapter questionCorrectedAdapter = new QuestionCorrectedAdapter(questionsList, questionsResults);
+                questionsRecyclerView.setAdapter(questionCorrectedAdapter);
+
+                Toast.makeText(v.getContext(), "Tuviste " + Integer.toString(correct_answers) + " respuestas correctas de " + Integer.toString(questionAmount),
                         Toast.LENGTH_LONG).show();
-                
+                /*
                 HttpRequestTaskExamResult httpRequestTaskExamResult= new HttpRequestTaskExamResult();
                 httpRequestTaskExamResult.execute(myApiToken,mySessionId,myUnit_id,String.valueOf(questionAmount),String.valueOf(correct_answers));
-
+                */
             }
         });
     }
@@ -78,9 +81,11 @@ public class EvaluationActivity extends AppCompatActivity {
         int correct_answers=0;
         for (int i = 0; i < answers.size();i++) {
           int correctAnswerNumber= questionsList.get(i).getCorrectAnswerNumber();
-            if(answers.get(i)==correctAnswerNumber) correct_answers++;
-
-
+            if(answers.get(i)==correctAnswerNumber) {
+                correct_answers++;
+                questionsResults.add(1);
+            } else
+                questionsResults.add(0);
         }
         Log.d("CorrectAnswers", String.valueOf(correct_answers));
         return correct_answers;
