@@ -37,6 +37,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -62,6 +63,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
+        }
+
         auth = FirebaseAuth.getInstance();
         if ( auth.getCurrentUser()!=null){
             Log.d("AUTH", "User LOGGED IN");
@@ -77,7 +85,6 @@ public class MainActivity extends AppCompatActivity
                     AuthUI.GOOGLE_PROVIDER
             ).build(),RC_SIGN_IN);
         }
-
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -127,7 +134,7 @@ public class MainActivity extends AppCompatActivity
     private void InitApiTokenFromServer(String userEmail) {
         HttpRequestTaskLogin httpRequestTask = new HttpRequestTaskLogin();
 
-        httpRequestTask.execute(userEmail);
+        httpRequestTask.execute(userEmail, FirebaseInstanceId.getInstance().getToken());
         try {
             Login login = (Login) httpRequestTask.get();
             api_token=login.getApi_token();
@@ -137,6 +144,8 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -238,11 +247,7 @@ public class MainActivity extends AppCompatActivity
         client.disconnect();
     }
 
-    private void goToLoginScreen() {
-        Intent intent = new Intent(this,LogInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-        startActivity(intent);
-    }
+
 
     public void startActivity(Intent intent) {
         // check if search intent
@@ -321,7 +326,10 @@ public class MainActivity extends AppCompatActivity
         protected Login doInBackground(String... params) {
             try {
                 String user = params[0];
-                Login login=  new LoginServices().getLoginBy(user);
+                String token= params[1];
+                Log.d("tokenRequestLogin", token);
+
+                Login login=  new LoginServices().getLoginBy(user, token);
                 return login;
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);
