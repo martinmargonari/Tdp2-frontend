@@ -12,7 +12,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LogInActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
@@ -24,6 +23,19 @@
             </intent-filter>
         </activity>
 
+
+        <service android:name=".domain.MyFirebaseInstanceIDService" android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".domain.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
         <!-- enable the search dialog to send searches to SearchableActivity -->
         <meta-data
             android:name="android.app.default_searchable"
@@ -62,6 +74,7 @@
         <activity android:name=".activities.CourseInformationActivity" />
         <activity android:name=".activities.MyCourseUnitActivity" />
         <activity android:name=".activities.EvaluationActivity"></activity>
+
     </application>
 
 </manifest>
