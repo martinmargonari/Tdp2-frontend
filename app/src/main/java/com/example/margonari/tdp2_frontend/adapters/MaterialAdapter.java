@@ -66,8 +66,8 @@ public class MaterialAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(MaterialHolder holder, int position) {
         holder.material_name.setText(mDataset.get(position).getName());
-        if (mDataset.get(position).getType() == Material.VIDEO) {
-            holder.material_photo.setImageResource(R.drawable.ic_slideshow_black_24dp);
+        if (mDataset.get(position).getType() == Material.EXAMEN) {
+            holder.material_photo.setImageResource(R.drawable.ic_assignment_black_24dp);
         } else {
             holder.material_photo.setImageResource(R.drawable.ic_insert_drive_file_black_24dp);
         }

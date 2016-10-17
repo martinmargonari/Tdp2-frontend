@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.adapters.MaterialAdapter;
+import com.example.margonari.tdp2_frontend.adapters.VideoAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Material;
 import com.example.margonari.tdp2_frontend.domain.Question;
@@ -24,12 +25,15 @@ import java.util.concurrent.ExecutionException;
 
 public class MyCourseUnitActivity extends AppCompatActivity {
 
+    private String api_token;
+    private UnityInfo unityInfo;
     private RecyclerView materialRecyclerView;
     private RecyclerView.LayoutManager materialLayoutManager;
     private RecyclerView.Adapter materialAdapter;
-    private String api_token;
-    private UnityInfo unityInfo;
     private ArrayList<Material> materialList;
+    private RecyclerView videoRecyclerView;
+    private RecyclerView.LayoutManager videoLayoutManager;
+    private RecyclerView.Adapter videoAdapter;
     private ArrayList<Video> videosList;
     private static String LOG_TAG = "MyCourseUnitActivity";
 
@@ -41,19 +45,6 @@ public class MyCourseUnitActivity extends AppCompatActivity {
 
         api_token = getIntent().getStringExtra("API_TOKEN");
         unityInfo = (UnityInfo)intent.getSerializableExtra("UNITY");
-       // unityInfo.getMaterials()[unityInfo.getMaterials().length].setFull_path("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_videos/4/1.mp4");
-        /*
-        //TODO HARDCODE
-        Material[] materialHardCode = new Material[10];
-        for (int i=0;i<unityInfo.getMaterials().length;i++){
-            materialHardCode[i]=unityInfo.getMaterials()[i];
-        }
-        Material m =new Material();
-        m.setFull_path("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_videos/4/1.mp4");
-
-        materialHardCode[unityInfo.getMaterials().length] =m;
-        unityInfo.setMaterials(materialHardCode);
-        */
 
         materialRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_unit_material);
         materialRecyclerView.setHasFixedSize(true);
@@ -63,22 +54,15 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         materialAdapter = new MaterialAdapter(getDataSetMaterial());
         materialRecyclerView.setAdapter(materialAdapter);
         materialList = getDataSetMaterial();
+
+        videoRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_unit_video);
+        videoRecyclerView.setHasFixedSize(true);
+        videoLayoutManager = new LinearLayoutManager(this);
+        videoRecyclerView.setLayoutManager(videoLayoutManager);
+        videoRecyclerView.setFocusable(false);
+        videoAdapter = new VideoAdapter(getDataSetVideos());
+        videoRecyclerView.setAdapter(videoAdapter);
         videosList = getDataSetVideos();
-
-        final Button button = (Button) findViewById(R.id.buttonActividades);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                ArrayList questions = new ArrayList<Question>();
-                for (int i = 0; i < unityInfo.getQuestions().length; i++) {
-                    questions.add(unityInfo.getQuestions()[i]);
-                }
-                Intent intent = new Intent(MyCourseUnitActivity.this,EvaluationActivity.class);
-                intent.putExtra("API_TOKEN",api_token);
-                intent.putExtra("QUESTIONS",questions);
-                startActivity(intent);
-            }
-        });
     }
 
     private ArrayList<Material> getDataSetMaterial() {
@@ -87,6 +71,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         for (int i = 0; i < unityInfo.getMaterials().length; i++) {
             results.add(unityInfo.getMaterials()[i]);
         }
+        results.add(new Material("EXAMEN",Material.EXAMEN));
         return results;
     }
 
@@ -111,23 +96,8 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                 Material material = materialList.get(position);
                 int type = material.getType();
 
-                System.out.println("LLEGO ACA!!!");
-
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(material.getFull_path()));
-                startActivity(browserIntent);
-                /*
-                if (type == Material.DOCUMENTO) {
-                    //Abrir Documento
-
-                } else if (type == Material.VIDEO) {
-                    Video video = videosList.get(position);
-                    Intent intent = new Intent(MyCourseUnitActivity.this, VideoViewActivity.class);
-                    intent.putExtra("VIDEO_URL",video.getFull_path());
-                    startActivity(intent);
-                } else {
-                    //Abrir Examen
-                    System.out.println("GOT HERE");
-                    ArrayList questions = new ArrayList<Question>();
+                if (type == Material.EXAMEN) {
+                   ArrayList questions = new ArrayList<Question>();
                     for (int i = 0; i < unityInfo.getQuestions().length; i++) {
                         questions.add(unityInfo.getQuestions()[i]);
                     }
@@ -135,9 +105,25 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                     intent.putExtra("API_TOKEN",api_token);
                     intent.putExtra("QUESTIONS",questions);
                     startActivity(intent);
-                }*/
+                } else {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(material.getFull_path()));
+                    startActivity(browserIntent);
+                }
 
                 Log.i(LOG_TAG, " Clicked on Item " + position);
+            }
+        });
+
+        ((VideoAdapter) videoAdapter).setOnItemClickListener(new VideoAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Video video = videosList.get(position);
+                Intent intent = new Intent(MyCourseUnitActivity.this, VideoViewActivity.class);
+                intent.putExtra("VIDEO_URL",video.getFull_path());
+                startActivity(intent);
+
+                Log.i(LOG_TAG, " Clicked on Video Item " + position);
             }
         });
     }
