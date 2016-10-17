@@ -37,6 +37,19 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         Intent intent = getIntent();
         api_token = getIntent().getStringExtra("API_TOKEN");
         unityInfo = (UnityInfo)intent.getSerializableExtra("UNITY");
+       // unityInfo.getMaterials()[unityInfo.getMaterials().length].setFull_path("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_videos/4/1.mp4");
+
+        //TODO HARDCODE
+        Material[] materialHardCode = new Material[10];
+        for (int i=0;i<unityInfo.getMaterials().length;i++){
+            materialHardCode[i]=unityInfo.getMaterials()[i];
+        }
+        Material m =new Material();
+        m.setFull_path("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_videos/4/1.mp4");
+
+        materialHardCode[unityInfo.getMaterials().length] =m;
+        unityInfo.setMaterials(materialHardCode);
+
 
         materialRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_unit_material);
         materialRecyclerView.setHasFixedSize(true);

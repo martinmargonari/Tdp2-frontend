@@ -56,4 +56,20 @@ public class Material implements java.io.Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getFile_extension() {
+        return file_extension;
+    }
+
+    public void setFile_extension(String file_extension) {
+        this.file_extension = file_extension;
+    }
+
+    public String getFull_path() {
+        return full_path;
+    }
+
+    public void setFull_path(String full_path) {
+        this.full_path = full_path;
+    }
 }
