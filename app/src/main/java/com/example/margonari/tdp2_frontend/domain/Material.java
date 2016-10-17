@@ -19,6 +19,7 @@ public class Material implements java.io.Serializable {
 
     public static final int VIDEO = 1;
     public static final int DOCUMENTO = 2;
+    public static final int EXAMEN = 3;
 
     public Material(String name, int type) {
         this.name = name;
