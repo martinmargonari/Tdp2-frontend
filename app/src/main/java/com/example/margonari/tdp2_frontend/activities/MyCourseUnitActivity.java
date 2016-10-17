@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
@@ -16,6 +17,7 @@ import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Material;
 import com.example.margonari.tdp2_frontend.domain.Question;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
+import com.example.margonari.tdp2_frontend.domain.Video;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -28,6 +30,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
     private String api_token;
     private UnityInfo unityInfo;
     private ArrayList<Material> materialList;
+    private ArrayList<Video> videosList;
     private static String LOG_TAG = "MyCourseUnitActivity";
 
     @Override
@@ -60,6 +63,22 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         materialAdapter = new MaterialAdapter(getDataSetMaterial());
         materialRecyclerView.setAdapter(materialAdapter);
         materialList = getDataSetMaterial();
+        videosList = getDataSetVideos();
+
+        final Button button = (Button) findViewById(R.id.buttonActividades);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                ArrayList questions = new ArrayList<Question>();
+                for (int i = 0; i < unityInfo.getQuestions().length; i++) {
+                    questions.add(unityInfo.getQuestions()[i]);
+                }
+                Intent intent = new Intent(MyCourseUnitActivity.this,EvaluationActivity.class);
+                intent.putExtra("API_TOKEN",api_token);
+                intent.putExtra("QUESTIONS",questions);
+                startActivity(intent);
+            }
+        });
     }
 
     private ArrayList<Material> getDataSetMaterial() {
@@ -68,11 +87,19 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         for (int i = 0; i < unityInfo.getMaterials().length; i++) {
             results.add(unityInfo.getMaterials()[i]);
         }
+        return results;
+    }
 
-        //results.add(new Material("Examen",Material.EXAMEN));
+    private ArrayList<Video> getDataSetVideos() {
+        //TODO
+        ArrayList results = new ArrayList<Video>();
+        for (int i = 0; i < unityInfo.getVideos().length; i++) {
+            results.add(unityInfo.getVideos()[i]);
+        }
 
         return results;
     }
+
 
     @Override
     protected void onResume() {
@@ -93,11 +120,14 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                     //Abrir Documento
 
                 } else if (type == Material.VIDEO) {
-                        //Abrir Video
+                    Video video = videosList.get(position);
+                    Intent intent = new Intent(MyCourseUnitActivity.this, VideoViewActivity.class);
+                    intent.putExtra("VIDEO_URL",video.getFull_path());
+                    startActivity(intent);
                 } else {
                     //Abrir Examen
                     System.out.println("GOT HERE");
-                    ArrayList questions = new ArrayList<Question>();x
+                    ArrayList questions = new ArrayList<Question>();
                     for (int i = 0; i < unityInfo.getQuestions().length; i++) {
                         questions.add(unityInfo.getQuestions()[i]);
                     }

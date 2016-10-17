@@ -1,5 +1,6 @@
 package com.example.margonari.tdp2_frontend.activities;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
@@ -19,13 +20,18 @@ public class VideoViewActivity extends Activity {
     VideoView videoview;
 
     // Insert your Video URL
-    String VideoURL = "http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_videos/4/1.mp4";
+    String VideoURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get the layout from video_main.xml
         setContentView(R.layout.activity_video_view);
+
+        Intent intent = getIntent();
+
+        VideoURL = intent.getStringExtra("VIDEO_URL");
+
         // Find your VideoView in your video_main.xml layout
         videoview = (VideoView) findViewById(R.id.VideoView);
         // Execute StreamVideo AsyncTask

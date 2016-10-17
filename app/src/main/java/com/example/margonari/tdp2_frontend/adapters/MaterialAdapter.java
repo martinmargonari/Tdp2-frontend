@@ -36,6 +36,7 @@ public class MaterialAdapter extends RecyclerView
             material_name = (TextView) itemView.findViewById(R.id.material_name);
             material_photo = (ImageView) itemView.findViewById(R.id.unit_material_pic);
             context = itemView.getContext();
+            itemView.setOnClickListener(this);
         }
 
         @Override

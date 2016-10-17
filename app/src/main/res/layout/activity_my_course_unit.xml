@@ -59,6 +59,12 @@
             android:gravity="center"
             />
 
+        <Button
+            android:text="Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonActividades" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_unit_material"
             android:layout_width="match_parent"

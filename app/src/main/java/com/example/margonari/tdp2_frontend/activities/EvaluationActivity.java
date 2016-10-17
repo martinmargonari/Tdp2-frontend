@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.QuestionAdapter;
@@ -25,6 +27,7 @@ public class EvaluationActivity extends AppCompatActivity {
     private static String LOG_TAG = "EvaluationActivity";
     private ArrayList<Question> questionsList;
     private String api_token;
+    private ArrayList<Integer> answers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,16 @@ public class EvaluationActivity extends AppCompatActivity {
         questionsRecyclerView.setFocusable(false);
         questionsAdapter = new QuestionAdapter(questionsList);
         questionsRecyclerView.setAdapter(questionsAdapter);
+
+        final Button button = (Button) findViewById(R.id.button_send_answers);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ArrayList<Integer> answers = ((QuestionAdapter)questionsAdapter).getAnswers();
+                for (int i = 0; i < answers.size();i++) {
+                    System.out.println(answers.get(i));
+                }
+            }
+        });
     }
 
     private ArrayList<Question> getDataSetQuestions() {
