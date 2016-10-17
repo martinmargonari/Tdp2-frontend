@@ -1,6 +1,7 @@
 package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,16 +30,16 @@ public class MyCourseUnitActivity extends AppCompatActivity {
     private ArrayList<Material> materialList;
     private static String LOG_TAG = "MyCourseUnitActivity";
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_course_unit);
-
         Intent intent = getIntent();
+
         api_token = getIntent().getStringExtra("API_TOKEN");
         unityInfo = (UnityInfo)intent.getSerializableExtra("UNITY");
        // unityInfo.getMaterials()[unityInfo.getMaterials().length].setFull_path("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_videos/4/1.mp4");
-
+        /*
         //TODO HARDCODE
         Material[] materialHardCode = new Material[10];
         for (int i=0;i<unityInfo.getMaterials().length;i++){
@@ -49,7 +50,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
 
         materialHardCode[unityInfo.getMaterials().length] =m;
         unityInfo.setMaterials(materialHardCode);
-
+        */
 
         materialRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_unit_material);
         materialRecyclerView.setHasFixedSize(true);
@@ -58,6 +59,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         materialRecyclerView.setFocusable(false);
         materialAdapter = new MaterialAdapter(getDataSetMaterial());
         materialRecyclerView.setAdapter(materialAdapter);
+        materialList = getDataSetMaterial();
     }
 
     private ArrayList<Material> getDataSetMaterial() {
@@ -67,7 +69,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
             results.add(unityInfo.getMaterials()[i]);
         }
 
-        results.add(new Material("Examen",Material.EXAMEN));
+        //results.add(new Material("Examen",Material.EXAMEN));
 
         return results;
     }
@@ -82,14 +84,20 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                 Material material = materialList.get(position);
                 int type = material.getType();
 
+                System.out.println("LLEGO ACA!!!");
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(material.getFull_path()));
+                startActivity(browserIntent);
+                /*
                 if (type == Material.DOCUMENTO) {
                     //Abrir Documento
+
                 } else if (type == Material.VIDEO) {
                         //Abrir Video
                 } else {
                     //Abrir Examen
                     System.out.println("GOT HERE");
-                    ArrayList questions = new ArrayList<Question>();
+                    ArrayList questions = new ArrayList<Question>();x
                     for (int i = 0; i < unityInfo.getQuestions().length; i++) {
                         questions.add(unityInfo.getQuestions()[i]);
                     }
@@ -97,7 +105,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                     intent.putExtra("API_TOKEN",api_token);
                     intent.putExtra("QUESTIONS",questions);
                     startActivity(intent);
-                }
+                }*/
 
                 Log.i(LOG_TAG, " Clicked on Item " + position);
             }

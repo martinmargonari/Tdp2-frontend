@@ -26,7 +26,7 @@ public class MaterialAdapter extends RecyclerView
     private ArrayList<Material> mDataset;
     private static MyClickListener myClickListener;
 
-    public static class MaterialHolder extends RecyclerView.ViewHolder {
+    public static class MaterialHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView material_name;
         ImageView material_photo;
         Context context;
@@ -38,6 +38,10 @@ public class MaterialAdapter extends RecyclerView
             context = itemView.getContext();
         }
 
+        @Override
+        public void onClick(View v) {
+            myClickListener.onItemClick(getAdapterPosition(), v);
+        }
     }
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
@@ -68,8 +72,8 @@ public class MaterialAdapter extends RecyclerView
         }
     }
 
-    public void addItem(Material Material, int index) {
-        mDataset.add(index, Material);
+    public void addItem(Material material, int index) {
+        mDataset.add(index, material);
         notifyItemInserted(index);
     }
 
