@@ -74,7 +74,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         for (int i = 0; i < unityInfo.getMaterials().length; i++) {
             results.add(unityInfo.getMaterials()[i]);
         }
-        results.add(new Material("EXAMEN",Material.EXAMEN));
+        results.add(new Material("Examen de la Unidad",Material.EXAMEN));
         return results;
     }
 

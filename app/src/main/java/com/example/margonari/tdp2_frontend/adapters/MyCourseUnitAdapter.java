@@ -77,8 +77,7 @@ public class MyCourseUnitAdapter extends RecyclerView
         String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
         Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
         holder.week_number.setText("SEMANA " + Integer.toString(position+1));
-        holder.week_limit.setText(mDataset.get(position).getExam_deadline());
-        //TODO tomar la fecha limite del servidor
+        holder.week_limit.setText(mDataset.get(position).getExam_deadline().substring(0,10));
     }
 
     public void addItem(Unit unit, int index) {
