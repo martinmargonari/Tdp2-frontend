@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.QuestionAdapter;
@@ -62,9 +63,11 @@ public class EvaluationActivity extends AppCompatActivity {
                 int questionAmount=  questionsList.size();
                 correct_answers   =  getNumberOfCorrectAnswers();
 
+                Toast.makeText(v.getContext(), "Tuviste " + Integer.toString(correct_answers) + " respuestas correctas.",
+                        Toast.LENGTH_LONG).show();
+                
                 HttpRequestTaskExamResult httpRequestTaskExamResult= new HttpRequestTaskExamResult();
                 httpRequestTaskExamResult.execute(myApiToken,mySessionId,myUnit_id,String.valueOf(questionAmount),String.valueOf(correct_answers));
-
 
             }
         });

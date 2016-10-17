@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.MaterialAdapter;
@@ -20,6 +21,9 @@ import com.example.margonari.tdp2_frontend.domain.Video;
 import java.util.ArrayList;
 
 public class MyCourseUnitActivity extends AppCompatActivity {
+
+    private TextView labelNameUnit;
+    private TextView unitDescription;
 
     private RecyclerView materialRecyclerView;
     private RecyclerView.LayoutManager materialLayoutManager;
@@ -46,6 +50,11 @@ public class MyCourseUnitActivity extends AppCompatActivity {
 
 
         unityInfo = (UnityInfo)intent.getSerializableExtra("UNITY");
+
+        labelNameUnit = (TextView) findViewById(R.id.label_name_unit);
+        unitDescription = (TextView) findViewById(R.id.unit_description);
+
+        labelNameUnit.setText(unityInfo.getUnity().getName());
 
         materialRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_unit_material);
         materialRecyclerView.setHasFixedSize(true);
