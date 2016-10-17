@@ -15,6 +15,7 @@ public class LoginServices extends AbstractServices{
 
     public Login getLoginBy(String user, String token) {
         String loginQuery = this.getQueryBy(user,token);
+        Log.d("LoginQuery", loginQuery);
         LoginDTO loginDTO = (LoginDTO) geDataOftDTO(loginQuery, LoginDTO.class);
         return loginDTO.getData();
     }
@@ -34,7 +35,7 @@ public class LoginServices extends AbstractServices{
         urlStringBuffer.append(api_security);
         urlStringBuffer.append("&email=");
         urlStringBuffer.append(user);
-        urlStringBuffer.append("push_id");
+        urlStringBuffer.append("&push_id=");
         urlStringBuffer.append(push_id);
 
 
