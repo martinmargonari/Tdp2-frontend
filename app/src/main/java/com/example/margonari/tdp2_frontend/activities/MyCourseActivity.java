@@ -27,6 +27,7 @@ public class MyCourseActivity extends AppCompatActivity {
     private String api_token;
     private Course courseFullData;
     private  ArrayList<Unit> unitArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

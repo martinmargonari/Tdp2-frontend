@@ -1,5 +1,6 @@
 package com.example.margonari.tdp2_frontend.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import com.example.margonari.tdp2_frontend.adapters.UnitAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Question;
 import com.example.margonari.tdp2_frontend.domain.Unit;
+import com.example.margonari.tdp2_frontend.domain.UnityInfo;
 
 import java.util.ArrayList;
 
@@ -29,12 +31,16 @@ public class EvaluationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluation);
 
+        Intent intent = getIntent();
+        api_token = getIntent().getStringExtra("API_TOKEN");
+        questionsList = (ArrayList<Question>) intent.getSerializableExtra("QUESTIONS");
+
         questionsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_questions);
         questionsRecyclerView.setHasFixedSize(true);
         questionsLayoutManager = new LinearLayoutManager(this);
         questionsRecyclerView.setLayoutManager(questionsLayoutManager);
         questionsRecyclerView.setFocusable(false);
-        questionsAdapter = new QuestionAdapter(getDataSetQuestions());
+        questionsAdapter = new QuestionAdapter(questionsList);
         questionsRecyclerView.setAdapter(questionsAdapter);
     }
 

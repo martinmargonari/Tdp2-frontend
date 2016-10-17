@@ -194,6 +194,9 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("API_TOKEN", api_token);
             startActivity(intent);
         } else if (id == R.id.cursos_destacados) {
+            Intent myIntent = new Intent(MainActivity.this,
+                    VideoViewActivity.class);
+            startActivity(myIntent);
 
         } else if (id == R.id.todos_los_cursos) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

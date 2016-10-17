@@ -75,6 +75,7 @@
         <activity android:name=".activities.MyCourseUnitActivity" />
         <activity android:name=".activities.EvaluationActivity"></activity>
 
+        <activity android:name=".activities.VideoViewActivity"></activity>
     </application>
 
 </manifest>
