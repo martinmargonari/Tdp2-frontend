@@ -33,8 +33,8 @@ public class ForumCategoryAdapter extends RecyclerView
 
         public ForumCategoryHolder(View itemView) {
             super(itemView);
-            category_title = (TextView) itemView.findViewById(R.id.week_number);
-            category_description = (TextView) itemView.findViewById(R.id.unit_course_name);
+            category_title = (TextView) itemView.findViewById(R.id.category_title);
+            category_description = (TextView) itemView.findViewById(R.id.category_description);
 
             context = itemView.getContext();
             Log.i(LOG_TAG, "Adding Listener");
@@ -59,7 +59,7 @@ public class ForumCategoryAdapter extends RecyclerView
     public ForumCategoryAdapter.ForumCategoryHolder onCreateViewHolder(ViewGroup parent,
                                                                        int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.foum_category, parent, false);
+                .inflate(R.layout.forum_category, parent, false);
 
         ForumCategoryAdapter.ForumCategoryHolder dataObjectHolder = new ForumCategoryAdapter.ForumCategoryHolder(view);
         return dataObjectHolder;

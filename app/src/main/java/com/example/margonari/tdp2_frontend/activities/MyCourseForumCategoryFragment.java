@@ -50,7 +50,6 @@ public class MyCourseForumCategoryFragment extends Fragment {
      * @param courseID Parameter 2.
      * @return A new instance of fragment MyCourseForumCategoryFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MyCourseForumCategoryFragment newInstance(String api_token, String courseID) {
         MyCourseForumCategoryFragment fragment = new MyCourseForumCategoryFragment();
         Bundle args = new Bundle();
