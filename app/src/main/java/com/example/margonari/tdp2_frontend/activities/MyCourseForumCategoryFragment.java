@@ -108,7 +108,7 @@ public class MyCourseForumCategoryFragment extends Fragment {
         @Override
         protected ArrayList<ForumCategory> doInBackground(String... params) {
             try {
-                ForumCategoriesServices forumCategoriesServices= new ForumCategoriesServices();
+                ForumCategoriesServices forumCategoriesServices = new ForumCategoriesServices();
                 forumCategoriesServices.setApi_security(api_token);
                 listCategories = (ArrayList<ForumCategory>) forumCategoriesServices.getListCategoriesBy(courseID);
                 return listCategories;
@@ -119,6 +119,25 @@ public class MyCourseForumCategoryFragment extends Fragment {
             return null;
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ForumCategoryAdapter) forumCategoriesAdapter).setOnItemClickListener(new ForumCategoryAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                ForumCategory forumCategory = forumCategoryArrayList.get(position);
+                String categoryID = forumCategory.getCategory_id();
+                Intent intent = new Intent(getContext(), MyCourseForumThreadActivity.class);
+                intent.putExtra("API_TOKEN", api_token);
+                intent.putExtra("CATEGORY_ID", categoryID);
+                startActivity(intent);
+
+                Log.i("LOG_TAG", " Clicked on Item " + position);
+            }
+        });
     }
 
 }

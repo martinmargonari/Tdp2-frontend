@@ -32,7 +32,7 @@ import com.example.margonari.tdp2_frontend.domain.ForumThread;
 import com.example.margonari.tdp2_frontend.domain.Login;
 import com.example.margonari.tdp2_frontend.services.ForumCategoriesServices;
 import com.example.margonari.tdp2_frontend.services.ForumPostServices;
-import com.example.margonari.tdp2_frontend.services.ForumTheadsServices;
+import com.example.margonari.tdp2_frontend.services.ForumThreadsServices;
 import com.example.margonari.tdp2_frontend.services.ListCoursesByCategoriesServices;
 import com.example.margonari.tdp2_frontend.services.ListMyCoursesServices;
 import com.example.margonari.tdp2_frontend.services.LoginServices;
@@ -418,9 +418,9 @@ public class MainActivity extends AppCompatActivity
             try {
                 String category_id = params[0];
 
-                ForumTheadsServices forumCategoriesServices= new ForumTheadsServices();
+                ForumThreadsServices forumCategoriesServices= new ForumThreadsServices();
                 forumCategoriesServices.setApi_security(api_token);
-                listaThreads = (ArrayList<ForumThread>) forumCategoriesServices.getListTheadsBy(category_id);
+                listaThreads = (ArrayList<ForumThread>) forumCategoriesServices.getListThreadsBy(category_id);
                 return listaThreads;
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);

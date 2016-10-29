@@ -11,9 +11,9 @@ import java.util.List;
  * Created by luis on 27/10/16.
  */
 
-public class ForumTheadsServices extends AbstractServices {
+public class ForumThreadsServices extends AbstractServices {
     private static final String service_name = "forum/thread";
-    public List<ForumThread> getListTheadsBy(String category_id) {
+    public List<ForumThread> getListThreadsBy(String category_id) {
 
         String coursesQuery = this.getQueryBy(category_id);
         ForumThreadsDTO coursesDTO = (ForumThreadsDTO) geDataOftDTO(coursesQuery, ForumThreadsDTO.class);

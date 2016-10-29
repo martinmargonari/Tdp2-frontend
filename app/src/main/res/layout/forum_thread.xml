@@ -40,7 +40,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true">
                     <ImageView
-                        android:id="@+id/unit_photo"
+                        android:id="@+id/replies_pic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
