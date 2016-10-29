@@ -183,7 +183,7 @@ public class MyCoursesActivity extends AppCompatActivity
                 try {
                     Course coursefulldata= (Course)httpRequestTask.get();
                     coursefulldata.setSession_id(course.getSession_id());
-                    Intent intent = new Intent(MyCoursesActivity.this, MyCourseActivity.class);
+                    Intent intent = new Intent(MyCoursesActivity.this, MyCourseParentActivity.class);
                     intent.putExtra("API_TOKEN", api_token);
                     intent.putExtra("COURSE_FULL_DATA", coursefulldata);
                     startActivity( intent);

@@ -23,17 +23,16 @@
             </intent-filter>
         </activity>
 
-
-        <service android:name=".domain.MyFirebaseInstanceIDService" android:exported="true">
+        <service
+            android:name=".domain.MyFirebaseInstanceIDService"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".domain.MyFirebaseMessagingService">
+        <service android:name=".domain.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <!-- enable the search dialog to send searches to SearchableActivity -->
@@ -73,9 +72,12 @@
         <activity android:name=".activities.MyCourseActivity" />
         <activity android:name=".activities.CourseInformationActivity" />
         <activity android:name=".activities.MyCourseUnitActivity" />
-        <activity android:name=".activities.EvaluationActivity"></activity>
-
-        <activity android:name=".activities.VideoViewActivity"></activity>
+        <activity android:name=".activities.EvaluationActivity" />
+        <activity android:name=".activities.VideoViewActivity" />
+        <activity
+            android:name=".activities.MyCourseParentActivity"
+            android:label="@string/title_activity_my_course_parent"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
