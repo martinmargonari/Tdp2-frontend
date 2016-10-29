@@ -26,7 +26,13 @@ import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.domain.ForumCategory;
+import com.example.margonari.tdp2_frontend.domain.ForumPost;
+import com.example.margonari.tdp2_frontend.domain.ForumThread;
 import com.example.margonari.tdp2_frontend.domain.Login;
+import com.example.margonari.tdp2_frontend.services.ForumCategoriesServices;
+import com.example.margonari.tdp2_frontend.services.ForumPostServices;
+import com.example.margonari.tdp2_frontend.services.ForumTheadsServices;
 import com.example.margonari.tdp2_frontend.services.ListCoursesByCategoriesServices;
 import com.example.margonari.tdp2_frontend.services.ListMyCoursesServices;
 import com.example.margonari.tdp2_frontend.services.LoginServices;
@@ -194,7 +200,48 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("API_TOKEN", api_token);
             startActivity(intent);
         } else if (id == R.id.cursos_destacados) {
+            //////////////////////////Categorias en curso 6 ( el de python):::: Burcar en el log "CategoriaDescription" //////////////////////////
+            HttpRequestTaskForumCategories httpRequestTaskForumCategories= new HttpRequestTaskForumCategories();
+            httpRequestTaskForumCategories.execute("6");//CUrso de python
+            ArrayList<ForumCategory> listCateories= new ArrayList<>();
+            try {
+                listCateories= httpRequestTaskForumCategories.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            Log.d("CategoriaDescription", listCateories.get(0).getDescription());
 
+            //////////////////////////////////////////Threads en la categoria 1 del curso de python :::: Burcar en el log "ThreadTitle" //////////////////////////////
+
+            HttpRequestTaskForumThreads httpRequestTaskForumThreads= new HttpRequestTaskForumThreads();
+            httpRequestTaskForumThreads.execute("1");//Categoria 1 del curso de python
+            ArrayList<ForumThread> listThreads= new ArrayList<>();
+            try {
+                listThreads= httpRequestTaskForumThreads.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            Log.d("ThreadTitle", listThreads.get(0).getTitle());
+
+            //////////////////////////////////////////Threads en la categoria 1 del curso de python :::: Burcar en el log "PostContent" //////////////////////////////
+
+            HttpRequestTaskForumPost httpRequestTaskForumPost= new HttpRequestTaskForumPost();
+            httpRequestTaskForumPost.execute("1");//Categoria 1 del curso de python
+            ArrayList<ForumPost> listPost= new ArrayList<>();
+            try {
+                listPost= httpRequestTaskForumPost.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            Log.d("PostContent", listPost.get(0).getContent());
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
         } else if (id == R.id.todos_los_cursos) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -342,5 +389,67 @@ public class MainActivity extends AppCompatActivity
 
 
 
+    private class HttpRequestTaskForumCategories extends AsyncTask<String, Void, ArrayList<ForumCategory>> {
 
+        ArrayList<ForumCategory> listaCategorias;
+        @Override
+        protected ArrayList<ForumCategory> doInBackground(String... params) {
+            try {
+                String course_id = params[0];
+
+                ForumCategoriesServices forumCategoriesServices= new ForumCategoriesServices();
+                forumCategoriesServices.setApi_security(api_token);
+                listaCategorias= (ArrayList<ForumCategory>) forumCategoriesServices.getListCategoriesBy(course_id);
+                return listaCategorias;
+            } catch (Exception e) {
+                Log.e("LoginActivity", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+    }
+
+    private class HttpRequestTaskForumThreads extends AsyncTask<String, Void, ArrayList<ForumThread>> {
+
+        ArrayList<ForumThread> listaThreads;
+        @Override
+        protected ArrayList<ForumThread> doInBackground(String... params) {
+            try {
+                String category_id = params[0];
+
+                ForumTheadsServices forumCategoriesServices= new ForumTheadsServices();
+                forumCategoriesServices.setApi_security(api_token);
+                listaThreads = (ArrayList<ForumThread>) forumCategoriesServices.getListTheadsBy(category_id);
+                return listaThreads;
+            } catch (Exception e) {
+                Log.e("LoginActivity", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+    }
+
+
+    private class HttpRequestTaskForumPost extends AsyncTask<String, Void, ArrayList<ForumPost>> {
+
+        ArrayList<ForumPost> listaPost;
+        @Override
+        protected ArrayList<ForumPost> doInBackground(String... params) {
+            try {
+                String thread_id = params[0];
+
+                ForumPostServices forumPostServices= new ForumPostServices();
+                forumPostServices.setApi_security(api_token);
+                listaPost = (ArrayList<ForumPost>) forumPostServices.getListPostBy(thread_id);
+                return listaPost;
+            } catch (Exception e) {
+                Log.e("LoginActivity", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+    }
 }
