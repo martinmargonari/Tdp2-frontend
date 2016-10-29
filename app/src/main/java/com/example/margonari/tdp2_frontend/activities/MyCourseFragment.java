@@ -48,7 +48,6 @@ public class MyCourseFragment extends Fragment {
      * @param courseFullData Parameter 2.
      * @return A new instance of fragment MyCourseFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MyCourseFragment newInstance(String api_token, Course courseFullData) {
         MyCourseFragment fragment = new MyCourseFragment();
         Bundle args = new Bundle();

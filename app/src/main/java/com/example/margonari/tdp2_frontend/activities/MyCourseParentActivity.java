@@ -125,10 +125,10 @@ public class MyCourseParentActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            /*if (position == 0) {
+            if (position == 0) {
                     return MyCourseFragment.newInstance(api_token,courseFullData);
-            }*/
-            return MyCourseFragment.newInstance(api_token,courseFullData);
+            } else
+                return MyCourseForumCategoryFragment.newInstance(api_token, courseFullData.getId());
         }
 
         @Override

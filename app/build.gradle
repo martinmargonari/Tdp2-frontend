@@ -40,7 +40,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Single target that includes all FirebaseUI libraries
-    
 
 
     compile 'com.github.bumptech.glide:glide:3.6.1'
