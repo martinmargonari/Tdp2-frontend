@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class MyCourseForumThreadActivity extends AppCompatActivity {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String API_TOKEN = "API_TOKEN";
     private static final String CATEGORY_ID = "CATEGORY_ID";
 
