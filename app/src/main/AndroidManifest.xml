@@ -79,7 +79,8 @@
             android:label="@string/title_activity_my_course_parent"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.MyCourseForumThreadActivity" />
-        <activity android:name=".activities.NewTopicActivity"></activity>
+        <activity android:name=".activities.NewTopicActivity" />
+        <activity android:name=".activities.MyCourseForumThreadPostsActivity"></activity>
     </application>
 
 </manifest>
