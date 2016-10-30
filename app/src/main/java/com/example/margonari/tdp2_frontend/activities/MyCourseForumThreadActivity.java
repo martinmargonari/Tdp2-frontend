@@ -94,5 +94,26 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
         }
 
     }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ForumThreadAdapter) forumThreadsAdapter).setOnItemClickListener(new ForumThreadAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                ForumThread forumThread = forumThreadArrayList.get(position);
+                String forumThreadId = forumThread.getId();
+                Intent intent = new Intent(MyCourseForumThreadActivity.this, MyCourseForumThreadPostsActivity.class);
+                intent.putExtra("API_TOKEN", api_token);
+                intent.putExtra("THREAD_ID", forumThreadId);
+                startActivity(intent);
+
+                Log.i("LOG_TAG", " Clicked on Item " + position);
+            }
+        });
+    }
  
 }

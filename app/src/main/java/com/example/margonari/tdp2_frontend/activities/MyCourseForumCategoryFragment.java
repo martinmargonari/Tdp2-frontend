@@ -119,7 +119,7 @@ public class MyCourseForumCategoryFragment extends Fragment {
 
     }
 
-    @Override
+
     public void onResume() {
         super.onResume();
         ((ForumCategoryAdapter) forumCategoriesAdapter).setOnItemClickListener(new ForumCategoryAdapter
@@ -127,7 +127,7 @@ public class MyCourseForumCategoryFragment extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 ForumCategory forumCategory = forumCategoryArrayList.get(position);
-                String categoryID = forumCategory.getCategory_id();
+                String categoryID = forumCategory.getId();
                 Intent intent = new Intent(getContext(), MyCourseForumThreadActivity.class);
                 intent.putExtra("API_TOKEN", api_token);
                 intent.putExtra("CATEGORY_ID", categoryID);

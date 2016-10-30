@@ -25,6 +25,14 @@ public class ForumCategory {
         return course_id;
     }
 
+    public ForumCategory() {
+    }
+
+    public ForumCategory(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
     public void setCourse_id(String course_id) {
         this.course_id = course_id;
     }
