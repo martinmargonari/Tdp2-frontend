@@ -13,13 +13,9 @@ import android.view.ViewGroup;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.ForumCategoryAdapter;
-import com.example.margonari.tdp2_frontend.adapters.MyCourseUnitAdapter;
 import com.example.margonari.tdp2_frontend.domain.ForumCategory;
-import com.example.margonari.tdp2_frontend.domain.Unit;
-import com.example.margonari.tdp2_frontend.domain.UnityInfo;
 import com.example.margonari.tdp2_frontend.services.ForumCategoriesServices;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -80,6 +76,8 @@ public class MyCourseForumCategoryFragment extends Fragment {
         forumCategoriesRecyclerView.setLayoutManager(forumCategoriesLayoutManager);
         forumCategoriesRecyclerView.setFocusable(false);
         forumCategoryArrayList = getDataSetForumCategories();
+        Log.d("Size de categorias", String.valueOf(forumCategoryArrayList.size()));
+
         forumCategoriesAdapter = new ForumCategoryAdapter(forumCategoryArrayList);
         forumCategoriesRecyclerView.setAdapter(forumCategoriesAdapter);
 

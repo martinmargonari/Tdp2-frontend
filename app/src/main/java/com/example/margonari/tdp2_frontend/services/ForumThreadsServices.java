@@ -22,8 +22,6 @@ public class ForumThreadsServices extends AbstractServices {
 
     @Override
     protected String getQueryBy(String... params) {
-
-
         String category_id = params[0];
         String url = urlBase;
         StringBuffer urlStringBuffer = new StringBuffer(url);
@@ -33,9 +31,7 @@ public class ForumThreadsServices extends AbstractServices {
         urlStringBuffer.append(api_security);
         urlStringBuffer.append("&category_id=");
         urlStringBuffer.append(category_id);
-
         Log.d("ThreadsInCategoryForum",urlStringBuffer.toString());
-
         return urlStringBuffer.toString();
     }
 }
