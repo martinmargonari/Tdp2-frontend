@@ -86,7 +86,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         videoLayoutManager = new LinearLayoutManager(this);
         videoRecyclerView.setLayoutManager(videoLayoutManager);
         videoRecyclerView.setFocusable(false);
-        videoAdapter = new VideoAdapter(getDataSetVideos());
+        videoAdapter = new VideoAdapter(getDataSetVideos(), this);
         videoRecyclerView.setAdapter(videoAdapter);
         videosList = getDataSetVideos();
 

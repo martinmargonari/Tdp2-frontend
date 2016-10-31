@@ -26,7 +26,7 @@ public class MaterialAdapter extends RecyclerView
     private static String LOG_TAG = "MaterialAdapter";
     private ArrayList<Material> mDataset;
     private static MyClickListener myClickListener;
-    Context context;
+    private Context context;
 
     public static class MaterialHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView material_name;
