@@ -63,6 +63,11 @@ public class ForumPostAdapter extends RecyclerView
     public void onBindViewHolder(final ForumPostAdapter.ForumPostHolder holder, final int position) {
         holder.post_author.setText(mDataset.get(position).getAuthor_id());
         holder.post_content.setText(mDataset.get(position).getContent());
+        if(mDataset.get(position).getAttachments().length==0) {
+            holder.boton_adjuntos.setVisibility(View.GONE);
+        }else {
+            holder.boton_adjuntos.setText(mDataset.get(position).getAttachments()[0].getName());
+        }
         holder.boton_adjuntos.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -73,6 +78,7 @@ public class ForumPostAdapter extends RecyclerView
                     ((MyCourseForumThreadPostsActivity)mCOntext).downloadFile(mDataset.get(position).getAttachments()[0].getFile_path(),mDataset.get(position).getAttachments()[0].getName());
 
                 }
+
             }
         });
     };
