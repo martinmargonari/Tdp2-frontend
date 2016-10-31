@@ -3,6 +3,8 @@ package com.example.margonari.tdp2_frontend.services;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by luis on 19/09/16.
  */
@@ -17,7 +19,7 @@ public abstract class AbstractServices {
         return restTemplate.getForObject(url, object);
     }
 
-    protected  abstract String getQueryBy(String... params);
+    protected  abstract String getQueryBy(String... params) throws UnsupportedEncodingException;
 
     public String getApi_security() {
         return api_security;

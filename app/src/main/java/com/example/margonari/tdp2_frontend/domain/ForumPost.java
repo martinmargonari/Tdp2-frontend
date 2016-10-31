@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class ForumPost {
 
     private String id;
+    private String author_name;
     private String thread_id;
     private String author_id;
     private String content;
@@ -101,5 +102,13 @@ public class ForumPost {
 
     public void setAttachments(AttachFile[] attachments) {
         this.attachments = attachments;
+    }
+
+    public String getAuthor_name() {
+        return author_name;
+    }
+
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
     }
 }
