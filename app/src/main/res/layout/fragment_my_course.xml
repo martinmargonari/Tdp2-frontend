@@ -19,4 +19,17 @@
         android:layout_marginRight="@dimen/card_margin_horizontal"
         />
 
+    <Button
+        android:id="@+id/button_download_certificate"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center"
+        android:text="DESCARGAR CERTIFICADO"
+        android:textColor="#ffffff"
+        android:backgroundTint="#3146cc"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/recycler_view_my_course_units"
+        android:layout_alignStart="@+id/recycler_view_my_course_units" />
+
 </RelativeLayout>
