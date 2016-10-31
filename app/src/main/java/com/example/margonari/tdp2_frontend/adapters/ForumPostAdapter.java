@@ -61,7 +61,7 @@ public class ForumPostAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(final ForumPostAdapter.ForumPostHolder holder, final int position) {
-        holder.post_author.setText(mDataset.get(position).getAuthor_id());
+        holder.post_author.setText(mDataset.get(position).getAuthor_name());
         holder.post_content.setText(mDataset.get(position).getContent());
         if(mDataset.get(position).getAttachments().length==0) {
             holder.boton_adjuntos.setVisibility(View.GONE);

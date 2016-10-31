@@ -73,4 +73,6 @@ public class Material implements java.io.Serializable {
     public void setFull_path(String full_path) {
         this.full_path = full_path;
     }
+
+
 }

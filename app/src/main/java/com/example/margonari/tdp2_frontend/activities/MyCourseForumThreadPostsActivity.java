@@ -23,6 +23,7 @@ import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.ForumPostAdapter;
 import com.example.margonari.tdp2_frontend.domain.ForumPost;
 import com.example.margonari.tdp2_frontend.services.ForumDeletePostServices;
+import com.example.margonari.tdp2_frontend.services.ForumMakePostServices;
 import com.example.margonari.tdp2_frontend.services.ForumPostServices;
 
 import org.apache.commons.io.FilenameUtils;
@@ -73,7 +74,10 @@ private DownloadManager downloadManager;
             public void onClick(View view) {
                 //TODO Communication to make POST
                 String content = textPost.getText().toString();
-
+                HttpRequestTaskForumMakePost httpRequestTaskForumMakePost= new HttpRequestTaskForumMakePost();
+                httpRequestTaskForumMakePost.execute(thread_id,content);
+                finish();
+                startActivity(getIntent());
             }
         });
 
@@ -115,11 +119,7 @@ private DownloadManager downloadManager;
     }
 
     public void downloadFile(String urlFile, final String filename){
-        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        Log.d("urlAttachment", urlFile);
-        DownloadFileFromURL downloadFileFromURL= new DownloadFileFromURL();
-        downloadFileFromURL.execute(urlFile);*/
+
         Environment
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                 .mkdirs();
@@ -203,7 +203,30 @@ private DownloadManager downloadManager;
                 Boolean is_deleted=   forumPostServices.deletePostBy(post_id);
                 Log.d("ResultadoEliminacion", is_deleted.toString());
             } catch (Exception e) {
-                Log.e("LoginActivity", e.getMessage(), e);
+                Log.e("MyCoourseForumThread", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+    }
+
+
+    private class HttpRequestTaskForumMakePost extends AsyncTask<String, Void, Boolean> {
+
+        ArrayList<ForumPost> listPost;
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+                String thread_id = params[0];
+                String content= params[1];
+
+                ForumMakePostServices forumPostServices= new ForumMakePostServices();
+                forumPostServices.setApi_security(CourselandApp.getApi_token());
+                Boolean is_make=   forumPostServices.makePostBy(thread_id,content);
+                Log.d("ResultadoMakePost", is_make.toString());
+            } catch (Exception e) {
+                Log.e("MyCoourseForumThread", e.getMessage(), e);
             }
 
             return null;
