@@ -5,9 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
+import com.example.margonari.tdp2_frontend.activities.MyCourseForumThreadPostsActivity;
+import com.example.margonari.tdp2_frontend.domain.AttachFile;
 import com.example.margonari.tdp2_frontend.domain.ForumPost;
 
 import java.util.ArrayList;
@@ -21,10 +24,12 @@ public class ForumPostAdapter extends RecyclerView
         .ForumPostHolder> {
     private static String LOG_TAG = "ForumPostAdapter";
     private ArrayList<ForumPost> mDataset;
+    private Context mCOntext;
 
     public static class ForumPostHolder extends RecyclerView.ViewHolder {
         TextView post_author;
         TextView post_content;
+        Button boton_adjuntos;
 
         Context context;
 
@@ -32,12 +37,15 @@ public class ForumPostAdapter extends RecyclerView
             super(itemView);
             post_author = (TextView) itemView.findViewById(R.id.forum_post_author);
             post_content = (TextView) itemView.findViewById(R.id.forum_post_content);
+            boton_adjuntos= (Button) itemView.findViewById(R.id.button_files);
 
             context = itemView.getContext();
+
         }
     }
 
-    public ForumPostAdapter(ArrayList<ForumPost> myDataset) {
+    public ForumPostAdapter(ArrayList<ForumPost> myDataset, Context context) {
+        mCOntext= context;
         mDataset = myDataset;
     }
 
@@ -52,14 +60,27 @@ public class ForumPostAdapter extends RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(ForumPostAdapter.ForumPostHolder holder, int position) {
+    public void onBindViewHolder(final ForumPostAdapter.ForumPostHolder holder, final int position) {
         holder.post_author.setText(mDataset.get(position).getAuthor_id());
         holder.post_content.setText(mDataset.get(position).getContent());
-    }
+        holder.boton_adjuntos.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                AttachFile[] arrayOfAttachments= mDataset.get(position).getAttachments();
+                if(mDataset.get(position).getAttachments().length!=0) {
+
+                    ((MyCourseForumThreadPostsActivity)mCOntext).downloadFile(mDataset.get(position).getAttachments()[0].getFile_path(),mDataset.get(position).getAttachments()[0].getName());
+
+                }
+            }
+        });
+    };
 
     public void addItem(ForumPost forumThread, int index) {
         mDataset.add(index, forumThread);
         notifyItemInserted(index);
+
     }
 
     public void deleteItem(int index) {
@@ -71,4 +92,8 @@ public class ForumPostAdapter extends RecyclerView
     public int getItemCount() {
         return mDataset.size();
     }
+
+
+
+
 }

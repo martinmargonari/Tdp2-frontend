@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity
         try {
             Login login = (Login) httpRequestTask.get();
             api_token=login.getApi_token();
+            CourselandApp.setApi_token(api_token);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

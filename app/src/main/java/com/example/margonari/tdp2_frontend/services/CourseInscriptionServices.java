@@ -2,7 +2,7 @@ package com.example.margonari.tdp2_frontend.services;
 
 import android.util.Log;
 
-import com.example.margonari.tdp2_frontend.rest_dto.InscriptionDTO;
+import com.example.margonari.tdp2_frontend.rest_dto.EmptyDTO;
 
 /**
  * Created by luis on 26/09/16.
@@ -14,7 +14,7 @@ public class CourseInscriptionServices extends AbstractServices {
     public boolean ifExistsErrors(String course_id) {
         String coursesQuery = this.getQueryBy(course_id);
         Log.d("Inscription",coursesQuery);
-        InscriptionDTO coursesDTO = (InscriptionDTO) geDataOftDTO(coursesQuery, InscriptionDTO.class);
+        EmptyDTO coursesDTO = (EmptyDTO) geDataOftDTO(coursesQuery, EmptyDTO.class);
         return  !coursesDTO.getErrors().isEmpty() ;
     }
 

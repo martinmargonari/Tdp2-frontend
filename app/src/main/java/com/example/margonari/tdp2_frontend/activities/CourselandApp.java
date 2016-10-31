@@ -27,6 +27,11 @@ public class CourselandApp extends Application {
 
     }
 
+    public static String getApi_token() {
+        return api_token;
+    }
 
-
-  }
+    public static void setApi_token(String api_token) {
+        CourselandApp.api_token = api_token;
+    }
+}

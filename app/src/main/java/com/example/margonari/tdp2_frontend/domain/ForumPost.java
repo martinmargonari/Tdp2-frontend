@@ -19,6 +19,7 @@ public class ForumPost {
     private String sequence;
     private String created_at;
     private String updated_at;
+    private AttachFile[] attachments;
 
     public String getId() {
         return id;
@@ -94,5 +95,11 @@ public class ForumPost {
 
     private String deleted_at;
 
+    public AttachFile[] getAttachments() {
+        return attachments;
+    }
 
+    public void setAttachments(AttachFile[] attachments) {
+        this.attachments = attachments;
+    }
 }
