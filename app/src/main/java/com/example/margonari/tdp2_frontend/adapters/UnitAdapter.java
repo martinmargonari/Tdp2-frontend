@@ -25,6 +25,8 @@ public class UnitAdapter extends RecyclerView
     private static String LOG_TAG = "UnitAdapter";
     private ArrayList<Unit> mDataset;
     private static MyClickListener myClickListener;
+    private Context mCOntext;
+
 
     public static class UnitHolder extends RecyclerView.ViewHolder
             implements View
@@ -33,11 +35,14 @@ public class UnitAdapter extends RecyclerView
         ImageView unit_photo;
         Context context;
 
+
         public UnitHolder(View itemView) {
             super(itemView);
             unit_name = (TextView) itemView.findViewById(R.id.unit_name);
             unit_photo = (ImageView) itemView.findViewById(R.id.unit_photo);
             context = itemView.getContext();
+
+
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -54,7 +59,10 @@ public class UnitAdapter extends RecyclerView
 
     public UnitAdapter(ArrayList<Unit> myDataset) {
         mDataset = myDataset;
+
     }
+
+
 
     @Override
     public UnitHolder onCreateViewHolder(ViewGroup parent,
@@ -71,6 +79,8 @@ public class UnitAdapter extends RecyclerView
         holder.unit_name.setText(mDataset.get(position).getName());
         String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
         Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
+
+
         //holder.unit_photo.setImageResource(mDataset.get(position).getPhoto_id());
     }
 

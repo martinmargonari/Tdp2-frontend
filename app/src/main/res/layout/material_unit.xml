@@ -47,6 +47,8 @@
 
             <ImageButton
                 android:id="@+id/material_download_button"
+                android:clickable="true"
+                android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_file_download_black_24dp"

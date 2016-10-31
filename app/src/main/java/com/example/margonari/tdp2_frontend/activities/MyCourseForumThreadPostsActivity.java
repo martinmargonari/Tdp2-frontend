@@ -119,11 +119,7 @@ private DownloadManager downloadManager;
     }
 
     public void downloadFile(String urlFile, final String filename){
-        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        Log.d("urlAttachment", urlFile);
-        DownloadFileFromURL downloadFileFromURL= new DownloadFileFromURL();
-        downloadFileFromURL.execute(urlFile);*/
+
         Environment
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                 .mkdirs();
