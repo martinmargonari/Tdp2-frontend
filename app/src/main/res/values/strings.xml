@@ -4,7 +4,7 @@
     <string name="facebook_application_id" translatable="false">1784425185166350</string>
 
 
-    <string name="title_activity_main">Encontrar cursos</string>
+    <string name="title_activity_main">Courseland</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="search_hint">Buscar en todos los cursos</string>
