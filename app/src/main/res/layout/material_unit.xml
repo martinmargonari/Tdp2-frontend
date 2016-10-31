@@ -45,11 +45,11 @@
                 android:gravity="center"
                 />
 
-            <ImageView
-                android:id="@+id/material_download"
+            <ImageButton
+                android:id="@+id/material_download_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_file_download_black_24dp"
+                android:background="@drawable/ic_file_download_black_24dp"
                 android:layout_alignParentRight="true"
                 />
         </RelativeLayout>
