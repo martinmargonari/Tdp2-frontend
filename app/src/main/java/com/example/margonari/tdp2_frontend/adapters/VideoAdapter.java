@@ -73,12 +73,13 @@ public class VideoAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(VideoAdapter.VideoHolder holder, final int position) {
         holder.video_name.setText(mDataset.get(position).getName());
+
         holder.video_photo.setImageResource(R.drawable.ic_slideshow_black_24dp);
         holder.boton_adjuntos.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if (mDataset.get(position).getFull_path()!=null){
-                    ((MyCourseUnitActivity)context).downloadFile(mDataset.get(position).getFull_path(),mDataset.get(position).getName()+mDataset.get(position).getVideo_extension());
+                    ((MyCourseUnitActivity)context).downloadFile(mDataset.get(position).getFull_path(),mDataset.get(position).getName()+"."+mDataset.get(position).getVideo_extension());
                     Log.d("FILE PATH", mDataset.get(position).getFull_path());
                 }
             }

@@ -68,10 +68,10 @@ public class EvaluationActivity extends AppCompatActivity {
 
                 Toast.makeText(v.getContext(), "Tuviste " + Integer.toString(correct_answers) + " respuestas correctas de " + Integer.toString(questionAmount),
                         Toast.LENGTH_LONG).show();
-                /*
+
                 HttpRequestTaskExamResult httpRequestTaskExamResult= new HttpRequestTaskExamResult();
                 httpRequestTaskExamResult.execute(myApiToken,mySessionId,myUnit_id,String.valueOf(questionAmount),String.valueOf(correct_answers));
-                */
+
             }
         });
     }
@@ -114,8 +114,9 @@ public class EvaluationActivity extends AppCompatActivity {
 
 
                 ExamResultServices examResultServices=  new ExamResultServices();
-                        examResultServices.make(myApiToken, mySessionId,unit_id,correct_answers,questions_amount);
-
+                       Boolean result=  examResultServices.make(myApiToken, mySessionId,unit_id,correct_answers,questions_amount);
+                String resultado= result.toString();
+                    Log.d("Resultaddo",resultado );
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);
             }

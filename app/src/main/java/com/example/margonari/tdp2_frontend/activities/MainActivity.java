@@ -86,9 +86,14 @@ public class MainActivity extends AppCompatActivity
             profilePicture= auth.getCurrentUser().getPhotoUrl().toString();
             InitApiTokenFromServer(userEmail);
         }else{
-            startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setProviders(
+            startActivityForResult(
+                    AuthUI.getInstance().createSignInIntentBuilder()
+                            .setIsSmartLockEnabled(false)
+
+                            .setProviders(
                     AuthUI.FACEBOOK_PROVIDER,
-                    AuthUI.GOOGLE_PROVIDER
+                    AuthUI.GOOGLE_PROVIDER,
+                    AuthUI.EMAIL_PROVIDER
             ).build(),RC_SIGN_IN);
         }
 
@@ -255,11 +260,16 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Log.d("AUTH", "User LOGGED OUT");
-                    startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setProviders(
+                    startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                            .setIsSmartLockEnabled(false)
+                            .setProviders(
                             AuthUI.FACEBOOK_PROVIDER,
-                            AuthUI.GOOGLE_PROVIDER
+                            AuthUI.GOOGLE_PROVIDER,
+                            AuthUI.EMAIL_PROVIDER
                     ).build(),RC_SIGN_IN);
+
                                     }
+
             });
 
         }

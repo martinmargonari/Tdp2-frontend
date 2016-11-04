@@ -30,16 +30,12 @@ public class ListMyCoursesServices extends AbstractServices{
 
     @Override
     protected String getQueryBy(String... params) {
-
-
         String url = urlBase;
         StringBuffer urlStringBuffer = new StringBuffer(url);
         urlStringBuffer.append(service_name);
         urlStringBuffer.append("?");
         urlStringBuffer.append("api_token=");
         urlStringBuffer.append(api_security);
-
-
         return urlStringBuffer.toString();
     }
 }

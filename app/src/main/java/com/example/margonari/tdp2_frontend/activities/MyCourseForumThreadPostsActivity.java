@@ -235,6 +235,4 @@ private DownloadManager downloadManager;
     }
 
 
-
-
 }

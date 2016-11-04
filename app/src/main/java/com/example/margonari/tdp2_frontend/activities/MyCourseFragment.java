@@ -1,8 +1,6 @@
 package com.example.margonari.tdp2_frontend.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.MyCourseUnitAdapter;
@@ -23,7 +22,7 @@ import com.example.margonari.tdp2_frontend.services.UnitServices;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class MyCourseFragment extends Fragment {
+public class MyCourseFragment extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String API_TOKEN = "API_TOKEN";
     private static final String COURSE_FULL_DATA = "COURSE_FULL_DATA";
@@ -35,6 +34,8 @@ public class MyCourseFragment extends Fragment {
     private RecyclerView.LayoutManager unitsLayoutManager;
     private RecyclerView.Adapter unitsAdapter;
     private ArrayList<Unit> unitArrayList;
+    private Button button_certificate;
+
 
     public MyCourseFragment() {
         // Required empty public constructor
@@ -64,15 +65,16 @@ public class MyCourseFragment extends Fragment {
             api_token = getArguments().getString(API_TOKEN);
             courseFullData = (Course) getArguments().getSerializable(COURSE_FULL_DATA);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_my_course, container, false);
+        View v = inflater.inflate(R.layout.fragment_my_course, container, false);
 
-        unitsRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.recycler_view_my_course_units);
+        unitsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_my_course_units);
         unitsRecyclerView.setHasFixedSize(true);
         unitsLayoutManager = new LinearLayoutManager(getContext());
         unitsRecyclerView.setLayoutManager(unitsLayoutManager);
@@ -81,9 +83,25 @@ public class MyCourseFragment extends Fragment {
         unitsRecyclerView.setAdapter(unitsAdapter);
         unitArrayList= (ArrayList)courseFullData.getUnities();
 
-        return fragmentView;
-    }
 
+
+
+        Button b = (Button) v.findViewById(R.id.button_download_certificate);
+        b.setOnClickListener(this);
+        return v;
+
+
+    }
+    @Override
+    public void onClick(View view) {
+        //TODO Communication to make POST
+        //       String content = textPost.getText().toString();
+        //       MyCourseForumThreadPostsActivity.HttpRequestTaskForumMakePost httpRequestTaskForumMakePost= new MyCourseForumThreadPostsActivity.HttpRequestTaskForumMakePost();
+        //       httpRequestTaskForumMakePost.execute(thread_id,content);
+
+        ((MyCourseParentActivity)getActivity()).downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/api/course/certificate-pdf?api_token=Jc2YzH5LVLXGdxrTs2BApWigRqfbnWYCrDnoME9iCT9GDq9C16zVBrYachVv&session_id=21&course_id=9", "certificado.pdf");
+        Log.d("Certificado","Descargar certificado");
+    }
     private ArrayList<Unit> getDataSetUnits() {
         return (ArrayList<Unit>) courseFullData.getUnities();
 

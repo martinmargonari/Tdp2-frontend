@@ -10,7 +10,7 @@ import com.example.margonari.tdp2_frontend.rest_dto.AbstractDTO;
 public class ExamResultServices extends AbstractServices{
     private static final String service_name = "course/create-exam-result";
 
-    public void make(String... params) {
+    public Boolean make(String... params) {
 
         String myApiToken 		=  params[0];
         String mySessionId		=  params[1];
@@ -20,8 +20,8 @@ public class ExamResultServices extends AbstractServices{
 
         String coursesQuery = this.getQueryBy(myApiToken, mySessionId,unit_id,correct_answers,questions_amount);
         Log.d("QueryExam", coursesQuery);
-        geDataOftDTO(coursesQuery, AbstractDTO.class);
-
+        AbstractDTO a = (AbstractDTO)geDataOftDTO(coursesQuery, AbstractDTO.class);
+        return a.getErrors().isEmpty();
     }
 
     @Override
