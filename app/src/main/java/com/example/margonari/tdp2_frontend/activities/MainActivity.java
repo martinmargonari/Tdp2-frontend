@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -201,9 +202,9 @@ public class MainActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-            Intent intent = new Intent(this,MyCoursesActivity.class);
-            intent.putExtra("LIST_CATEGORIES", listCourses);
-            intent.putExtra("API_TOKEN", api_token);
+            Intent intent = new Intent(MainActivity.this, MyCoursesActivity.class);
+            intent.putExtra(MyCoursesActivity.API_TOKEN, api_token);
+            intent.putExtra(MyCoursesActivity.LIST_CURRENTS, listCourses);
             startActivity(intent);
         } else if (id == R.id.cursos_destacados) {
             //////////////////////////Categorias en curso 6 ( el de python):::: Burcar en el log "CategoriaDescription" //////////////////////////
