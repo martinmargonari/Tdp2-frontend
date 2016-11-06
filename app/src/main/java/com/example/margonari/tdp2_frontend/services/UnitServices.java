@@ -13,8 +13,8 @@ public class UnitServices extends AbstractServices {
 
 
         private static final String service_name = "course/unity";
-        public UnityInfo getUnityInfo(String courseId) {
-            String unityQuery = this.getQueryBy(courseId);
+        public UnityInfo getUnityInfo(String courseId, String sessionid) {
+            String unityQuery = this.getQueryBy(courseId,sessionid);
             Log.d("UnitServices", unityQuery);
             UnityInfoDTO unitDTO = (UnityInfoDTO) geDataOftDTO(unityQuery, UnityInfoDTO.class);
             return unitDTO.getData();
@@ -23,6 +23,7 @@ public class UnitServices extends AbstractServices {
         @Override
         protected String getQueryBy(String... params) {
             String unity_id = params[0];
+            String session_id= params[1];
 
             String url = urlBase;
             StringBuffer urlStringBuffer = new StringBuffer(url);
@@ -32,6 +33,8 @@ public class UnitServices extends AbstractServices {
             urlStringBuffer.append(api_security);
             urlStringBuffer.append("&unity_id=");
             urlStringBuffer.append(unity_id);
+            urlStringBuffer.append("&session_id=");
+            urlStringBuffer.append(session_id);
             System.out.println(urlStringBuffer.toString());
             return urlStringBuffer.toString();
         }

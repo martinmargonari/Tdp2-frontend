@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.ImageAdapter;
 import com.example.margonari.tdp2_frontend.domain.Categoria;
@@ -116,7 +115,8 @@ public class MainActivity extends AppCompatActivity
         ImageView imageProfile = (ImageView) headerView.findViewById(R.id.profile_picture);
         userNameText.setText(firstName + " " + lastName);
         emailText.setText(userEmail);
-        Glide.with(this).load(profilePicture).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageProfile);
+
+        Glide.with(this).load(profilePicture).into(imageProfile);
 
         grillaCategorias = (GridView) findViewById(R.id.grilla_categorias);
         adapterCategorias = new ImageAdapter(this);

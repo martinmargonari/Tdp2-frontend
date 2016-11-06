@@ -116,7 +116,7 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(int position, View v) {
                 Unit unit = unitArrayList.get(position);
                 MyCourseFragment.HttpRequestTaskUnity httpRequestTask = new MyCourseFragment.HttpRequestTaskUnity();
-                httpRequestTask.execute(unit.getId());
+                httpRequestTask.execute(unit.getId(), courseFullData.getSession_id());
                 try {
                     UnityInfo unityInfo = (UnityInfo) httpRequestTask.get();
                     Intent intent = new Intent(getContext(), MyCourseUnitActivity.class);
@@ -139,9 +139,10 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
         protected UnityInfo doInBackground(String... params) {
             try {
                 String course_id = params[0];
+                String session_id=params[1];
                 UnitServices unitServices= new UnitServices();
                 unitServices.setApi_security(api_token);
-                UnityInfo unityInfo=  unitServices.getUnityInfo(course_id);
+                UnityInfo unityInfo=  unitServices.getUnityInfo(course_id,session_id);
 
                 return unityInfo;
             } catch (Exception e) {
