@@ -3,39 +3,53 @@ package com.example.margonari.tdp2_frontend.activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.example.margonari.tdp2_frontend.R;
-import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
-import com.example.margonari.tdp2_frontend.services.CourseFullDataServices;
+import com.example.margonari.tdp2_frontend.services.ListMyCoursesFinishedServices;
+import com.example.margonari.tdp2_frontend.services.ListMyCoursesServices;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class MyCoursesActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Spinner.OnItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Spinner spinnerCoursesType;
+    public static final String API_TOKEN = "API_TOKEN";
+
+    /**
+     * The {@link PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link FragmentStatePagerAdapter}.
+     */
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    private ViewPager mViewPager;
+
     private Intent intent;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "MyCoursesActivity";
     private ArrayList<Course> coursesList;
     private String api_token;
@@ -44,8 +58,21 @@ public class MyCoursesActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_courses);
+
+        intent = getIntent();
+        api_token = getIntent().getStringExtra(API_TOKEN);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        mViewPager = (ViewPager) findViewById(R.id.container_pages);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_courses);
+        tabLayout.setupWithViewPager(mViewPager);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -54,31 +81,6 @@ public class MyCoursesActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_my_courses);
         navigationView.setNavigationItemSelectedListener(this);
-
-        spinnerCoursesType = (Spinner) findViewById(R.id.spinner_type_of_courses);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.type_of_courses_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCoursesType.setAdapter(adapter);
-        spinnerCoursesType.setOnItemSelectedListener(this);
-
-
-        intent = getIntent();
-        coursesList= (ArrayList<Course>)intent.getSerializableExtra("LIST_CATEGORIES");
-
-
-
-
-        api_token = getIntent().getStringExtra("API_TOKEN");
-        System.out.println("APITOKEN EN MY COURSES: "+ api_token);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_my_courses);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new CoursesAdapter(coursesList);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -142,77 +144,106 @@ public class MyCoursesActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        switch (position) {
-            case 0:
-                // CURSOS ACTUALES
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-                //TODO Pedir la info según lo que corresponda, por el momento en esta solapa poner
-                // unicamente lo que devuelva la request de mis cursos, luego agregaremos mas logica
-                mAdapter = new CoursesAdapter(coursesList);
-                mRecyclerView.setAdapter(mAdapter);
-                break;
-            case 1:
-                // CURSOS FUTUROS
-                break;
-            case 2:
-                // CURSOS PASADOS
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ((CoursesAdapter) mAdapter).setOnItemClickListener(new CoursesAdapter
-                .MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                Course course = coursesList.get(position);
-
-                HttpRequestTask httpRequestTask= new HttpRequestTask();
-                httpRequestTask.execute(course.getId());
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            if (position == 0) {
+                HttpRequestTaskMyCoursesCurrent httpRequestTaskMyCourses = new HttpRequestTaskMyCoursesCurrent();
+                httpRequestTaskMyCourses.execute();
+                ArrayList<Course> coursesList= new ArrayList<>();
                 try {
-                    Course coursefulldata= (Course)httpRequestTask.get();
-                    coursefulldata.setSession_id(course.getSession_id());
-                    Intent intent = new Intent(MyCoursesActivity.this, MyCourseParentActivity.class);
-                    intent.putExtra("API_TOKEN", api_token);
-                    intent.putExtra("COURSE_FULL_DATA", coursefulldata);
-                    startActivity( intent);
+                    coursesList = httpRequestTaskMyCourses.get();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-                Log.i(LOG_TAG, " Clicked on Item " + position);
+
+                return MyCoursesCurrentFragment.newInstance(api_token,coursesList);
+
+            } else {
+                HttpRequestTaskMyCoursesFinished httpRequestTaskMyCourses = new HttpRequestTaskMyCoursesFinished();
+                httpRequestTaskMyCourses.execute();
+                ArrayList<Course> coursesList = new ArrayList<>();
+                try {
+                    coursesList = httpRequestTaskMyCourses.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                return MyCoursesFinishedFragment.newInstance(api_token, coursesList);
             }
-        });
-    }
-
-    private class HttpRequestTask extends AsyncTask<String, Void, Course> {
-        @Override
-        protected Course doInBackground(String... params) {
-            try {
-                String course_id = params[0];
-                CourseFullDataServices courseFullDataServices= new CourseFullDataServices();
-                courseFullDataServices.setApi_security(api_token);
-                return courseFullDataServices.getCourseBy(course_id);
-
-            } catch (Exception e) {
-                Log.e("CourseAcivity", e.getMessage(), e);
-            }
-
-            return null;
         }
 
+        @Override
+        public int getCount() {
+            // Show 2 total pages.
+            return 2;
+        }
 
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "CURSOS ACTUALES";
+                case 1:
+                    return "CURSOS FINALIZADOS";
+            }
+            return null;
+        }
     }
+
+    private class HttpRequestTaskMyCoursesCurrent extends AsyncTask<String, Void, ArrayList<Course>> {
+
+        ArrayList<Course> listaCursos;
+        @Override
+        protected ArrayList<Course> doInBackground(String... params) {
+            try {
+
+                ListMyCoursesServices listMyCoursesServices= new ListMyCoursesServices();
+                listMyCoursesServices.setApi_security(api_token);
+                listaCursos = (ArrayList<Course>) listMyCoursesServices.getListCoursesBy();
+
+
+            } catch (Exception e) {
+                Log.e("ListCoursesCurrent", e.getMessage(), e);
+            }
+
+            return listaCursos;
+        }
+    }
+
+    private class HttpRequestTaskMyCoursesFinished extends AsyncTask<String, Void, ArrayList<Course>> {
+
+        ArrayList<Course> listaCursos;
+        @Override
+        protected ArrayList<Course> doInBackground(String... params) {
+            try {
+
+                ListMyCoursesFinishedServices listMyCoursesFinishedServices = new ListMyCoursesFinishedServices();
+                listMyCoursesFinishedServices.setApi_security(api_token);
+                listaCursos = (ArrayList<Course>) listMyCoursesFinishedServices.getListCoursesBy();
+
+
+            } catch (Exception e) {
+                Log.e("ListCoursesFinished", e.getMessage(), e);
+            }
+
+            return listaCursos;
+        }
+    }
+
+
 }

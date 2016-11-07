@@ -72,6 +72,8 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        unitArrayList= (ArrayList)courseFullData.getUnities();
         View v = inflater.inflate(R.layout.fragment_my_course, container, false);
 
         unitsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_my_course_units);
@@ -81,8 +83,6 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
         unitsRecyclerView.setFocusable(false);
         unitsAdapter = new MyCourseUnitAdapter(getDataSetUnits());
         unitsRecyclerView.setAdapter(unitsAdapter);
-        unitArrayList= (ArrayList)courseFullData.getUnities();
-
 
 
 
