@@ -16,6 +16,8 @@ public class ForumCategoriesServices extends AbstractServices {
     public List<ForumCategory> getListCategoriesBy(String course_id) {
 
         String coursesQuery = this.getQueryBy(course_id);
+        Log.d("Query "+this.getClass().getName(),coursesQuery);
+
         ForumCategoriesDTO coursesDTO = (ForumCategoriesDTO) geDataOftDTO(coursesQuery, ForumCategoriesDTO.class);
         return coursesDTO.getData();
     }

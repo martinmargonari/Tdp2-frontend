@@ -19,7 +19,7 @@ public class ExamResultServices extends AbstractServices{
         String questions_amount  =  params[4];
 
         String coursesQuery = this.getQueryBy(myApiToken, mySessionId,unit_id,correct_answers,questions_amount);
-        Log.d("QueryExam", coursesQuery);
+        Log.d("Query "+this.getClass().getName(),coursesQuery);
         AbstractDTO a = (AbstractDTO)geDataOftDTO(coursesQuery, AbstractDTO.class);
         return a.getErrors().isEmpty();
     }

@@ -18,6 +18,11 @@ package com.example.margonari.tdp2_frontend.domain;
         import android.provider.MediaStore;
         import android.support.annotation.RequiresApi;
 
+        import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+        import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FilePath {
 
     /**

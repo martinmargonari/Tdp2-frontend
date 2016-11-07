@@ -454,6 +454,7 @@ public class MainActivity extends AppCompatActivity
                 ForumPostServices forumPostServices= new ForumPostServices();
                 forumPostServices.setApi_security(api_token);
                 listaPost = (ArrayList<ForumPost>) forumPostServices.getListPostBy(thread_id);
+               Log.d("EL POST :",listaPost.get(0).toString()) ;
                 return listaPost;
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);

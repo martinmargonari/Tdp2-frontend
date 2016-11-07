@@ -15,7 +15,7 @@ public class UnitServices extends AbstractServices {
         private static final String service_name = "course/unity";
         public UnityInfo getUnityInfo(String courseId, String sessionid) {
             String unityQuery = this.getQueryBy(courseId,sessionid);
-            Log.d("UnitServices", unityQuery);
+            Log.d("Query "+this.getClass().getName(),unityQuery);
             UnityInfoDTO unitDTO = (UnityInfoDTO) geDataOftDTO(unityQuery, UnityInfoDTO.class);
             return unitDTO.getData();
         }

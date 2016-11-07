@@ -13,7 +13,7 @@ public class CourseInscriptionServices extends AbstractServices {
 
     public boolean ifExistsErrors(String course_id) {
         String coursesQuery = this.getQueryBy(course_id);
-        Log.d("Inscription",coursesQuery);
+        Log.d("Query "+this.getClass().getName(),coursesQuery);
         EmptyDTO coursesDTO = (EmptyDTO) geDataOftDTO(coursesQuery, EmptyDTO.class);
         return  !coursesDTO.getErrors().isEmpty() ;
     }
