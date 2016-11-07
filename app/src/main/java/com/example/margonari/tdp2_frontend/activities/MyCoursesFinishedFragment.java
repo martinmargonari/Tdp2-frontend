@@ -70,7 +70,7 @@ public class MyCoursesFinishedFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_my_courses_current, container, false);
-        coursesRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_my_courses_current);
+        coursesRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_my_courses_finished);
         coursesRecyclerView.setHasFixedSize(true);
         coursesLayoutManager = new LinearLayoutManager(getContext());
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
