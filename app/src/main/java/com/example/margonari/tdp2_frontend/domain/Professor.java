@@ -1,5 +1,7 @@
 package com.example.margonari.tdp2_frontend.domain;
 
+import android.content.res.AssetManager;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -15,23 +17,14 @@ public class Professor implements java.io.Serializable {
     private String id;
     private String name;
     private String last_name;
-    private String type;
     private String role;
 
     private int photo_id;
     private String file_extension;
 
-    private static String PROFESOR = "PROFESOR";
-    private static String ASISTENTE = "ASISTENTE";
+    private static String PROFESOR = "Profesor";
+    private static String ASISTENTE = "Asistente";
 
-    public Professor(String name, boolean isProfessor) {
-        this.name = name;
-        if (isProfessor) {
-            type = PROFESOR;
-        } else {
-            type = ASISTENTE;
-        }
-    }
     public Professor(){
 
     }
@@ -61,13 +54,9 @@ public class Professor implements java.io.Serializable {
     }
 
     public String getType() {
-
-        if(this.isAssistent())
-            return ASISTENTE;
         if(this.isProfessor())
             return PROFESOR;
-        return "";
-
+        return ASISTENTE;
     }
 
     public String getFullName(){
@@ -86,9 +75,6 @@ public class Professor implements java.io.Serializable {
         this.last_name = last_name;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public int getPhoto_id() {
         return photo_id;

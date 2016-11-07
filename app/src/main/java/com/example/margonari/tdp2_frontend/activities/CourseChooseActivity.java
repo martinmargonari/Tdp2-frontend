@@ -11,10 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.ProfessorAdapter;
 import com.example.margonari.tdp2_frontend.adapters.UnitAdapter;
@@ -24,6 +26,9 @@ import com.example.margonari.tdp2_frontend.domain.Unit;
 import com.example.margonari.tdp2_frontend.services.CourseInscriptionServices;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import org.springframework.util.StreamUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -53,34 +58,25 @@ public class CourseChooseActivity extends AppCompatActivity {
         api_token = getIntent().getStringExtra("API_TOKEN");
         courseFullData= (Course)intent.getSerializableExtra("COURSE_FULL_DATA");
 
+        ImageView imageCourse = (ImageView) findViewById(R.id.image_course_choose);
+        String urlImage = getResources().getString(R.string.imagesURL) + courseFullData.getId() + "." + courseFullData.getFile_extension();
+        Picasso.with(this).load(urlImage).into(imageCourse);
 
+
+        TextView nameProfessorTextView = (TextView)findViewById(R.id.professor_course_choose);
+
+        for (Professor professor:courseFullData.getUsers()) {
+            if(professor.isProfessor()) {
+                nameProfessorTextView.setText(StringUtils.capitalize (professor.getFullName()));
+            }
+            System.out.println(professor.getType() + ": " + StringUtils.capitalize(professor.getFullName()));
+        }
 
         TextView nameCourseTextView = (TextView)findViewById(R.id.name_course_choose);
         nameCourseTextView.setText(courseFullData.getName());
 
         TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
         descriptionTextView.setText(courseFullData.getDescription());
-
-        final RelativeLayout layoutBackgroundCourse = (RelativeLayout) findViewById(R.id.background_course_choose);
-        String urlImage = getResources().getString(R.string.imagesURL) + courseFullData.getId() + "." + courseFullData.getFile_extension();
-        Picasso.with(getBaseContext()).load(urlImage);
-        Log.d("IMAGEURL", urlImage);
-        Picasso.with(this).load(urlImage).into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                layoutBackgroundCourse.setBackground(new BitmapDrawable(bitmap));
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        });
 
         unitsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_units);
         unitsRecyclerView.setHasFixedSize(true);
