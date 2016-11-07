@@ -11,6 +11,9 @@ import android.widget.EditText;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.ForumPost;
+import com.example.margonari.tdp2_frontend.domain.ForumThread;
+import com.example.margonari.tdp2_frontend.services.ForumMakePostServices;
+import com.example.margonari.tdp2_frontend.services.ForumMakeThreadServices;
 import com.example.margonari.tdp2_frontend.services.ForumPostServices;
 
 import java.util.ArrayList;
@@ -41,11 +44,38 @@ public class NewTopicActivity extends AppCompatActivity {
                 String title = textNewTopicTitle.getText().toString();
                 String content = textNewTopicContent.getText().toString();
 
-                //TODO Make communication to post new thread
+                HttpRequestTaskForumMakeThread httpRequestTaskForumMakeThread= new HttpRequestTaskForumMakeThread();
+                httpRequestTaskForumMakeThread.execute(categoryID,title,content);
 
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK,returnIntent);
                 finish();
+
             }
         });
+    }
+    private class HttpRequestTaskForumMakeThread extends AsyncTask<String, Void, Boolean> {
+
+        ArrayList<ForumThread> listPost;
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+
+                String category_id = params[0];
+                String title=params[1];
+                String content=params[2];
+
+                ForumMakeThreadServices forumMakeThreadServices= new ForumMakeThreadServices();
+                forumMakeThreadServices.setApi_security(CourselandApp.getApi_token());
+                Boolean is_make=   forumMakeThreadServices.makePostBy(category_id,title,content);
+                Log.d("ResultadoMakePost", is_make.toString());
+            } catch (Exception e) {
+                Log.e("MyCoourseForumThread", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
     }
 
 }
