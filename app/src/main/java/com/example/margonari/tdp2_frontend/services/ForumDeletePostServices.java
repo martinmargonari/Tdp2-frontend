@@ -16,7 +16,7 @@ public class ForumDeletePostServices extends AbstractServices{
         Log.d("Query "+this.getClass().getName(),coursesQuery);
 
         EmptyDTO emptyDTO = (EmptyDTO) geDataOftDTO(coursesQuery, EmptyDTO.class);
-        return emptyDTO.getErrors().isEmpty();
+        return emptyDTO.getErrors()[0].isEmpty();
     }
 
     @Override

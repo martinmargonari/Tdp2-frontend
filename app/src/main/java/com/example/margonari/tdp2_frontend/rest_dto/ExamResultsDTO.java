@@ -13,7 +13,15 @@ import java.util.List;
 public class ExamResultsDTO extends AbstractDTO {
 
 
-    public ExamResult getData() { return (ExamResult) data; }
+    public ExamResult getData() {
+        try {
+            return (ExamResult) data;
+
+
+        }catch (Exception e){
+            return null;
+        }
+    }
 
     public void setData(ExamResult data) {
         this.data = data;

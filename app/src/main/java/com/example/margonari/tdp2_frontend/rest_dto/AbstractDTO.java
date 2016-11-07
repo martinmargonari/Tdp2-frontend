@@ -15,13 +15,13 @@ import java.util.List;
 public abstract class AbstractDTO {
 
     protected Object data;
-    protected List<String> errors;
+    protected String[] errors;
 
-    public List<String> getErrors() {
+    public String[] getErrors() {
         return errors;
     }
 
-    public void setErrors(List<String> errors) {
+    public void setErrors(String[] errors) {
         this.errors = errors;
     }
 

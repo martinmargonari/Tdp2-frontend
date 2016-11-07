@@ -73,24 +73,35 @@ public class EvaluationActivity extends AppCompatActivity {
 
                 HttpRequestTaskExamResult httpRequestTaskExamResult= new HttpRequestTaskExamResult();
                 httpRequestTaskExamResult.execute(myApiToken,mySessionId,myUnit_id,String.valueOf(questionAmount),String.valueOf(correct_answers));
+                ExamResult examResult;
                 try {
-                    ExamResult examResult=(ExamResult) httpRequestTaskExamResult.get();
-                    if (examResult.getIs_approved().equals("true")){Toast.makeText(v.getContext(),
+                     examResult=(ExamResult) httpRequestTaskExamResult.get();
+
+
+                    if (examResult!=null && examResult.getIs_approved().equals("true")){Toast.makeText(v.getContext(),
                             "Tu condicion ante el examen es  APROBADO"+ " y tu score fue de "+
                                     examResult.getScore(), Toast.LENGTH_LONG).show();
                     }
-                    else{Toast.makeText(v.getContext(),
+                    else if(examResult!=null) {Toast.makeText(v.getContext(),
                             "Tu condicion ante el examen es  DESAPROBADO"+ " y tu score fue de "+
                                     examResult.getScore(), Toast.LENGTH_LONG).show();}
+                    else{
+                        Toast.makeText(v.getContext(),
+                                "Ya realizaste el examen anteriormente, no podes realizar el examen mas de una vez", Toast.LENGTH_LONG).show();
 
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (ExecutionException  e) {
                     e.printStackTrace();
-                }
+
+                    Toast.makeText(v.getContext(),
+                            "Ya realizaste el examen anteriormente, no podes realizar el examen mas de una vez", Toast.LENGTH_LONG).show();
 
 
-            }
+
+
+            }   }
         });
     }
 
