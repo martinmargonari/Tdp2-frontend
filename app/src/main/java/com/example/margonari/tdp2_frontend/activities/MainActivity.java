@@ -191,20 +191,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.mis_cursos) {
-            HttpRequestTaskMyCourses httpRequestTaskMyCourses= new HttpRequestTaskMyCourses();
-            httpRequestTaskMyCourses.execute();
-            ArrayList<Course> listCourses= new ArrayList<>();
-            try {
-                 listCourses= httpRequestTaskMyCourses.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
 
             Intent intent = new Intent(MainActivity.this, MyCoursesActivity.class);
             intent.putExtra(MyCoursesActivity.API_TOKEN, api_token);
-            intent.putExtra(MyCoursesActivity.LIST_CURRENTS, listCourses);
             startActivity(intent);
         } else if (id == R.id.cursos_destacados) {
             //////////////////////////Categorias en curso 6 ( el de python):::: Burcar en el log "CategoriaDescription" //////////////////////////
@@ -357,28 +346,6 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
-    class HttpRequestTaskMyCourses extends AsyncTask<String, Void, ArrayList<Course>> {
-
-        ArrayList<Course> listaCursos;
-        @Override
-        protected ArrayList<Course> doInBackground(String... params) {
-            try {
-
-                ListMyCoursesServices listMyCoursesServices= new ListMyCoursesServices();
-                listMyCoursesServices.setApi_security(api_token);
-                listaCursos= (ArrayList<Course>) listMyCoursesServices.getListCoursesBy();
-
-
-            } catch (Exception e) {
-                Log.e("ListCoursesByCategories", e.getMessage(), e);
-            }
-
-            return listaCursos;
-        }
-
-    }
-
 
     private class HttpRequestTaskLogin extends AsyncTask<String, Void, Login> {
         @Override

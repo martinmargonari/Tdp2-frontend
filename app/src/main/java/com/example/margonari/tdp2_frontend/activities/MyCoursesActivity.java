@@ -1,6 +1,7 @@
 package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,20 +16,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.services.ListMyCoursesFinishedServices;
+import com.example.margonari.tdp2_frontend.services.ListMyCoursesServices;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class MyCoursesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String API_TOKEN = "API_TOKEN";
-    public static final String LIST_CURRENTS = "LIST_CURRENTS";
 
     /**
      * The {@link PagerAdapter} that will provide
@@ -57,7 +61,6 @@ public class MyCoursesActivity extends AppCompatActivity
 
         intent = getIntent();
         api_token = getIntent().getStringExtra(API_TOKEN);
-        coursesList= (ArrayList<Course>)intent.getSerializableExtra(LIST_CURRENTS);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -155,9 +158,33 @@ public class MyCoursesActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             if (position == 0) {
+                HttpRequestTaskMyCoursesCurrent httpRequestTaskMyCourses = new HttpRequestTaskMyCoursesCurrent();
+                httpRequestTaskMyCourses.execute();
+                ArrayList<Course> coursesList= new ArrayList<>();
+                try {
+                    coursesList = httpRequestTaskMyCourses.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
                 return MyCoursesCurrentFragment.newInstance(api_token,coursesList);
-            } else
-                return MyCoursesCurrentFragment.newInstance(api_token,coursesList);
+
+            } else {
+                HttpRequestTaskMyCoursesFinished httpRequestTaskMyCourses = new HttpRequestTaskMyCoursesFinished();
+                httpRequestTaskMyCourses.execute();
+                ArrayList<Course> coursesList = new ArrayList<>();
+                try {
+                    coursesList = httpRequestTaskMyCourses.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                return MyCoursesFinishedFragment.newInstance(api_token, coursesList);
+            }
         }
 
         @Override
@@ -177,4 +204,46 @@ public class MyCoursesActivity extends AppCompatActivity
             return null;
         }
     }
+
+    private class HttpRequestTaskMyCoursesCurrent extends AsyncTask<String, Void, ArrayList<Course>> {
+
+        ArrayList<Course> listaCursos;
+        @Override
+        protected ArrayList<Course> doInBackground(String... params) {
+            try {
+
+                ListMyCoursesServices listMyCoursesServices= new ListMyCoursesServices();
+                listMyCoursesServices.setApi_security(api_token);
+                listaCursos = (ArrayList<Course>) listMyCoursesServices.getListCoursesBy();
+
+
+            } catch (Exception e) {
+                Log.e("ListCoursesCurrent", e.getMessage(), e);
+            }
+
+            return listaCursos;
+        }
+    }
+
+    private class HttpRequestTaskMyCoursesFinished extends AsyncTask<String, Void, ArrayList<Course>> {
+
+        ArrayList<Course> listaCursos;
+        @Override
+        protected ArrayList<Course> doInBackground(String... params) {
+            try {
+
+                ListMyCoursesFinishedServices listMyCoursesFinishedServices = new ListMyCoursesFinishedServices();
+                listMyCoursesFinishedServices.setApi_security(api_token);
+                listaCursos = (ArrayList<Course>) listMyCoursesFinishedServices.getListCoursesBy();
+
+
+            } catch (Exception e) {
+                Log.e("ListCoursesFinished", e.getMessage(), e);
+            }
+
+            return listaCursos;
+        }
+    }
+
+
 }
