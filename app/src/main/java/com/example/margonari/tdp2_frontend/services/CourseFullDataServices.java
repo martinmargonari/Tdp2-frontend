@@ -15,7 +15,7 @@ public class CourseFullDataServices extends AbstractServices {
 
     public Course getCourseBy(String course_id) {
         String coursesQuery = this.getQueryBy(course_id);
-        Log.d("Course query",coursesQuery);
+        Log.d("Query "+this.getClass().getName(),coursesQuery);
         CoursesDTO coursesDTO = (CoursesDTO) geDataOftDTO(coursesQuery, CoursesDTO.class);
         return coursesDTO.getData().get( 0 );
     }

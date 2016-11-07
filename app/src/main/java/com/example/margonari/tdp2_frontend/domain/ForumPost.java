@@ -3,6 +3,8 @@ package com.example.margonari.tdp2_frontend.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.util.Arrays;
+
 /**
  * Created by luis on 27/10/16.
  */
@@ -21,6 +23,9 @@ public class ForumPost {
     private String created_at;
     private String updated_at;
     private AttachFile[] attachments;
+    private String author_image;
+    private Author author;
+
 
     public String getId() {
         return id;
@@ -110,5 +115,40 @@ public class ForumPost {
 
     public void setAuthor_name(String author_name) {
         this.author_name = author_name;
+    }
+
+    public String getAuthor_image() {
+        return author_image;
+    }
+
+    public void setAuthor_image(String author_image) {
+        this.author_image = author_image;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    @Override
+    public String toString() {
+        return "ForumPost{" +
+                "id='" + id + '\'' +
+                ", author_name='" + author_name + '\'' +
+                ", thread_id='" + thread_id + '\'' +
+                ", author_id='" + author_id + '\'' +
+                ", content='" + content + '\'' +
+                ", post_id='" + post_id + '\'' +
+                ", sequence='" + sequence + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", updated_at='" + updated_at + '\'' +
+                ", attachments=" + Arrays.toString(attachments) +
+                ", author_image='" + author_image + '\'' +
+                ", author=" + author +
+                ", deleted_at='" + deleted_at + '\'' +
+                '}';
     }
 }

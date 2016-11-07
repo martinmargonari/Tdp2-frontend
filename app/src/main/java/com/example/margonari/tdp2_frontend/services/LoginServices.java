@@ -15,7 +15,7 @@ public class LoginServices extends AbstractServices{
 
     public Login getLoginBy(String user, String token) {
         String loginQuery = this.getQueryBy(user,token);
-        Log.d("LoginQuery", loginQuery);
+        Log.d("Query "+this.getClass().getName(),loginQuery);
         LoginDTO loginDTO = (LoginDTO) geDataOftDTO(loginQuery, LoginDTO.class);
         return loginDTO.getData();
     }

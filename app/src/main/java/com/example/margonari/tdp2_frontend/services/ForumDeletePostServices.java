@@ -13,6 +13,8 @@ public class ForumDeletePostServices extends AbstractServices{
 
     public Boolean deletePostBy(String post_id) {
         String coursesQuery = this.getQueryBy(post_id);
+        Log.d("Query "+this.getClass().getName(),coursesQuery);
+
         EmptyDTO emptyDTO = (EmptyDTO) geDataOftDTO(coursesQuery, EmptyDTO.class);
         return emptyDTO.getErrors().isEmpty();
     }

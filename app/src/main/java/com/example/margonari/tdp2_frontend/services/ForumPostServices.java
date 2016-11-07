@@ -16,6 +16,8 @@ public class ForumPostServices extends AbstractServices {
     public List<ForumPost> getListPostBy(String thread_id) {
 
         String coursesQuery = this.getQueryBy(thread_id);
+        Log.d("Query "+this.getClass().getName(),coursesQuery);
+
         ForumPostDTO coursesDTO = (ForumPostDTO) geDataOftDTO(coursesQuery, ForumPostDTO.class);
         return coursesDTO.getData();
     }

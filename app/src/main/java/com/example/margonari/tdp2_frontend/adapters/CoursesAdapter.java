@@ -78,7 +78,6 @@ public class CoursesAdapter extends RecyclerView
         String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getId() + "." + mDataset.get(position).getFile_extension();
         Picasso.with(holder.context).load(urlImage).into(holder.course_photo);
 
-        //h
         // older.course_session_start.setText("El curso inicia: " + mDataset.get(position).getCurrent_sessions().get(0).getStart().substring(0,10));
     }
 

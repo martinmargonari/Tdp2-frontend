@@ -17,6 +17,7 @@ public class ForumMakePostServices extends AbstractServices{
     public Boolean makePostBy(String thread_id, String content) throws UnsupportedEncodingException {
         String coursesQuery = this.getQueryBy(thread_id,content);
 
+        Log.d("Query "+this.getClass().getName(),coursesQuery);
 
         EmptyDTO emptyDTO = (EmptyDTO) geDataOftDTO(coursesQuery, EmptyDTO.class);
         return true;

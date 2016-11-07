@@ -1,5 +1,7 @@
 package com.example.margonari.tdp2_frontend.services;
 
+import android.util.Log;
+
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.rest_dto.CoursesDTO;
 
@@ -15,6 +17,8 @@ public class ListCourseServices extends AbstractServices {
 
     public List<Course> getListCoursesBy(String courseName) {
         String coursesQuery = this.getQueryBy(courseName);
+        Log.d("Query "+this.getClass().getName(),coursesQuery);
+
         CoursesDTO coursesDTO = (CoursesDTO) geDataOftDTO(coursesQuery, CoursesDTO.class);
         return coursesDTO.getData();
     }
