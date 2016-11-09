@@ -58,6 +58,8 @@ public class CourseChooseActivity extends AppCompatActivity {
         api_token = getIntent().getStringExtra("API_TOKEN");
         courseFullData= (Course)intent.getSerializableExtra("COURSE_FULL_DATA");
 
+        this.setTitle(courseFullData.getName());
+
         ImageView imageCourse = (ImageView) findViewById(R.id.image_course_choose);
         String urlImage = getResources().getString(R.string.imagesURL) + courseFullData.getId() + "." + courseFullData.getFile_extension();
         Picasso.with(this).load(urlImage).into(imageCourse);

@@ -128,9 +128,11 @@ public class MyCourseForumCategoryFragment extends Fragment {
             public void onItemClick(int position, View v) {
                 ForumCategory forumCategory = forumCategoryArrayList.get(position);
                 String categoryID = forumCategory.getId();
+                String title = forumCategory.getTitle();
                 Intent intent = new Intent(getContext(), MyCourseForumThreadActivity.class);
-                intent.putExtra("API_TOKEN", api_token);
-                intent.putExtra("CATEGORY_ID", categoryID);
+                intent.putExtra(MyCourseForumThreadActivity.API_TOKEN, api_token);
+                intent.putExtra(MyCourseForumThreadActivity.CATEGORY_ID, categoryID);
+                intent.putExtra(MyCourseForumThreadActivity.CATEGORY_NAME, title);
                 startActivity(intent);
 
                 Log.i("LOG_TAG", " Clicked on Item " + position);

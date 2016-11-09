@@ -33,6 +33,8 @@ public class NewTopicActivity extends AppCompatActivity {
         api_token = intent.getStringExtra("API_TOKEN");
         categoryID = intent.getStringExtra("CATEGORY_ID");
 
+        this.setTitle("Nuevo Tópico");
+
         textNewTopicTitle = (EditText) findViewById(R.id.new_topic_title);
         textNewTopicContent = (EditText) findViewById(R.id.new_topic_content);
         buttonCreateNewTopic = (Button) findViewById(R.id.button_create_topic);

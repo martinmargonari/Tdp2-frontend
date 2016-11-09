@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.ForumThreadAdapter;
+import com.example.margonari.tdp2_frontend.domain.ForumCategory;
 import com.example.margonari.tdp2_frontend.domain.ForumThread;
 import com.example.margonari.tdp2_frontend.services.ForumThreadsServices;
 
@@ -20,11 +21,13 @@ import java.util.concurrent.ExecutionException;
 
 public class MyCourseForumThreadActivity extends AppCompatActivity {
 
-    private static final String API_TOKEN = "API_TOKEN";
-    private static final String CATEGORY_ID = "CATEGORY_ID";
+    public static final String API_TOKEN = "API_TOKEN";
+    public static final String CATEGORY_ID = "CATEGORY_ID";
+    public static final String CATEGORY_NAME = "CATEGORY_NAME";
 
     private String api_token;
-    private String categoryID;
+    private String categoryId;
+    private String categoryName;
 
     private RecyclerView forumThreadsRecyclerView;
     private RecyclerView.LayoutManager forumThreadsLayoutManager;
@@ -38,7 +41,10 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_course_forum_thread);
 
         api_token = getIntent().getStringExtra(API_TOKEN);
-        categoryID = getIntent().getStringExtra(CATEGORY_ID);
+        categoryId = getIntent().getStringExtra(CATEGORY_ID);
+        categoryName = getIntent().getStringExtra(CATEGORY_NAME);
+
+        this.setTitle(categoryName);
 
         forumThreadsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_my_course_forum_threads);
         forumThreadsRecyclerView.setHasFixedSize(true);
@@ -54,7 +60,7 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MyCourseForumThreadActivity.this,NewTopicActivity.class);
                 intent.putExtra("API_TOKEN",api_token);
-                intent.putExtra("CATEGORY_ID",categoryID);
+                intent.putExtra("CATEGORY_ID",categoryId);
                 startActivity(intent);
             }
         });
@@ -84,7 +90,7 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
             try {
                 ForumThreadsServices forumThreadsServices = new ForumThreadsServices();
                 forumThreadsServices.setApi_security(api_token);
-                listThreads = (ArrayList<ForumThread>) forumThreadsServices.getListThreadsBy(categoryID);
+                listThreads = (ArrayList<ForumThread>) forumThreadsServices.getListThreadsBy(categoryId);
                 return listThreads;
             } catch (Exception e) {
                 Log.e("ForumThreadActivity", e.getMessage(), e);
@@ -106,9 +112,11 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
             public void onItemClick(int position, View v) {
                 ForumThread forumThread = forumThreadArrayList.get(position);
                 String forumThreadId = forumThread.getId();
+                String title = forumThread.getTitle();
                 Intent intent = new Intent(MyCourseForumThreadActivity.this, MyCourseForumThreadPostsActivity.class);
-                intent.putExtra("API_TOKEN", api_token);
-                intent.putExtra("THREAD_ID", forumThreadId);
+                intent.putExtra(MyCourseForumThreadPostsActivity.API_TOKEN, api_token);
+                intent.putExtra(MyCourseForumThreadPostsActivity.THREAD_ID, forumThreadId);
+                intent.putExtra(MyCourseForumThreadPostsActivity.THREAD_NAME, title);
                 startActivity(intent);
 
                 Log.i("LOG_TAG", " Clicked on Item " + position);

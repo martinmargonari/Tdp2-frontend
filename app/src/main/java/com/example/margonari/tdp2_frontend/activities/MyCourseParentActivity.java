@@ -95,6 +95,7 @@ public class MyCourseParentActivity extends AppCompatActivity {
             }
         });
 
+        this.setTitle(courseFullData.getName());
 
         //tabLayout.setupWithViewPager(mViewPager);
 
