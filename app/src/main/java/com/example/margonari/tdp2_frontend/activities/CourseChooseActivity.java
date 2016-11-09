@@ -91,11 +91,8 @@ public class CourseChooseActivity extends AppCompatActivity {
         professorsLayoutManager = new LinearLayoutManager(this);
         professorsRecyclerView.setLayoutManager(professorsLayoutManager);
         professorsRecyclerView.setFocusable(false);
-        professorsAdapter = new ProfessorAdapter(getDataSetProfessors());
+        professorsAdapter = new ProfessorAdapter((ArrayList)courseFullData.getUsers());
         professorsRecyclerView.setAdapter(professorsAdapter);
-
-
-
     }
 
     private ArrayList<Unit> getDataSetUnits() {
