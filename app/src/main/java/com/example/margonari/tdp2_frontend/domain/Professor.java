@@ -60,7 +60,7 @@ public class Professor implements java.io.Serializable {
     }
 
     public String getFullName(){
-        StringBuffer fullname= new StringBuffer();
+        StringBuffer fullname = new StringBuffer();
         if(!name.isEmpty()) fullname.append(name);
         fullname.append(" ");
         if(!last_name.isEmpty()) fullname.append(last_name);

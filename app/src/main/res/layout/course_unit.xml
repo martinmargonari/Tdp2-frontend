@@ -4,257 +4,56 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<!--
+
     <RelativeLayout
+        android:padding="10dp"
         android:id="@+id/expand_unit"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_above="@+id/expandable_unit_description"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/border">
+
+        <TextView
+            android:id="@+id/unit_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"/>
+
+        <TextView
+            android:id="@+id/unit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@id/unit_number" />
 
         <ImageView
             android:id="@+id/expand_unit_icon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:scaleType="centerInside"
             android:src="@drawable/expand"
             android:tintMode="src_in" />
     </RelativeLayout>
-    <TextView
-        android:id="@+id/unit_name"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="sample" />
-
--->
-
-    <Button
-        android:id="@+id/expandableButton"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:drawableRight="@android:drawable/arrow_down_float"
-        android:backgroundTint="@android:color/white"
-        android:elevation="0dp"
-        android:gravity="top"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="15dp" />
 
     <com.github.aakira.expandablelayout.ExpandableRelativeLayout
         android:id="@+id/expandable_unit_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/expandableButton"
+        android:paddingBottom="10dp"
+        android:layout_below="@id/expand_unit"
         app:ael_expanded="false"
         app:ael_interpolator="bounce"
-        app:ael_orientation="vertical">
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:id="@+id/cv_unit_description"
-            android:layout_marginBottom="@dimen/course_margin_bottom"
-            >
-            <LinearLayout
+        android:background="@android:color/white">
+            <TextView
+                android:id="@+id/unit_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    android:id="@+id/unit_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-
-
-    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
-</RelativeLayout>
-
-<!--    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/cv_unit_material"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <LinearLayout
-            android:id = "@+id/expand_unit"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:id="@+id/relative_image"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:gravity="center"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
-
-                <ImageView
-                    android:id="@+id/expand_unit_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_expand"
-                    android:tintMode="src_in"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/unit_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
-
-
-        <LinearLayout
-            android:id="@+id/collapsable"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.71">
-
-        <TextView
-            android:id="@+id/unit_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/unit_name"
-            android:text="sample2" />
-        </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-    >
-    </RelativeLayout>
-
-<com.github.aakira.expandablelayout.ExpandableLinearLayout
-    android:id="@+id/expandable_unit_description"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/unit_name"
-    android:orientation="vertical"
-    app:ael_duration="400"
-    app:ael_expanded="false">
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <TextView
-            android:id="@+id/unit_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/unit_name"
-            android:text="sample2" />
-    </android.support.v4.widget.NestedScrollView>
-</com.github.aakira.expandablelayout.ExpandableLinearLayout>
-</RelativeLayout>
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:padding="1dp">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/cv_course_unit"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardElevation="4dp"
-        card_view:cardCornerRadius="3dp"
-        >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            >
-            <RelativeLayout
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:padding="5dp"
-                android:id="@+id/layout_photo_unit">
-
-                <ImageView
-                    android:id="@+id/unit_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:layout_marginLeft="5dp"
-                    />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/unit_name"
-                android:layout_toRightOf="@+id/layout_photo_unit"
-                android:layout_alignParentTop="true"
-                android:textSize="20sp"
-                android:gravity="center"
+                android:paddingTop="20dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="20dp"
+                android:textSize="12sp"
                 />
-
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
-
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-
-    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
-        android:id="@+id/expandableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:ael_expanded="false"
-        app:ael_duration="500"
-        app:ael_interpolator="bounce"
-        app:ael_orientation="vertical">
-
-        <TextView
-            android:id="@+id/unit_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="sample" />
-        <TextView
-            android:id="@+id/unit_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/unit_name"
-            android:text="sample2" />
     </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
-</LinearLayout>
 
--->
+</RelativeLayout>

@@ -12,6 +12,7 @@
         card_view:cardUseCompatPadding="true"
         card_view:cardElevation="4dp"
         card_view:cardCornerRadius="3dp"
+        style="@style/AppTheme.CardTheme"
         >
 
         <RelativeLayout
@@ -41,9 +42,8 @@
                 android:id="@+id/course_name"
                 android:layout_toRightOf="@+id/layout_photo"
                 android:layout_alignParentTop="true"
-                android:textSize="15dp"
-                android:textColor="@android:color/black"
                 android:maxLines="2"
+                android:text="La concha de tu madre all boys"
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
