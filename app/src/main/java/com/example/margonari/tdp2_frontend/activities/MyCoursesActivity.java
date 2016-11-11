@@ -130,8 +130,6 @@ public class MyCoursesActivity extends AppCompatActivity
             Intent intent = new Intent(this,MainActivity.class);
             intent.putExtra("API_TOKEN", api_token);
             startActivity(intent);
-        } else if (id == R.id.notificaciones) {
-
         } else if (id == R.id.ajustes) {
 
         } else if (id == R.id.cerrar_sesion) {

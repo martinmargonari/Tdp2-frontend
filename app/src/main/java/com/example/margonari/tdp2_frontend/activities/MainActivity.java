@@ -243,8 +243,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.todos_los_cursos) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.notificaciones) {
-
         } else if (id == R.id.ajustes) {
 
         } else if (id == R.id.cerrar_sesion) {
