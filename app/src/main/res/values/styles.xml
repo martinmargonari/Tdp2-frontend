@@ -49,6 +49,11 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextHead">
+        <item name="android:fontFamily">roboto</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 
 
 
