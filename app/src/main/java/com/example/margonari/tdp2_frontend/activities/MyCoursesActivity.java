@@ -19,7 +19,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.services.ListMyCoursesFinishedServices;
@@ -33,6 +37,9 @@ public class MyCoursesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String API_TOKEN = "API_TOKEN";
+    public static final String USER_EMAIL = "USER_EMAIL";
+    public static final String USER_FULLNAME = "USER_FULLNAME";
+    public static final String USER_PICTURE = "USER_PICTURE";
 
     /**
      * The {@link PagerAdapter} that will provide
@@ -53,6 +60,9 @@ public class MyCoursesActivity extends AppCompatActivity
     private static String LOG_TAG = "MyCoursesActivity";
     private ArrayList<Course> coursesList;
     private String api_token;
+    private String userEmail;
+    private String userFullName;
+    private String userPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +70,10 @@ public class MyCoursesActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_courses);
 
         intent = getIntent();
-        api_token = getIntent().getStringExtra(API_TOKEN);
+        api_token = intent.getStringExtra(API_TOKEN);
+        userEmail = intent.getStringExtra(USER_EMAIL);
+        userFullName = intent.getStringExtra(USER_FULLNAME);
+        userPicture = intent.getStringExtra(USER_PICTURE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,6 +94,18 @@ public class MyCoursesActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_my_courses);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView userNameText = (TextView) headerView.findViewById(R.id.user_name);
+        TextView emailText = (TextView) headerView.findViewById(R.id.user_email);
+        ImageView imageProfile = (ImageView) headerView.findViewById(R.id.profile_picture);
+
+        userNameText.setText(userFullName);
+        emailText.setText(userEmail);
+        imageProfile.setImageDrawable(getDrawable(R.drawable.profile_pic_user));
+
+        if (userPicture != null)
+            Glide.with(this).load(userPicture).into(imageProfile);
     }
 
     @Override
