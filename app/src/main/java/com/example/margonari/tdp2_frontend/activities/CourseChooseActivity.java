@@ -71,7 +71,6 @@ public class CourseChooseActivity extends AppCompatActivity {
             if(professor.isProfessor()) {
                 nameProfessorTextView.setText(StringUtils.capitalize (professor.getFullName()));
             }
-            System.out.println(professor.getType() + ": " + StringUtils.capitalize(professor.getFullName()));
         }
 
         TextView nameCourseTextView = (TextView)findViewById(R.id.name_course_choose);
