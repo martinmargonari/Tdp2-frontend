@@ -116,10 +116,13 @@ public class MainActivity extends AppCompatActivity
         TextView userNameText = (TextView) headerView.findViewById(R.id.user_name);
         TextView emailText = (TextView) headerView.findViewById(R.id.user_email);
         ImageView imageProfile = (ImageView) headerView.findViewById(R.id.profile_picture);
+
         userNameText.setText(firstName + " " + lastName);
         emailText.setText(userEmail);
+        imageProfile.setImageDrawable(getDrawable(R.drawable.profile_pic_user));
 
-        Glide.with(this).load(profilePicture).into(imageProfile);
+        if (profilePicture != null)
+            Glide.with(this).load(profilePicture).into(imageProfile);
 
         grillaCategorias = (GridView) findViewById(R.id.grilla_categorias);
         adapterCategorias = new ImageAdapter(this);
@@ -196,6 +199,9 @@ public class MainActivity extends AppCompatActivity
 
             Intent intent = new Intent(MainActivity.this, MyCoursesActivity.class);
             intent.putExtra(MyCoursesActivity.API_TOKEN, api_token);
+            intent.putExtra(MyCoursesActivity.USER_EMAIL, userEmail);
+            intent.putExtra(MyCoursesActivity.USER_FULLNAME, firstName + " " + lastName);
+            intent.putExtra(MyCoursesActivity.USER_PICTURE, profilePicture);
             startActivity(intent);
         } else if (id == R.id.cursos_destacados) {
             //////////////////////////Categorias en curso 6 ( el de python):::: Burcar en el log "CategoriaDescription" //////////////////////////
@@ -243,8 +249,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.todos_los_cursos) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.notificaciones) {
-
         } else if (id == R.id.ajustes) {
 
         } else if (id == R.id.cerrar_sesion) {

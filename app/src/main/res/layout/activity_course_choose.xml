@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.margonari.tdp2_frontend.activities.CourseChooseActivity"
-    android:descendantFocusability="beforeDescendants"
     android:theme="@style/AppTheme.CardTheme">
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:descendantFocusability="beforeDescendants">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -106,7 +112,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/cv_course_plan"
             android:layout_marginBottom="@dimen/course_margin_bottom"
-            android:paddingBottom="15dp"
             style="@style/AppTheme.CardTheme">
 
             <LinearLayout
@@ -130,7 +135,8 @@
                     android:id="@+id/recycler_view_units"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false" />
+                    android:focusable="false"
+                    android:layout_marginBottom="15dp"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -167,16 +173,19 @@
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
-        <Button
-            android:id="@+id/button_inscribirse"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center"
-            android:text="INSCRIBIRSE"
-            android:textColor="#ffffff"
-            android:backgroundTint="#3146cc"
-            android:onClick="inscribirse"/>
     </LinearLayout>
 </ScrollView>
+
+    <Button
+        android:id="@+id/button_inscribirse"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center"
+        android:text="INSCRIBIRSE"
+        android:textColor="@color/buttonTextColor"
+        android:textAppearance="@style/TextBody"
+        android:backgroundTint="@color/accent"
+        android:onClick="inscribirse"/>
+
+</LinearLayout>
