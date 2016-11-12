@@ -2,7 +2,9 @@ package com.example.margonari.tdp2_frontend.services;
 
 import android.util.Log;
 
+import com.example.margonari.tdp2_frontend.domain.ExamResult;
 import com.example.margonari.tdp2_frontend.rest_dto.AbstractDTO;
+import com.example.margonari.tdp2_frontend.rest_dto.ExamResultsDTO;
 
 /**
  * Created by luis on 17/10/16.
@@ -10,7 +12,7 @@ import com.example.margonari.tdp2_frontend.rest_dto.AbstractDTO;
 public class ExamResultServices extends AbstractServices{
     private static final String service_name = "course/create-exam-result";
 
-    public Boolean make(String... params) {
+    public ExamResult make(String... params) {
 
         String myApiToken 		=  params[0];
         String mySessionId		=  params[1];
@@ -20,8 +22,8 @@ public class ExamResultServices extends AbstractServices{
 
         String coursesQuery = this.getQueryBy(myApiToken, mySessionId,unit_id,correct_answers,questions_amount);
         Log.d("Query "+this.getClass().getName(),coursesQuery);
-        AbstractDTO a = (AbstractDTO)geDataOftDTO(coursesQuery, AbstractDTO.class);
-        return a.getErrors().isEmpty();
+        ExamResultsDTO a = (ExamResultsDTO)geDataOftDTO(coursesQuery, ExamResultsDTO.class);
+        return a.getData();
     }
 
     @Override

@@ -61,7 +61,8 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
                 Intent intent = new Intent(MyCourseForumThreadActivity.this,NewTopicActivity.class);
                 intent.putExtra("API_TOKEN",api_token);
                 intent.putExtra("CATEGORY_ID",categoryId);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
+
             }
         });
 
@@ -106,6 +107,7 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+
         ((ForumThreadAdapter) forumThreadsAdapter).setOnItemClickListener(new ForumThreadAdapter
                 .MyClickListener() {
             @Override
@@ -122,6 +124,21 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
                 Log.i("LOG_TAG", " Clicked on Item " + position);
             }
         });
+
+
+
     }
- 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+
+            if(resultCode == RESULT_OK){
+                finish();
+                startActivity(getIntent());
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Do nothing?
+            }
+        }
+    }//onActivityResult
 }

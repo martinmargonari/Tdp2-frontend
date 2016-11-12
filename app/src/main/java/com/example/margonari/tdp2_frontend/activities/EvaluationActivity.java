@@ -14,10 +14,12 @@ import android.widget.Toast;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.QuestionAdapter;
 import com.example.margonari.tdp2_frontend.adapters.QuestionCorrectedAdapter;
+import com.example.margonari.tdp2_frontend.domain.ExamResult;
 import com.example.margonari.tdp2_frontend.domain.Question;
 import com.example.margonari.tdp2_frontend.services.ExamResultServices;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class EvaluationActivity extends AppCompatActivity {
 
@@ -71,8 +73,35 @@ public class EvaluationActivity extends AppCompatActivity {
 
                 HttpRequestTaskExamResult httpRequestTaskExamResult= new HttpRequestTaskExamResult();
                 httpRequestTaskExamResult.execute(myApiToken,mySessionId,myUnit_id,String.valueOf(questionAmount),String.valueOf(correct_answers));
+                ExamResult examResult;
+                try {
+                     examResult=(ExamResult) httpRequestTaskExamResult.get();
 
-            }
+
+                    if (examResult!=null && examResult.getIs_approved().equals("true")){Toast.makeText(v.getContext(),
+                            "Tu condicion ante el examen es  APROBADO"+ " y tu score fue de "+
+                                    examResult.getScore(), Toast.LENGTH_LONG).show();
+                    }
+                    else if(examResult!=null) {Toast.makeText(v.getContext(),
+                            "Tu condicion ante el examen es  DESAPROBADO"+ " y tu score fue de "+
+                                    examResult.getScore(), Toast.LENGTH_LONG).show();}
+                    else{
+                        Toast.makeText(v.getContext(),
+                                "Ya realizaste el examen anteriormente, no podes realizar el examen mas de una vez", Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException  e) {
+                    e.printStackTrace();
+
+                    Toast.makeText(v.getContext(),
+                            "Ya realizaste el examen anteriormente, no podes realizar el examen mas de una vez", Toast.LENGTH_LONG).show();
+
+
+
+
+            }   }
         });
     }
 
@@ -100,9 +129,9 @@ public class EvaluationActivity extends AppCompatActivity {
     }
 
 
-    private class HttpRequestTaskExamResult extends AsyncTask<String, Void, Void> {
+    private class HttpRequestTaskExamResult extends AsyncTask<String, Void, ExamResult> {
         @Override
-        protected Void doInBackground(String... params) {
+        protected ExamResult doInBackground(String... params) {
             try {
 
                 String myApiToken 		=  params[0];
@@ -114,9 +143,12 @@ public class EvaluationActivity extends AppCompatActivity {
 
 
                 ExamResultServices examResultServices=  new ExamResultServices();
-                       Boolean result=  examResultServices.make(myApiToken, mySessionId,unit_id,correct_answers,questions_amount);
-                String resultado= result.toString();
+                       ExamResult result=  examResultServices.make(myApiToken, mySessionId,unit_id,correct_answers,questions_amount);
+                String resultado= result.getIs_approved();
                     Log.d("Resultaddo",resultado );
+                String score = result.getScore();
+                Log.d("Score",score );
+                return result;
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);
             }

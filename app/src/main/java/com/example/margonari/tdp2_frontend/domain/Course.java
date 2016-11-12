@@ -23,6 +23,7 @@ public class Course implements java.io.Serializable {
     private List<Unit> unities= new ArrayList<Unit>();
     private List<Professor> users=new ArrayList<Professor>();
     private int photo_id;
+    private String full_image;
 
 
     public Course(String name, String description, int photo_id) {
@@ -108,6 +109,14 @@ public class Course implements java.io.Serializable {
         this.session_id = session_id;
     }
 
+    public String getFull_image() {
+        return full_image;
+    }
+
+    public void setFull_image(String full_image) {
+        this.full_image = full_image;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -121,4 +130,6 @@ public class Course implements java.io.Serializable {
                 ", photo_id=" + photo_id +
                 '}';
     }
+
+
 }

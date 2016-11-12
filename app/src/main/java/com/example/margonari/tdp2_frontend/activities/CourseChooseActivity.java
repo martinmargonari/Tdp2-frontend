@@ -97,13 +97,8 @@ public class CourseChooseActivity extends AppCompatActivity {
     }
 
     private ArrayList<Unit> getDataSetUnits() {
-        ArrayList results = new ArrayList<Unit>();
-        if (courseFullData.getUnities().size() != 0){
-            for (int index = 0; index < courseFullData.getUnities().size(); index++) {
-                Unit obj = new Unit(courseFullData.getUnities().get( index ).getName(), R.drawable.arte);
-                results.add(obj);
-            }
-        }
+        ArrayList results = new ArrayList<Unit>(courseFullData.getUnities());
+
         return results;
     }
 
@@ -128,7 +123,7 @@ public class CourseChooseActivity extends AppCompatActivity {
         Log.d("SESSION ID : ",courseFullData.getNext_sessions().get(0).getId().toString());
         try {
             Boolean ifExistsErrors= (Boolean) httpRequestTask.get();
-            if(ifExistsErrors==true) {Toast.makeText( CourseChooseActivity.this,"Hay un error en la inscripcion , intente mas tarde",Toast.LENGTH_SHORT).show();}
+            if(ifExistsErrors!=null && ifExistsErrors==true) {Toast.makeText( CourseChooseActivity.this,"Hay un error en la inscripcion , intente mas tarde",Toast.LENGTH_SHORT).show();}
             else{Toast.makeText( CourseChooseActivity.this,"Inscripcion realizada con exito",Toast.LENGTH_SHORT).show();}
         } catch (InterruptedException e) {
             e.printStackTrace();

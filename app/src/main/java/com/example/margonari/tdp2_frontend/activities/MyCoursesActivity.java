@@ -102,7 +102,7 @@ public class MyCoursesActivity extends AppCompatActivity
 
         userNameText.setText(userFullName);
         emailText.setText(userEmail);
-        imageProfile.setImageDrawable(getDrawable(R.drawable.profile_pic_user));
+        imageProfile.setImageDrawable(getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
 
         if (userPicture != null)
             Glide.with(this).load(userPicture).into(imageProfile);

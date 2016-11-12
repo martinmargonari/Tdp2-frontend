@@ -44,12 +44,16 @@ public class MyCourseActivity extends AppCompatActivity {
         unitsLayoutManager = new LinearLayoutManager(this);
         unitsRecyclerView.setLayoutManager(unitsLayoutManager);
         unitsRecyclerView.setFocusable(false);
-        unitsAdapter = new MyCourseUnitAdapter(getDataSetUnits());
+        unitsAdapter = new MyCourseUnitAdapter(getDataSetUnits(),this);
         unitsRecyclerView.setAdapter(unitsAdapter);
         unitArrayList= (ArrayList)courseFullData.getUnities();
 
 
 
+    }
+
+    public Course getCourseFullData(){
+        return  courseFullData;
     }
 
     private ArrayList<Unit> getDataSetUnits() {
