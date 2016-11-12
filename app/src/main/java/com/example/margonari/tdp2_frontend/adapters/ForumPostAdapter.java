@@ -2,6 +2,7 @@ package com.example.margonari.tdp2_frontend.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class ForumPostAdapter extends RecyclerView
     public void onBindViewHolder(final ForumPostAdapter.ForumPostHolder holder, final int position) {
         holder.post_author.setText(mDataset.get(position).getAuthor_name());
         holder.post_content.setText(mDataset.get(position).getContent());
+        Log.d("AuthorImageUrl", mDataset.get(position).getAuthor_image()); //Aca recibis la imagen
         if(mDataset.get(position).getAttachments().length==0) {
             holder.boton_adjuntos.setVisibility(View.GONE);
         }else {

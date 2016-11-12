@@ -22,6 +22,8 @@ public class Unit implements java.io.Serializable {
     private String file_extension;
     private String is_final_exam;
     private String full_image;
+    private String description;
+    private String minimum_score;
 
     public Unit() {
     }
@@ -109,6 +111,22 @@ public class Unit implements java.io.Serializable {
 
     public void setFull_image(String full_image) {
         this.full_image = full_image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getMinimum_score() {
+        return minimum_score;
+    }
+
+    public void setMinimum_score(String minimum_score) {
+        this.minimum_score = minimum_score;
     }
 
     @Override

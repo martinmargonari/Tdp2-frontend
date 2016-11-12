@@ -126,7 +126,7 @@ public class UnitAdapter extends RecyclerView
     public void onBindViewHolder(UnitHolder holder, int position) {
         holder.unit_number.setText(Integer.toString(position + 1));
         holder.unit_name.setText(mDataset.get(position).getName());
-        holder.unit_description.setText("En esta unidad, aprenderemos las palabras básicas para poder desenvolvernos en el idioma.");
+        holder.unit_description.setText(mDataset.get(position).getDescription());
     }
 
     public void addItem(Unit unit, int index) {

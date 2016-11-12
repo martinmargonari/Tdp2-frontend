@@ -1,5 +1,6 @@
 package com.example.margonari.tdp2_frontend.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Professor;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -25,13 +27,17 @@ public class ProfessorAdapter extends RecyclerView
     public static class ProfessorHolder extends RecyclerView.ViewHolder {
         TextView professor_name;
         TextView professor_type;
-        //ImageView Professor_photo;
+        ImageView Professor_photo;
+        Context context;
+
 
         public ProfessorHolder(View itemView) {
             super(itemView);
             professor_name = (TextView) itemView.findViewById(R.id.professor_name);
             professor_type = (TextView) itemView.findViewById(R.id.professor_type);
-            //Professor_photo = (ImageView) itemView.findViewById(R.id.professor_photo);
+            Professor_photo = (ImageView) itemView.findViewById(R.id.professor_photo);
+            context = itemView.getContext();
+
         }
 
     }
@@ -55,7 +61,10 @@ public class ProfessorAdapter extends RecyclerView
         holder.professor_name.setText(mDataset.get(position).getFullName());
         holder.professor_type.setText(mDataset.get(position).getType());
         System.out.println("TIPO: " + mDataset.get(position).getType());
-        //holder.professor_photo.setImageResource(mDataset.get(position).getPhoto_id());
+
+        String urlImage = mDataset.get(position).getFull_image();
+        Picasso.with(holder.context).load(urlImage).into(holder.Professor_photo);
+
     }
 
     public void addItem(Professor Professor, int index) {

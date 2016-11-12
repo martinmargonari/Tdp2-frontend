@@ -98,13 +98,8 @@ public class CourseChooseActivity extends AppCompatActivity {
     }
 
     private ArrayList<Unit> getDataSetUnits() {
-        ArrayList results = new ArrayList<Unit>();
-        if (courseFullData.getUnities().size() != 0){
-            for (int index = 0; index < courseFullData.getUnities().size(); index++) {
-                Unit obj = new Unit(courseFullData.getUnities().get( index ).getName(), R.drawable.arte);
-                results.add(obj);
-            }
-        }
+        ArrayList results = new ArrayList<Unit>(courseFullData.getUnities());
+
         return results;
     }
 

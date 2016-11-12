@@ -40,6 +40,7 @@ import com.example.margonari.tdp2_frontend.services.LoginServices;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity
     private String profilePicture;
     private FirebaseAuth auth;
     private GoogleApiClient client;
-
+    ImageView imageProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity
 
         auth = FirebaseAuth.getInstance();
         if ( auth.getCurrentUser()!=null){
+
             Log.d("AUTH", "User LOGGED IN");
             userEmail=auth.getCurrentUser().getEmail();
             firstName=auth.getCurrentUser().getDisplayName();
@@ -90,13 +92,12 @@ public class MainActivity extends AppCompatActivity
         }else{
             startActivityForResult(
                     AuthUI.getInstance().createSignInIntentBuilder()
-                            .setIsSmartLockEnabled(false)
                             .setLogo(R.drawable.ic_launcher)
                             .setProviders(
                     AuthUI.FACEBOOK_PROVIDER,
-                    AuthUI.GOOGLE_PROVIDER,
-                    AuthUI.EMAIL_PROVIDER
+                    AuthUI.GOOGLE_PROVIDER
             ).build(),RC_SIGN_IN);
+
         }
 
 
@@ -115,11 +116,11 @@ public class MainActivity extends AppCompatActivity
 
         TextView userNameText = (TextView) headerView.findViewById(R.id.user_name);
         TextView emailText = (TextView) headerView.findViewById(R.id.user_email);
-        ImageView imageProfile = (ImageView) headerView.findViewById(R.id.profile_picture);
+         imageProfile = (ImageView) headerView.findViewById(R.id.profile_picture);
 
         userNameText.setText(firstName + " " + lastName);
         emailText.setText(userEmail);
-        imageProfile.setImageDrawable(getDrawable(R.drawable.profile_pic_user));
+        imageProfile.setImageDrawable(getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
 
         if (profilePicture != null)
             Glide.with(this).load(profilePicture).into(imageProfile);
@@ -137,13 +138,15 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode,resultCode,data);
         if( requestCode == RC_SIGN_IN){
                 if ( resultCode== RESULT_OK){
-                    Log.d("AUTH",auth.getCurrentUser().getEmail());
-                    Log.d("hola",auth.getCurrentUser().getProviders().toString());
+                    auth = FirebaseAuth.getInstance();
 
                     InitApiTokenFromServer(auth.getCurrentUser().getEmail());
                     userEmail=auth.getCurrentUser().getEmail();
                     firstName=auth.getCurrentUser().getDisplayName();
                     profilePicture= auth.getCurrentUser().getPhotoUrl().toString();
+                    if (profilePicture != null)
+
+                        Glide.with(this).load(profilePicture).into(imageProfile);
                 }
         }else{Log.d("AUTH","User not autenticated");}
     }
@@ -204,70 +207,38 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra(MyCoursesActivity.USER_PICTURE, profilePicture);
             startActivity(intent);
         } else if (id == R.id.cursos_destacados) {
-            //////////////////////////Categorias en curso 6 ( el de python):::: Burcar en el log "CategoriaDescription" //////////////////////////
-            HttpRequestTaskForumCategories httpRequestTaskForumCategories= new HttpRequestTaskForumCategories();
-            httpRequestTaskForumCategories.execute("6");//CUrso de python
-            ArrayList<ForumCategory> listCateories= new ArrayList<>();
-            try {
-                listCateories= httpRequestTaskForumCategories.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            Log.d("CategoriaDescription", listCateories.get(0).getDescription());
 
-            //////////////////////////////////////////Threads en la categoria 1 del curso de python :::: Burcar en el log "ThreadTitle" //////////////////////////////
-
-            HttpRequestTaskForumThreads httpRequestTaskForumThreads= new HttpRequestTaskForumThreads();
-            httpRequestTaskForumThreads.execute("1");//Categoria 1 del curso de python
-            ArrayList<ForumThread> listThreads= new ArrayList<>();
-            try {
-                listThreads= httpRequestTaskForumThreads.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            Log.d("ThreadTitle", listThreads.get(0).getTitle());
-
-            //////////////////////////////////////////Threads en la categoria 1 del curso de python :::: Burcar en el log "PostContent" //////////////////////////////
-
-            HttpRequestTaskForumPost httpRequestTaskForumPost= new HttpRequestTaskForumPost();
-            httpRequestTaskForumPost.execute("1");//Categoria 1 del curso de python
-            ArrayList<ForumPost> listPost= new ArrayList<>();
-            try {
-                listPost= httpRequestTaskForumPost.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            Log.d("PostContent", listPost.get(0).getContent());
-
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////
         } else if (id == R.id.todos_los_cursos) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.ajustes) {
 
         } else if (id == R.id.cerrar_sesion) {
-            AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    Log.d("AUTH", "User LOGGED OUT");
-                    startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                            .setIsSmartLockEnabled(false)
-                            .setProviders(
-                            AuthUI.FACEBOOK_PROVIDER,
-                            AuthUI.GOOGLE_PROVIDER,
-                            AuthUI.EMAIL_PROVIDER
-                    ).build(),RC_SIGN_IN);
 
-                                    }
+            if ( auth.getCurrentUser()!=null){
+                AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d("AUTH", "User LOGGED OUT");
+                        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                                .setLogo(R.drawable.ic_launcher)
+                                .setProviders(
+                                        AuthUI.FACEBOOK_PROVIDER,
+                                        AuthUI.GOOGLE_PROVIDER
+                        ).build(),RC_SIGN_IN);
+                    }
+                });
+            }
 
-            });
+            else{
+                startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                        .setLogo(R.drawable.ic_launcher)
+                        .setProviders(
+                                AuthUI.FACEBOOK_PROVIDER,
+                                AuthUI.GOOGLE_PROVIDER
+                        ).build(),RC_SIGN_IN);
 
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

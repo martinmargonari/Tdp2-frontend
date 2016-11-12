@@ -18,6 +18,7 @@ public class Professor implements java.io.Serializable {
     private String name;
     private String last_name;
     private String role;
+    private String full_image;
 
     private int photo_id;
     private String file_extension;
@@ -98,6 +99,14 @@ public class Professor implements java.io.Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getFull_image() {
+        return full_image;
+    }
+
+    public void setFull_image(String full_image) {
+        this.full_image = full_image;
     }
 
     @Override

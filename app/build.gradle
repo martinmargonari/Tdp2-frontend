@@ -44,6 +44,8 @@ dependencies {
 
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
 
+
+
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
@@ -64,8 +66,7 @@ dependencies {
     compile 'com.github.aakira:expandable-layout:1.6.0@aar'
     compile 'com.github.johnkil.android-robototextview:robototextview:2.5.1'
     compile 'com.pkmmte.view:circularimageview:1.1'
-
-
+    compile 'com.google.android.gms:play-services-gcm:9.8.0'
     testCompile 'junit:junit:4.12'
 }
 
