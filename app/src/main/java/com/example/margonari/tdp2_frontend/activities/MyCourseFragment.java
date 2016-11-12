@@ -81,7 +81,7 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
         unitsLayoutManager = new LinearLayoutManager(getContext());
         unitsRecyclerView.setLayoutManager(unitsLayoutManager);
         unitsRecyclerView.setFocusable(false);
-        unitsAdapter = new MyCourseUnitAdapter(getDataSetUnits());
+        unitsAdapter = new MyCourseUnitAdapter(getDataSetUnits(),this.getContext());
         unitsRecyclerView.setAdapter(unitsAdapter);
 
 

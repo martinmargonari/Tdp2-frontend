@@ -10,10 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
+import com.example.margonari.tdp2_frontend.activities.MyCourseActivity;
+import com.example.margonari.tdp2_frontend.activities.MyCourseParentActivity;
+import com.example.margonari.tdp2_frontend.domain.ForumPost;
 import com.example.margonari.tdp2_frontend.domain.Unit;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 
 /**
@@ -25,6 +29,7 @@ public class MyCourseUnitAdapter extends RecyclerView
     private static String LOG_TAG = "MyCourseUnitAdapter";
     private ArrayList<Unit> mDataset;
     private static MyClickListener myClickListener;
+    private Context mContext;
 
     public static class UnitHolder extends RecyclerView.ViewHolder
             implements View
@@ -57,8 +62,11 @@ public class MyCourseUnitAdapter extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public MyCourseUnitAdapter(ArrayList<Unit> myDataset) {
+    public MyCourseUnitAdapter(ArrayList<Unit> myDataset,Context context) {
         mDataset = myDataset;
+        mContext=context;
+
+
     }
 
     @Override
@@ -76,8 +84,18 @@ public class MyCourseUnitAdapter extends RecyclerView
         holder.unit_name.setText(mDataset.get(position).getName());
         //TODO Agregar Descripcion de la unidad
 
-        String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
-        Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
+        if(mDataset.get(position).getFull_image()!=null){
+           /* String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
+            Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
+            Log.d("URL_IMAGE_UNIT", urlImage);
+
+            Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);*/
+
+        }else {
+            String urlImage = ((MyCourseParentActivity)mContext).getCourseFullData().getFull_image();
+            Log.d("URL_IMAGE_COURSE", urlImage);
+            Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
+        }
         holder.week_number.setText("SEMANA " + Integer.toString(position+1));
         holder.week_limit.setText(mDataset.get(position).getExam_deadline().substring(0,10));
     }

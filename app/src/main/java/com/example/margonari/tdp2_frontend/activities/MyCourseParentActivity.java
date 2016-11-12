@@ -102,6 +102,11 @@ public class MyCourseParentActivity extends AppCompatActivity {
     }
 
 
+
+    public Course getCourseFullData(){
+        return  courseFullData;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
