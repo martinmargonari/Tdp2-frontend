@@ -74,6 +74,7 @@ public class MyCourseUnitAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(UnitHolder holder, int position) {
         holder.unit_name.setText(mDataset.get(position).getName());
+        //String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
         String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
         Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
         holder.week_number.setText("SEMANA " + Integer.toString(position+1));
