@@ -1,6 +1,7 @@
 package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.setTitle("Encontrar Cursos");
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 Object value = getIntent().getExtras().get(key);
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult(
                     AuthUI.getInstance().createSignInIntentBuilder()
                             .setIsSmartLockEnabled(false)
-
+                            .setLogo(R.drawable.ic_launcher)
                             .setProviders(
                     AuthUI.FACEBOOK_PROVIDER,
                     AuthUI.GOOGLE_PROVIDER,

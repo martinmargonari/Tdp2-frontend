@@ -34,11 +34,13 @@ import java.util.concurrent.ExecutionException;
 
 public class MyCourseForumThreadPostsActivity extends AppCompatActivity {
 
-    private static final String API_TOKEN = "API_TOKEN";
-    private static final String THREAD_ID = "THREAD_ID";
+    public static final String API_TOKEN = "API_TOKEN";
+    public static final String THREAD_ID = "THREAD_ID";
+    public static final String THREAD_NAME = "THREAD_NAME";
 
     private String api_token;
     private String thread_id;
+    private String thread_name;
 
     private RecyclerView forumPostsRecyclerView;
     private RecyclerView.LayoutManager forumPostsLayoutManager;
@@ -47,7 +49,7 @@ public class MyCourseForumThreadPostsActivity extends AppCompatActivity {
     private Button buttonNewPost;
     private ArrayList<ForumPost> forum_list_attached_files;
     private EditText textPost;
-private DownloadManager downloadManager;
+    private DownloadManager downloadManager;
     public String filenameManager;
     private long q;
 
@@ -58,6 +60,9 @@ private DownloadManager downloadManager;
 
         api_token = getIntent().getStringExtra(API_TOKEN);
         thread_id = getIntent().getStringExtra(THREAD_ID);
+        thread_name = getIntent().getStringExtra(THREAD_NAME);
+
+        this.setTitle(thread_name);
 
         textPost = (EditText) findViewById(R.id.text_forum_post);
         forumPostsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_my_course_forum_posts);

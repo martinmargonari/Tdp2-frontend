@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.margonari.tdp2_frontend"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -62,6 +62,10 @@ dependencies {
     compile 'com.firebaseui:firebase-ui:0.5.1'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.github.aakira:expandable-layout:1.6.0@aar'
+    compile 'com.github.johnkil.android-robototextview:robototextview:2.5.1'
+    compile 'com.pkmmte.view:circularimageview:1.1'
+
+
     testCompile 'junit:junit:4.12'
 }
 

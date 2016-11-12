@@ -21,11 +21,8 @@ public class ProfessorAdapter extends RecyclerView
         .ProfessorHolder> {
     private static String LOG_TAG = "ProfessorAdapter";
     private ArrayList<Professor> mDataset;
-    private static MyClickListener myClickListener;
 
-    public static class ProfessorHolder extends RecyclerView.ViewHolder
-            implements View
-            .OnClickListener {
+    public static class ProfessorHolder extends RecyclerView.ViewHolder {
         TextView professor_name;
         TextView professor_type;
         //ImageView Professor_photo;
@@ -35,18 +32,8 @@ public class ProfessorAdapter extends RecyclerView
             professor_name = (TextView) itemView.findViewById(R.id.professor_name);
             professor_type = (TextView) itemView.findViewById(R.id.professor_type);
             //Professor_photo = (ImageView) itemView.findViewById(R.id.professor_photo);
-            Log.i(LOG_TAG, "Adding Listener");
-            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            myClickListener.onItemClick(getAdapterPosition(), v);
-        }
-    }
-
-    public void setOnItemClickListener(MyClickListener myClickListener) {
-        this.myClickListener = myClickListener;
     }
 
     public ProfessorAdapter(ArrayList<Professor> myDataset) {
@@ -67,6 +54,7 @@ public class ProfessorAdapter extends RecyclerView
     public void onBindViewHolder(ProfessorHolder holder, int position) {
         holder.professor_name.setText(mDataset.get(position).getFullName());
         holder.professor_type.setText(mDataset.get(position).getType());
+        System.out.println("TIPO: " + mDataset.get(position).getType());
         //holder.professor_photo.setImageResource(mDataset.get(position).getPhoto_id());
     }
 
@@ -85,7 +73,4 @@ public class ProfessorAdapter extends RecyclerView
         return mDataset.size();
     }
 
-    public interface MyClickListener {
-        public void onItemClick(int position, View v);
-    }
 }

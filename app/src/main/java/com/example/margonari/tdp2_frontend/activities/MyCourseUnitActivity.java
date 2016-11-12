@@ -66,6 +66,8 @@ public class MyCourseUnitActivity extends AppCompatActivity {
 
         unityInfo = (UnityInfo)intent.getSerializableExtra("UNITY");
 
+        this.setTitle(unityInfo.getUnity().getName());
+
         labelNameUnit = (TextView) findViewById(R.id.label_name_unit);
         unitDescription = (TextView) findViewById(R.id.unit_description);
 

@@ -3,137 +3,180 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.margonari.tdp2_frontend.activities.CourseChooseActivity"
-    android:descendantFocusability="beforeDescendants">
-    >
+    android:descendantFocusability="beforeDescendants"
+    android:theme="@style/AppTheme.CardTheme">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:weightSum="1">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|bottom"
-            android:orientation="vertical">
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/background_course_choose"
+            <ImageView
+                android:id="@+id/image_course_choose"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop" />
+        <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cv_course_title"
+                android:layout_marginBottom="@dimen/course_margin_bottom"
+                style="@style/AppTheme.CardTheme"
+                >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="150dp"
-                android:background="@drawable/arte">
+                >
 
-                <TextView
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/professor_course_choose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:textAppearance="@style/TextCaption"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    app:typeface="roboto_regular"
+                    />
+
+                <com.devspark.robototextview.widget.RobotoTextView
                     android:id="@+id/name_course_choose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:padding="16dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:text="Taller de Desarrollo de Proyectos"
-                    android:textSize="30dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true" />
-            </RelativeLayout>
+                    android:textAppearance="@style/TextTile"
+                    app:typeface="roboto_medium"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                     />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-            <TextView
-                android:id="@+id/course_choose_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:padding="16dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:text="Esta es la descripcion de un curso"
-                android:textSize="15dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:background="@android:color/white"
-                android:layout_marginLeft="@dimen/card_margin_horizontal"
-                android:layout_marginRight="@dimen/card_margin_horizontal"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"/>
-
-            <TextView
-                android:id="@+id/textview_unidades"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:padding="16dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:text="Unidades"
-                android:textSize="15dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="@dimen/card_margin_horizontal"
-                android:layout_marginRight="@dimen/card_margin_horizontal"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
-                android:textStyle="bold" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_units"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:layout_marginLeft="@dimen/card_margin_horizontal"
-                android:layout_marginRight="@dimen/card_margin_horizontal"
-                />
-
-            <TextView
-                android:id="@+id/textview_personal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:padding="16dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:text="Personal encargado"
-                android:textSize="15dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="@dimen/card_margin_horizontal"
-                android:layout_marginRight="@dimen/card_margin_horizontal"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
-                android:textStyle="bold" />
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_professors"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:layout_marginLeft="@dimen/card_margin_horizontal"
-                android:layout_marginRight="@dimen/card_margin_horizontal"
-                />
-        </LinearLayout>
-
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:gravity="center|bottom"
-            android:orientation="vertical"
-            android:layout_below="@id/recycler_view_professors">
+            android:layout_height="wrap_content"
+            android:id="@+id/cv_course_description"
+            android:layout_marginBottom="@dimen/course_margin_bottom"
+            style="@style/AppTheme.CardTheme"
+            >
 
-
-            <Button
-                android:id="@+id/button_inscribirse"
-                style="?android:attr/buttonStyleSmall"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center"
-                android:text="INSCRIBIRSE"
-                android:textColor="#ffffff"
-                android:backgroundTint="#3146cc"
-                android:onClick="inscribirse"/>
+                android:orientation="vertical"
+                >
 
-        </LinearLayout>
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/course_description_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="DESCRIPCIÓN DEL CURSO"
+                    android:textAppearance="@style/TextSubhead"
+                    app:typeface="roboto_bold"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    />
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/course_choose_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:textAppearance="@style/TextBody"
+                    app:typeface="roboto_regular"
+                    app:textWeight="light"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cv_course_plan"
+            android:layout_marginBottom="@dimen/course_margin_bottom"
+            android:paddingBottom="15dp"
+            style="@style/AppTheme.CardTheme">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/units_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="PLAN DE ESTUDIOS"
+                    android:textAppearance="@style/TextSubhead"
+                    app:typeface="roboto_bold"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_units"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cv_course_professors"
+            android:layout_marginBottom="@dimen/course_margin_bottom"
+            style="@style/AppTheme.CardTheme">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/professors_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="DOCENTES"
+                    android:textAppearance="@style/TextSubhead"
+                    app:typeface="roboto_bold"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_professors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:layout_marginBottom="15dp"/>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/button_inscribirse"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:text="INSCRIBIRSE"
+            android:textColor="#ffffff"
+            android:backgroundTint="#3146cc"
+            android:onClick="inscribirse"/>
     </LinearLayout>
 </ScrollView>
