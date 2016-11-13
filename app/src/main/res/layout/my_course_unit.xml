@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/unit_course_photo"
             android:padding="10dp"
-            android:textAppearance="@style/TextCaption"
+            android:textAppearance="@style/TextTile"
             app:typeface="roboto_medium" />
 
         <com.devspark.robototextview.widget.RobotoTextView
