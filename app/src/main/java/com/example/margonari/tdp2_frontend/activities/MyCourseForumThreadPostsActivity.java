@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.ForumPostAdapter;
@@ -46,7 +47,7 @@ public class MyCourseForumThreadPostsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager forumPostsLayoutManager;
     private RecyclerView.Adapter forumPostsAdapter;
     private ArrayList<ForumPost> forumPostArrayList;
-    private Button buttonNewPost;
+    private ImageButton buttonNewPost;
     private ArrayList<ForumPost> forum_list_attached_files;
     private EditText textPost;
     private DownloadManager downloadManager;
@@ -73,7 +74,7 @@ public class MyCourseForumThreadPostsActivity extends AppCompatActivity {
         forumPostArrayList = getDataSetForumPosts();
         forumPostsAdapter = new ForumPostAdapter(forumPostArrayList,MyCourseForumThreadPostsActivity.this);
         forumPostsRecyclerView.setAdapter(forumPostsAdapter);
-        buttonNewPost = (Button) findViewById(R.id.button_new_post);
+        buttonNewPost = (ImageButton) findViewById(R.id.button_new_post);
         buttonNewPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
