@@ -4,12 +4,15 @@ import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -160,15 +163,47 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Video video = videosList.get(position);
-                Intent intent = new Intent(MyCourseUnitActivity.this, VideoViewActivity.class);
-                intent.putExtra("VIDEO_URL",video.getFull_path());
-                startActivity(intent);
+                final Video video = videosList.get(position);
+                CharSequence colors[] = new CharSequence[] {"Español", "Inglés", "Ninguno"};
+
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(MyCourseUnitActivity.this);
+                builder.setTitle("Elegí un idioma");
+                builder.setItems(colors, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, final int which) {
+
+                        downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Intent intent = new Intent(MyCourseUnitActivity.this, VideoViewActivity.class);
+                                intent.putExtra("VIDEO_URL",video.getFull_path());
+                                intent.putExtra("VIDEO_NAME",video.getName());
+                                if (which == 0) {
+                                    intent.putExtra("IDIOMA",String.valueOf(0));
+                                } else if (which == 1) {
+                                    intent.putExtra("IDIOMA",String.valueOf(1));
+                                } else {
+                                    intent.putExtra("IDIOMA",String.valueOf(2));
+                                }
+
+                                startActivity(intent);
+                            }
+                        }, 3000);
+
+                    }
+                });
+                builder.show();
+
 
                 Log.i(LOG_TAG, " Clicked on Video Item " + position);
             }
         });
     }
+
 
 
 
