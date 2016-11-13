@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.margonari.tdp2_frontend.activities.MyCourseUnitActivity"
     android:descendantFocusability="beforeDescendants">
@@ -14,69 +15,61 @@
         android:layout_height="wrap_content"
         >
 
+        <ImageView
+            android:id="@+id/image_unit"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:id="@+id/cv_course_unit_description"
-            android:padding="2dp"
+            android:id="@+id/cv_unit_title"
+            android:layout_marginBottom="@dimen/course_margin_bottom"
+            style="@style/AppTheme.CardTheme"
+            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             >
 
-            <LinearLayout
-                android:orientation="vertical"
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/name_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textAppearance="@style/TextTile"
+                app:typeface="roboto_medium"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/unit_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/label_name_unit"
-                    android:layout_alignParentTop="true"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@android:color/black"
-                    android:gravity="center"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/unit_description"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    />
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:textAppearance="@style/TextCaption"
+                app:typeface="roboto_regular" />
+        </LinearLayout>
 
-            </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/label_material_unit"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:textColor="@android:color/black"
-            android:text="Material"
-            android:gravity="center"
-            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_unit_video"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:layout_marginLeft="@dimen/card_margin_horizontal"
-            android:layout_marginRight="@dimen/card_margin_horizontal"
-            />
+            android:focusable="false"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_unit_material"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:layout_marginLeft="@dimen/card_margin_horizontal"
-            android:layout_marginRight="@dimen/card_margin_horizontal"
-            />
+            android:focusable="false"/>
 
     </LinearLayout>
 </ScrollView>
