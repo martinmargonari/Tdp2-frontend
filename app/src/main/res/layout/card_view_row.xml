@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/course_photo"
         android:padding="10dp"
-        android:textAppearance="@style/TextCaption"
+        android:textAppearance="@style/TextBody"
         app:typeface="roboto_medium" />
 
     <com.devspark.robototextview.widget.RobotoTextView

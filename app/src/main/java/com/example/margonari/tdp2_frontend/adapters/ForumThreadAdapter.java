@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
@@ -27,18 +28,20 @@ public class ForumThreadAdapter extends RecyclerView
     public static class ForumThreadHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
+        ImageView thread_author_pic;
         TextView thread_author;
-        TextView thread_title;
         TextView thread_replies;
+        TextView thread_title;
         TextView thread_date;
 
         Context context;
 
         public ForumThreadHolder(View itemView) {
             super(itemView);
+            thread_author_pic = (ImageView) itemView.findViewById(R.id.forum_thread_author_pic);
             thread_author = (TextView) itemView.findViewById(R.id.forum_thread_author);
-            thread_title = (TextView) itemView.findViewById(R.id.forum_thread_title);
             thread_replies = (TextView) itemView.findViewById(R.id.forum_thread_replies);
+            thread_title = (TextView) itemView.findViewById(R.id.forum_thread_title);
             thread_date = (TextView) itemView.findViewById(R.id.forum_thread_creation_date);
 
             context = itemView.getContext();
@@ -72,7 +75,9 @@ public class ForumThreadAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(ForumThreadAdapter.ForumThreadHolder holder, int position) {
-        holder.thread_author.setText(mDataset.get(position).getAuthor_id());
+        holder.thread_author.setText("Nombre del usuario");
+        holder.thread_author_pic.setImageDrawable(holder.context.getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
+        //TODO Nombre de autor e imagen de autor
         holder.thread_title.setText(mDataset.get(position).getTitle());
         holder.thread_replies.setText(mDataset.get(position).getReply_count());
         holder.thread_date.setText(mDataset.get(position).getCreated_at());
