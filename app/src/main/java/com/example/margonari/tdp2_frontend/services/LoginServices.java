@@ -13,8 +13,8 @@ public class LoginServices extends AbstractServices{
     private static final String service_name="login";
     public static final String api_security="85d8b4ccd607dde1753fa9293d694c03";
 
-    public Login getLoginBy(String user, String token) {
-        String loginQuery = this.getQueryBy(user,token);
+    public Login getLoginBy(String user, String token,String image_url) {
+        String loginQuery = this.getQueryBy(user,token,image_url);
         Log.d("Query "+this.getClass().getName(),loginQuery);
         LoginDTO loginDTO = (LoginDTO) geDataOftDTO(loginQuery, LoginDTO.class);
         return loginDTO.getData();
@@ -24,6 +24,7 @@ public class LoginServices extends AbstractServices{
     protected String getQueryBy(String... params) {
         String user=params[0];
         String push_id=params[1];
+        String image_url=params[2];
 
         Log.d("LoginServices_PushId", push_id);
 
@@ -37,6 +38,8 @@ public class LoginServices extends AbstractServices{
         urlStringBuffer.append(user);
         urlStringBuffer.append("&push_id=");
         urlStringBuffer.append(push_id);
+        urlStringBuffer.append("&image_url=");
+        urlStringBuffer.append(image_url);
 
 
         return urlStringBuffer.toString();

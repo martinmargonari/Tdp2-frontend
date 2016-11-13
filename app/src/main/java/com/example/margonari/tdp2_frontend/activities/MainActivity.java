@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity
     private void InitApiTokenFromServer(String userEmail) {
         HttpRequestTaskLogin httpRequestTask = new HttpRequestTaskLogin();
 
-        httpRequestTask.execute(userEmail, FirebaseInstanceId.getInstance().getToken());
+        httpRequestTask.execute(userEmail, FirebaseInstanceId.getInstance().getToken(),auth.getCurrentUser().getPhotoUrl().toString());
         try {
             Login login = (Login) httpRequestTask.get();
             api_token=login.getApi_token();
@@ -330,9 +330,11 @@ public class MainActivity extends AppCompatActivity
             try {
                 String user = params[0];
                 String token= params[1];
+                String image_url=params[2];
+
                 Log.d("tokenRequestLogin", token);
 
-                Login login=  new LoginServices().getLoginBy(user, token);
+                Login login=  new LoginServices().getLoginBy(user, token,image_url);
                 return login;
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);
