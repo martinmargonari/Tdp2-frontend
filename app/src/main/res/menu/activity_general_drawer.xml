@@ -10,10 +10,6 @@
             android:id="@+id/mis_cursos"
             android:icon="@drawable/ic_school_black_24dp"
             android:title="Mis Cursos" />
-        <item
-            android:id="@+id/cursos_destacados"
-            android:icon="@drawable/ic_star_black_24dp"
-            android:title="Destacados" />
     </group>
 
     <item android:title="Configuración">

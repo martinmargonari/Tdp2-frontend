@@ -181,9 +181,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.general_menu, menu);
-        return true;
+        public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.general_menu, menu);
+            return true;
     }
 
     @Override
@@ -208,13 +208,12 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra(MyCoursesActivity.USER_FULLNAME, firstName + " " + lastName);
             intent.putExtra(MyCoursesActivity.USER_PICTURE, profilePicture);
             startActivity(intent);
-        } else if (id == R.id.cursos_destacados) {
-
         } else if (id == R.id.todos_los_cursos) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.ajustes) {
-
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.cerrar_sesion) {
 
             if ( auth.getCurrentUser()!=null){

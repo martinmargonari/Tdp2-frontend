@@ -19,5 +19,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@android:color/holo_blue_dark"/>
+        app:backgroundTint="@color/accent"/>
 </FrameLayout>

@@ -4,6 +4,7 @@
     android:id="@+id/activity_my_course_forum_thread_answers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context="com.example.margonari.tdp2_frontend.activities.MyCourseForumThreadPostsActivity">
 
     <android.support.v7.widget.RecyclerView
@@ -16,7 +17,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:id="@+id/text_post_layout"
         android:orientation="horizontal"
         android:weightSum="1"
@@ -25,19 +26,26 @@
         android:layout_alignParentStart="true"
         android:background="@drawable/border">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/text_forum_post" />
-
         <ImageButton
             android:id="@+id/material_download_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
+            android:layout_marginStart="10dp"
             android:background="@drawable/ic_attach_file_black_24dp"
             />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center"
+            android:hint="Escribe un nuevo comentario..."
+            android:id="@+id/text_forum_post"
+            android:background="@android:color/transparent" />
 
         <ImageButton
             android:id="@+id/button_new_post"
@@ -45,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_gravity="center_horizontal|center"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/ic_send_black_24dp"
             />
 
