@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.ForumThread;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,8 @@ public class ForumThreadAdapter extends RecyclerView
     private static String LOG_TAG = "ForumThreadAdapter";
     private ArrayList<ForumThread> mDataset;
     private static ForumThreadAdapter.MyClickListener myClickListener;
+    private Context mCOntext;
+
 
     public static class ForumThreadHolder extends RecyclerView.ViewHolder
             implements View
@@ -59,8 +62,10 @@ public class ForumThreadAdapter extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public ForumThreadAdapter(ArrayList<ForumThread> myDataset) {
+    public ForumThreadAdapter(ArrayList<ForumThread> myDataset, Context context) {
         mDataset = myDataset;
+        mCOntext= context;
+
     }
 
     @Override
@@ -75,8 +80,12 @@ public class ForumThreadAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(ForumThreadAdapter.ForumThreadHolder holder, int position) {
-        holder.thread_author.setText("Nombre del usuario");
-        holder.thread_author_pic.setImageDrawable(holder.context.getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
+        holder.thread_author.setText(mDataset.get(position).getAuthor().getName());
+        Picasso.with(mCOntext).load( mDataset.get(position).getAuthor_image()).into(holder.thread_author_pic);
+
+        //holder.thread_author_pic.setImageDrawable(holder.context.getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
+        //holder.thread_author_pic.setImageDrawable(holder.context.getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
+
         //TODO Nombre de autor e imagen de autor
         holder.thread_title.setText(mDataset.get(position).getTitle());
         holder.thread_replies.setText(mDataset.get(position).getReply_count());

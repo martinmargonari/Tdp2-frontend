@@ -52,7 +52,7 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
         forumThreadsRecyclerView.setLayoutManager(forumThreadsLayoutManager);
         forumThreadsRecyclerView.setFocusable(false);
         forumThreadArrayList = getDataSetForumThreads();
-        forumThreadsAdapter = new ForumThreadAdapter(forumThreadArrayList);
+        forumThreadsAdapter = new ForumThreadAdapter(forumThreadArrayList,this);
         forumThreadsRecyclerView.setAdapter(forumThreadsAdapter);
         buttonNewTopic = (FloatingActionButton) findViewById(R.id.button_new_topic);
         buttonNewTopic.setOnClickListener(new View.OnClickListener() {

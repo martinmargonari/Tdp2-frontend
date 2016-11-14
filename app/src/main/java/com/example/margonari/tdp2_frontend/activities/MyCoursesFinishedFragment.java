@@ -1,10 +1,16 @@
 package com.example.margonari.tdp2_frontend.activities;
 
+import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +25,9 @@ import com.example.margonari.tdp2_frontend.adapters.CoursesAdapterFinished;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.services.CourseFullDataServices;
 
+import org.apache.commons.io.FilenameUtils;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -93,23 +102,9 @@ public class MyCoursesFinishedFragment extends Fragment {
                 public void onItemClick(int position, View v) {
                     Course course = coursesList.get(position);
 
-                    MyCoursesFinishedFragment.HttpRequestTask httpRequestTask= new MyCoursesFinishedFragment.HttpRequestTask();
-                    httpRequestTask.execute(course.getId());
-                    try {
-                        Course courseFullData= httpRequestTask.get();
-                        courseFullData.setSession_id(course.getSession_id());
-                        Intent intent = new Intent(getContext(), MyCourseParentActivity.class);
-                        intent.putExtra("API_TOKEN", api_token);
-                        intent.putExtra("COURSE_FULL_DATA", courseFullData);
-                        startActivity( intent);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
-                    Log.i(LOG_TAG, " Clicked on Item " + position);
+
                 }
-            });
+        });
     }
 
     private class HttpRequestTask extends AsyncTask<String, Void, Course> {
@@ -130,5 +125,7 @@ public class MyCoursesFinishedFragment extends Fragment {
 
 
     }
+
+
 
 }

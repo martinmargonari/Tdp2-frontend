@@ -23,6 +23,8 @@ public class ForumThread
     private String updated_at;
     private String deleted_at;
     private Author author;
+    private String author_image;
+
 
     public String getId() {
         return id;
@@ -110,5 +112,13 @@ public class ForumThread
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getAuthor_image() {
+        return author_image;
+    }
+
+    public void setAuthor_image(String author_image) {
+        this.author_image = author_image;
     }
 }
