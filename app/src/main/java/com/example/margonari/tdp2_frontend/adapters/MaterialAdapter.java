@@ -31,7 +31,7 @@ public class MaterialAdapter extends RecyclerView
     public static class MaterialHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView material_name;
         ImageView material_photo;
-        ImageButton boton_adjuntos;
+        ImageButton download_button;
         Context context;
 
 
@@ -41,7 +41,7 @@ public class MaterialAdapter extends RecyclerView
             material_photo = (ImageView) itemView.findViewById(R.id.unit_material_pic);
             context = itemView.getContext();
             itemView.setOnClickListener(this);
-            boton_adjuntos= (ImageButton) itemView.findViewById(R.id.material_download_button);
+            download_button = (ImageButton) itemView.findViewById(R.id.material_download_button);
 
         }
 
@@ -77,8 +77,9 @@ public class MaterialAdapter extends RecyclerView
             holder.material_photo.setImageResource(R.drawable.ic_assignment_black_24dp);
         } else {
             holder.material_photo.setImageResource(R.drawable.ic_insert_drive_file_black_24dp);
+            holder.download_button.setImageResource(R.drawable.ic_file_download_black_24dp);
         }
-        holder.boton_adjuntos.setOnClickListener(new View.OnClickListener(){
+        holder.download_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if (mDataset.get(position).getFull_path()!=null){

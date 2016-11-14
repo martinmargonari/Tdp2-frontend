@@ -1,98 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="40dp"
-    android:layout_marginBottom="5dp">
+    android:background="@drawable/border"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="15dp">
 
-    <TextView
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/week_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/week_number"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="20dp"
-        android:textAlignment="center" />
+        android:layout_gravity="center"
+        android:textAppearance="@style/TextSubhead"
+        android:text="SEMANA 1"
+        app:typeface="roboto_bold"
+        android:textAlignment="center"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        />
 
-    <android.support.v7.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="1dp"
-        android:id="@+id/cv_my_course_unit"
-        card_view:cardElevation="4dp"
-        >
+        android:layout_height="wrap_content"
+        android:id="@+id/unit_info"
+        android:padding="10dp"
+        android:background="@drawable/border"
+        android:layout_below="@id/week_number">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            <RelativeLayout
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:padding="5dp"
-                android:id="@+id/layout_photo_unit_course">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/unit_course_photo"
+            android:layout_alignParentStart="true"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true" />
 
-                <ImageView
-                    android:id="@+id/unit_course_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:layout_marginLeft="5dp"
-                    />
-            </RelativeLayout>
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/unit_course_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/unit_course_photo"
+            android:padding="10dp"
+            android:textAppearance="@style/TextTile"
+            app:typeface="roboto_medium" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/unit_course_name"
-                android:layout_toRightOf="@+id/layout_photo_unit"
-                android:textColor="@android:color/black"
-                android:layout_alignParentTop="true"
-                android:textSize="20sp"
-                android:gravity="center"
-                />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:id="@+id/cv_course_unit_limit"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        card_view:cardElevation="4dp"
-        card_view:cardBackgroundColor="#fafafa">
-
-        <RelativeLayout
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/unit_course_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:layout_toEndOf="@+id/unit_course_photo"
+            android:layout_below="@+id/unit_course_name"
+            android:padding="10dp"
+            android:maxLines="3"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:freezesText="true"
+            android:textAppearance="@style/TextCaption"
+            app:typeface="roboto_regular" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/week_limit_label"
-                android:layout_alignParentTop="true"
-                android:text="Fecha límite para evaluación: "
-                android:gravity="center"
-                />
+    </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/week_limit"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@id/week_limit_label"
-                android:gravity="center"
-                />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:layout_below="@id/unit_info"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="10dp">
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/week_limit_label"
+            android:text="Fecha límite para evaluación: "
+            android:gravity="center"
+            android:textAppearance="@style/TextBody"
+            app:typeface="roboto_light" />
 
-</LinearLayout>
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/week_limit"
+            android:gravity="center"
+            android:layout_toEndOf="@id/week_limit_label"
+            android:textAppearance="@style/TextBody"
+            app:typeface="roboto_light" />
+    </RelativeLayout>
+
+</RelativeLayout>

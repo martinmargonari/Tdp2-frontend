@@ -4,27 +4,34 @@ import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.MaterialAdapter;
 import com.example.margonari.tdp2_frontend.adapters.VideoAdapter;
+import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Material;
 import com.example.margonari.tdp2_frontend.domain.Question;
+import com.example.margonari.tdp2_frontend.domain.Unit;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
 import com.example.margonari.tdp2_frontend.domain.Video;
+import com.squareup.picasso.Picasso;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -33,8 +40,9 @@ import java.util.ArrayList;
 
 public class MyCourseUnitActivity extends AppCompatActivity {
 
-    private TextView labelNameUnit;
+    private TextView nameUnit;
     private TextView unitDescription;
+    private ImageView imageUnit;
 
     private RecyclerView materialRecyclerView;
     private RecyclerView.LayoutManager materialLayoutManager;
@@ -69,10 +77,15 @@ public class MyCourseUnitActivity extends AppCompatActivity {
 
         this.setTitle(unityInfo.getUnity().getName());
 
-        labelNameUnit = (TextView) findViewById(R.id.label_name_unit);
+        imageUnit = (ImageView) findViewById(R.id.image_unit);
+        nameUnit = (TextView) findViewById(R.id.name_unit);
         unitDescription = (TextView) findViewById(R.id.unit_description);
 
-        labelNameUnit.setText(unityInfo.getUnity().getName());
+        String urlImage = unityInfo.getUnity().getFull_image();
+
+        Picasso.with(this).load(urlImage).into(imageUnit);
+        nameUnit.setText(unityInfo.getUnity().getName());
+        unitDescription.setText(unityInfo.getUnity().getDescription());
 
         materialRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_unit_material);
         materialRecyclerView.setHasFixedSize(true);
@@ -159,15 +172,47 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Video video = videosList.get(position);
-                Intent intent = new Intent(MyCourseUnitActivity.this, VideoViewActivity.class);
-                intent.putExtra("VIDEO_URL",video.getFull_path());
-                startActivity(intent);
+                final Video video = videosList.get(position);
+                CharSequence colors[] = new CharSequence[] {"Español", "Inglés", "Ninguno"};
+
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(MyCourseUnitActivity.this);
+                builder.setTitle("Elegí un idioma");
+                builder.setItems(colors, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, final int which) {
+
+                        downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Intent intent = new Intent(MyCourseUnitActivity.this, VideoViewActivity.class);
+                                intent.putExtra("VIDEO_URL",video.getFull_path());
+                                intent.putExtra("VIDEO_NAME",video.getName());
+                                if (which == 0) {
+                                    intent.putExtra("IDIOMA",String.valueOf(0));
+                                } else if (which == 1) {
+                                    intent.putExtra("IDIOMA",String.valueOf(1));
+                                } else {
+                                    intent.putExtra("IDIOMA",String.valueOf(2));
+                                }
+
+                                startActivity(intent);
+                            }
+                        }, 3000);
+
+                    }
+                });
+                builder.show();
+
 
                 Log.i(LOG_TAG, " Clicked on Video Item " + position);
             }
         });
     }
+
 
 
 

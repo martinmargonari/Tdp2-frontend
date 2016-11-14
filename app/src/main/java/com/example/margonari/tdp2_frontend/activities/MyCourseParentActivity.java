@@ -65,6 +65,7 @@ public class MyCourseParentActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setBackgroundDrawable(getDrawable(R.drawable.arte));
 
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());

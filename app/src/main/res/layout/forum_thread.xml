@@ -1,86 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/border"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/cv_forum_thread"
-        >
+    <com.pkmmte.view.CircularImageView
+        android:id="@+id/forum_thread_author_pic"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/profile_pic"
+        android:elevation="3dp"
+        app:border="true"
+        app:border_color="@color/accent"
+        app:border_width="1dp"
+        android:paddingBottom="@dimen/nav_header_vertical_spacing"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:scaleType="centerCrop" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp"
-            >
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/forum_thread_author"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_toEndOf="@+id/forum_thread_author_pic"
+        android:paddingStart="10dp"
+        android:textAppearance="@style/TextBody"
+        app:typeface="roboto_medium" />
 
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/forum_thread_replies"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:paddingEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:textAppearance="@style/TextCaption"
+        app:typeface="roboto_regular" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp"
-                >
+    <ImageView
+        android:id="@+id/replies_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:foregroundGravity="center"
+        android:src="@drawable/ic_textsms_black_24dp"
+        android:layout_toLeftOf="@id/forum_thread_replies"
+        android:paddingEnd="5dp"
+        />
 
-                <TextView
-                    android:id="@+id/forum_thread_author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
-                    android:layout_marginLeft="5dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    />
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/forum_thread_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/forum_thread_author_pic"
+        android:paddingTop="10dp"
+        android:textAppearance="@style/TextTile"
+        app:typeface="roboto_medium" />
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true">
-                    <ImageView
-                        android:id="@+id/replies_pic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_textsms_black_24dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        />
-
-                    <TextView
-                        android:id="@+id/forum_thread_replies"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/forum_thread_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:textSize="20sp"
-                android:textColor="@android:color/black"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:padding="5dp"
-                />
-
-            <TextView
-                android:id="@+id/forum_thread_creation_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:textSize="10dp"
-                android:layout_alignParentBottom="true"
-                />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/forum_thread_creation_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/forum_thread_title"
+        android:paddingTop="10dp"
+        android:textAppearance="@style/TextCaption"
+        app:typeface="roboto_medium" />
+</RelativeLayout>

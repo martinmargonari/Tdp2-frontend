@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth auth;
     private GoogleApiClient client;
     ImageView imageProfile;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

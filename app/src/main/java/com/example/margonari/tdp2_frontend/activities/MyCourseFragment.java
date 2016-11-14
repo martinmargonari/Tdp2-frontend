@@ -11,13 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.MyCourseUnitAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.domain.Professor;
 import com.example.margonari.tdp2_frontend.domain.Unit;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
 import com.example.margonari.tdp2_frontend.services.UnitServices;
+import com.squareup.picasso.Picasso;
+
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -75,6 +81,20 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
 
         unitArrayList= (ArrayList)courseFullData.getUnities();
         View v = inflater.inflate(R.layout.fragment_my_course, container, false);
+
+        ImageView imageCourse = (ImageView) v.findViewById(R.id.image_course);
+        String urlImage = getResources().getString(R.string.imagesURL) + courseFullData.getId() + "." + courseFullData.getFile_extension();
+        Picasso.with(v.getContext()).load(urlImage).into(imageCourse);
+
+        TextView professorCourse = (TextView) v.findViewById(R.id.professor_course);
+        for (Professor professor:courseFullData.getUsers()) {
+            if(professor.isProfessor()) {
+                professorCourse.setText(StringUtils.capitalize (professor.getFullName()));
+            }
+        }
+
+        TextView nameCourseTextView = (TextView) v.findViewById(R.id.name_course);
+        nameCourseTextView.setText(courseFullData.getName());
 
         unitsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_my_course_units);
         unitsRecyclerView.setHasFixedSize(true);

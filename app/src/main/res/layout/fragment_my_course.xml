@@ -1,35 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_my_course"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.margonari.tdp2_frontend.activities.MyCourseActivity">
+    android:orientation="vertical"
+    android:layout_weight="1"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.margonari.tdp2_frontend.activities.MyCourseParentActivity"
+    android:descendantFocusability="beforeDescendants"
+    android:theme="@style/AppTheme.CardTheme">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_my_course_units"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="false"
-        android:layout_marginLeft="@dimen/card_margin_horizontal"
-        android:layout_marginRight="@dimen/card_margin_horizontal"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-    <Button
-        android:id="@+id/button_download_certificate"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center"
-        android:text="DESCARGAR CERTIFICADO"
-        android:textColor="#ffffff"
-        android:backgroundTint="#3146cc"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/recycler_view_my_course_units"
-        android:layout_alignStart="@+id/recycler_view_my_course_units" />
+        <ImageView
+            android:id="@+id/image_course"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cv_course_title"
+            android:layout_marginBottom="@dimen/course_margin_bottom"
+            style="@style/AppTheme.CardTheme"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
-</RelativeLayout>
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/professor_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:textAppearance="@style/TextCaption"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    app:typeface="roboto_regular"
+                    />
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/name_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:textAppearance="@style/TextTile"
+                    app:typeface="roboto_medium"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    <!--    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.09"
+            android:id="@+id/cv_course_plan"
+            android:layout_marginBottom="@dimen/course_margin_bottom"
+            style="@style/AppTheme.CardTheme"> -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.09"
+                >
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_my_course_units"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:layout_marginBottom="15dp"/>
+            </LinearLayout>
+
+        <Button
+            android:id="@+id/button_download_certificate"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:text="DESCARGAR CERTIFICADO"
+            android:textColor="#ffffff"
+            android:backgroundTint="#3146cc" />
+    </LinearLayout>
+</ScrollView>
+
