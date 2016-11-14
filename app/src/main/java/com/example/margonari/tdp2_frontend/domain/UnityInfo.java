@@ -17,6 +17,8 @@ public class UnityInfo implements Serializable{
     private Material[] materials;
     private Video[] videos;
     private Question[] questions;
+    private String exam_is_approved;
+    private String exam_score;
 
     public Unit getUnity() {
         return unity;
@@ -48,5 +50,21 @@ public class UnityInfo implements Serializable{
 
     public void setQuestions(Question[] questions) {
         this.questions = questions;
+    }
+
+    public String getExam_is_approved() {
+        return exam_is_approved;
+    }
+
+    public void setExam_is_approved(String exam_is_approved) {
+        this.exam_is_approved = exam_is_approved;
+    }
+
+    public String getExam_score() {
+        return exam_score;
+    }
+
+    public void setExam_score(String exam_score) {
+        this.exam_score = exam_score;
     }
 }

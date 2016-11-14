@@ -24,6 +24,7 @@ public class Unit implements java.io.Serializable {
     private String full_image;
     private String description;
     private String minimum_score;
+    private String  duration;
 
     public Unit() {
     }
@@ -127,6 +128,14 @@ public class Unit implements java.io.Serializable {
 
     public void setMinimum_score(String minimum_score) {
         this.minimum_score = minimum_score;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     @Override

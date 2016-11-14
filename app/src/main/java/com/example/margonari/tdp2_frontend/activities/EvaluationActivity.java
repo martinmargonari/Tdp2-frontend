@@ -56,6 +56,9 @@ public class EvaluationActivity extends AppCompatActivity {
         questionsRecyclerView.setAdapter(questionsAdapter);
 
         final Button button = (Button) findViewById(R.id.button_send_answers);
+
+
+
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 

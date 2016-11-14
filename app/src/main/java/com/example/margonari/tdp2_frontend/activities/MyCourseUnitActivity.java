@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.MaterialAdapter;
@@ -92,6 +93,8 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         videoRecyclerView.setAdapter(videoAdapter);
         videosList = getDataSetVideos();
 
+
+
     }
 
     private ArrayList<Material> getDataSetMaterial() {
@@ -122,21 +125,27 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Material material = materialList.get(position);
+                 Material material = materialList.get(position);
                 int type = material.getType();
 
                 if (type == Material.EXAMEN) {
-                   ArrayList questions = new ArrayList<Question>();
-                    for (int i = 0; i < unityInfo.getQuestions().length; i++) {
-                        questions.add(unityInfo.getQuestions()[i]);
-                    }
-                    Intent intent = new Intent(MyCourseUnitActivity.this,EvaluationActivity.class);
-                    intent.putExtra("API_TOKEN",api_token);
-                    intent.putExtra("QUESTIONS",questions);
-                    intent.putExtra("UNITY_ID",unityInfo.getUnity().getId());
-                    intent.putExtra("SESSION_ID",session_id);
+                    if (unityInfo.getExam_score()==null ||unityInfo.getExam_score().equals("null")) {
 
-                    startActivity(intent);
+                        ArrayList questions = new ArrayList<Question>();
+                        for (int i = 0; i < unityInfo.getQuestions().length; i++) {
+                            questions.add(unityInfo.getQuestions()[i]);
+                        }
+                        Intent intent = new Intent(MyCourseUnitActivity.this, EvaluationActivity.class);
+                        intent.putExtra("API_TOKEN", api_token);
+                        intent.putExtra("QUESTIONS", questions);
+                        intent.putExtra("UNITY_ID", unityInfo.getUnity().getId());
+                        intent.putExtra("SESSION_ID", session_id);
+
+                        startActivity(intent);
+                    } else if(unityInfo.getExam_is_approved().equals("true")){
+                        Toast.makeText( MyCourseUnitActivity.this,"Ya realizaste este examen, y lo aprobaste, no podes realizarlo nuevamente",Toast.LENGTH_SHORT).show();
+                }else {
+                        Toast.makeText( MyCourseUnitActivity.this,"Ya realizaste este examen, no podes realizarlo nuevamente",Toast.LENGTH_SHORT).show();}
                 } else {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(material.getFull_path()));
                     startActivity(browserIntent);

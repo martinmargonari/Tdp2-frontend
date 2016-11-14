@@ -24,6 +24,7 @@ public class Course implements java.io.Serializable {
     private List<Professor> users=new ArrayList<Professor>();
     private int photo_id;
     private String full_image;
+    private String duration;
 
 
     public Course(String name, String description, int photo_id) {
@@ -115,6 +116,14 @@ public class Course implements java.io.Serializable {
 
     public void setFull_image(String full_image) {
         this.full_image = full_image;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     @Override
