@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
         TextView emailText = (TextView) headerView.findViewById(R.id.user_email);
          imageProfile = (ImageView) headerView.findViewById(R.id.profile_picture);
 
-        userNameText.setText(firstName + " " + lastName);
+        userNameText.setText(firstName );
         emailText.setText(userEmail);
         imageProfile.setImageDrawable(getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
 

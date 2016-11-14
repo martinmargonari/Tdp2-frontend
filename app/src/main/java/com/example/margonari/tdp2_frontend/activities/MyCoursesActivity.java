@@ -183,7 +183,7 @@ public class MyCoursesActivity extends AppCompatActivity
             if (position == 0) {
                 HttpRequestTaskMyCoursesCurrent httpRequestTaskMyCourses = new HttpRequestTaskMyCoursesCurrent();
                 httpRequestTaskMyCourses.execute();
-                ArrayList<Course> coursesList= new ArrayList<>();
+                ArrayList<Course> coursesList = new ArrayList<>();
                 try {
                     coursesList = httpRequestTaskMyCourses.get();
                 } catch (InterruptedException e) {
@@ -192,9 +192,9 @@ public class MyCoursesActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                return MyCoursesCurrentFragment.newInstance(api_token,coursesList);
+                return MyCoursesCurrentFragment.newInstance(api_token, coursesList);
 
-            } else {
+            } else if (position == 1) {
                 HttpRequestTaskMyCoursesFinished httpRequestTaskMyCourses = new HttpRequestTaskMyCoursesFinished();
                 httpRequestTaskMyCourses.execute();
                 ArrayList<Course> coursesList = new ArrayList<>();
@@ -208,6 +208,8 @@ public class MyCoursesActivity extends AppCompatActivity
 
                 return MyCoursesFinishedFragment.newInstance(api_token, coursesList);
             }
+            return null;
+
         }
 
         @Override

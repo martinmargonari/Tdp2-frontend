@@ -123,7 +123,6 @@ public class MyCoursesCurrentFragment extends Fragment {
             return null;
         }
 
-
     }
   
 }

@@ -14,6 +14,7 @@ import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.activities.MyCourseForumThreadPostsActivity;
 import com.example.margonari.tdp2_frontend.domain.AttachFile;
 import com.example.margonari.tdp2_frontend.domain.ForumPost;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,8 @@ public class ForumPostAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(final ForumPostAdapter.ForumPostHolder holder, final int position) {
         holder.post_author_pic.setImageDrawable(holder.context.getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
-        //TODO Get image from server
+        Picasso.with(mCOntext).load( mDataset.get(position).getAuthor_image()).into(holder.post_author_pic);
+
         holder.post_author.setText(mDataset.get(position).getAuthor_name());
         holder.post_content.setText(mDataset.get(position).getContent());
         Log.d("AuthorImageUrl", mDataset.get(position).getAuthor_image()); //Aca recibis la imagen

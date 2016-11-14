@@ -132,8 +132,16 @@ public class MyCourseUnitActivity extends AppCompatActivity {
 
 
     @Override
+    public void onRestart() {
+        super.onRestart();
+
+    }
+
+    @Override
     protected void onResume() {
+
         super.onResume();
+
         ((MaterialAdapter) materialAdapter).setOnItemClickListener(new MaterialAdapter
                 .MyClickListener() {
             @Override
@@ -154,11 +162,11 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                         intent.putExtra("UNITY_ID", unityInfo.getUnity().getId());
                         intent.putExtra("SESSION_ID", session_id);
 
-                        startActivity(intent);
+                        startActivityForResult(intent,1);
                     } else if(unityInfo.getExam_is_approved().equals("true")){
                         Toast.makeText( MyCourseUnitActivity.this,"Ya realizaste este examen, y lo aprobaste, no podes realizarlo nuevamente",Toast.LENGTH_SHORT).show();
-                }else {
-                        Toast.makeText( MyCourseUnitActivity.this,"Ya realizaste este examen, no podes realizarlo nuevamente",Toast.LENGTH_SHORT).show();}
+                    }else {
+                            Toast.makeText( MyCourseUnitActivity.this,"Ya realizaste este examen, no podes realizarlo nuevamente",Toast.LENGTH_SHORT).show();}
                 } else {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(material.getFull_path()));
                     startActivity(browserIntent);
@@ -274,5 +282,19 @@ public class MyCourseUnitActivity extends AppCompatActivity {
         };
         registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+
+            if(resultCode == RESULT_OK){
+                finish();
+                startActivity(getIntent());
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Do nothing?
+            }
+        }
+    }//onActivityResult
 
 }
