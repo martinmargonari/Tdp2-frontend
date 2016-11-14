@@ -16,6 +16,8 @@ public class Material implements java.io.Serializable {
     private int type;
     private String file_extension;
     private String full_path;
+    private String duration;
+
 
     public static final int VIDEO = 1;
     public static final int DOCUMENTO = 2;
@@ -74,5 +76,11 @@ public class Material implements java.io.Serializable {
         this.full_path = full_path;
     }
 
+    public String getDuration() {
+        return duration;
+    }
 
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
 }

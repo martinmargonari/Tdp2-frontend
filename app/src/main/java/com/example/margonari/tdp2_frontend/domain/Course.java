@@ -16,6 +16,7 @@ public class Course implements java.io.Serializable {
 
     private String id;
     private String session_id;
+
     private String name;
     private String description;
     private String file_extension;

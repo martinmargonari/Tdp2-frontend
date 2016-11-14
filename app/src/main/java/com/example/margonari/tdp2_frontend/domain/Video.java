@@ -18,6 +18,8 @@ public class Video implements Serializable {
     private String name;
     private String video_extension;
     private String full_path;
+    private String duration;
+
 
     public String getId() {
         return id;
@@ -49,5 +51,13 @@ public class Video implements Serializable {
 
     public void setFull_path(String full_path) {
         this.full_path = full_path;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 }
