@@ -66,86 +66,84 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".activities.CoursesActivity"
-            android:parentActivityName=".activities.MainActivity"
-            android:launchMode="singleTop">
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity"/>
+                android:value=".activities.MainActivity" />
         </activity>
-
+        <activity
+            android:name=".activities.CoursesActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
         <activity
             android:name=".activities.CourseChooseActivity"
             android:parentActivityName=".activities.CoursesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.CoursesActivity"/>
+                android:value=".activities.CoursesActivity" />
         </activity>
-
-
         <activity
             android:name=".activities.MyCoursesActivity"
             android:label="@string/title_activity_my_courses"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop"/>
-
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.CourseInformationActivity" />
-
         <activity
             android:name=".activities.MyCourseParentActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop"
             android:parentActivityName=".activities.MyCoursesActivity"
-            android:launchMode="singleTop">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MyCoursesActivity"/>
+                android:value=".activities.MyCoursesActivity" />
         </activity>
-
         <activity
             android:name=".activities.MyCourseUnitActivity"
-            android:parentActivityName=".activities.MyCourseParentActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.MyCourseParentActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MyCourseParentActivity"/>
+                android:value=".activities.MyCourseParentActivity" />
         </activity>
-
         <activity
             android:name=".activities.EvaluationActivity"
-            android:parentActivityName=".activities.MyCourseUnitActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.MyCourseUnitActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MyCourseUnitActivity"/>
+                android:value=".activities.MyCourseUnitActivity" />
         </activity>
-
         <activity android:name=".activities.VideoViewActivity" />
-
         <activity
             android:name=".activities.MyCourseForumThreadActivity"
-            android:parentActivityName=".activities.MyCourseParentActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.MyCourseParentActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MyCourseParentActivity"/>
+                android:value=".activities.MyCourseParentActivity" />
         </activity>
-
         <activity
             android:name=".activities.MyCourseForumThreadPostsActivity"
-            android:parentActivityName=".activities.MyCourseForumThreadActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.MyCourseForumThreadActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MyCourseForumThreadActivity"/>
+                android:value=".activities.MyCourseForumThreadActivity" />
         </activity>
-
         <activity
             android:name=".activities.NewTopicActivity"
-            android:parentActivityName=".activities.MyCourseForumThreadActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.MyCourseForumThreadActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MyCourseForumThreadActivity"/>
+                android:value=".activities.MyCourseForumThreadActivity" />
         </activity>
 
     </application>

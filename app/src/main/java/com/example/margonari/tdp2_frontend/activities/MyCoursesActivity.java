@@ -118,28 +118,6 @@ public class MyCoursesActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.general_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.action_search) {
-            //TODO
-            //onSearchRequested();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -149,14 +127,13 @@ public class MyCoursesActivity extends AppCompatActivity
         if (id == R.id.mis_cursos) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.cursos_destacados) {
-
         } else if (id == R.id.todos_los_cursos) {
             Intent intent = new Intent(this,MainActivity.class);
             intent.putExtra("API_TOKEN", api_token);
             startActivity(intent);
         } else if (id == R.id.ajustes) {
-
+            Intent intent = new Intent(MyCoursesActivity.this, SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.cerrar_sesion) {
             LoginManager.getInstance().logOut();
             //goToLoginScreen();
