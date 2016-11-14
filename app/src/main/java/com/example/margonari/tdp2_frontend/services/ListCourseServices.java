@@ -5,7 +5,7 @@ import android.util.Log;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.rest_dto.CoursesDTO;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by luis on 19/09/16.
@@ -15,7 +15,7 @@ public class ListCourseServices extends AbstractServices {
     private static final String service_name = "courses";
 
 
-    public List<Course> getListCoursesBy(String courseName) {
+    public ArrayList<Course> getListCoursesBy(String courseName) {
         String coursesQuery = this.getQueryBy(courseName);
         Log.d("Query "+this.getClass().getName(),coursesQuery);
 

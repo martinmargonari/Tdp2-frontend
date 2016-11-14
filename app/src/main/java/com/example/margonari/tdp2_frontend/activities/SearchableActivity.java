@@ -6,12 +6,18 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.example.margonari.tdp2_frontend.R;
+import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.rest_dto.CoursesDTO;
+import com.example.margonari.tdp2_frontend.services.CourseFullDataServices;
 import com.example.margonari.tdp2_frontend.services.ListCourseServices;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -22,9 +28,15 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
-public class SearchableActivity extends ListActivity {
+public class SearchableActivity extends AppCompatActivity {
 
     private String api_token;
+    private static String LOG_TAG = "SearchableActivity";
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<Course> coursesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,43 +55,60 @@ public class SearchableActivity extends ListActivity {
 
     protected void search(String query) {
 
-        HttpRequestTask httpRequestTask = new HttpRequestTask();
+        HttpRequestTaskListCourses httpRequestTask = new HttpRequestTaskListCourses();
         httpRequestTask.execute(query, api_token);
 
-        ArrayList<String>  values = null;
+        coursesList = null;
         try {
-            List<Course> courseList= httpRequestTask.get();
-            values = getValuesFromListCourse(courseList);
+            coursesList = httpRequestTask.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        /*String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2" };*/
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, values);
-        setListAdapter(adapter);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_courses);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new CoursesAdapter(coursesList);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
-    private ArrayList<String> getValuesFromListCourse(List<Course> courseList) {
-        ArrayList<String> coursesNames = new ArrayList<>();
-        for (Course course: courseList) {
-            coursesNames.add(course.getName());
-
-        }
-
-        return coursesNames;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((CoursesAdapter) mAdapter).setOnItemClickListener(new CoursesAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Course course = coursesList.get(position);
+                HttpRequestTaskCourseData httpRequestTask = new HttpRequestTaskCourseData();
+                httpRequestTask.execute(course.getId());
+                try {
+                    Course coursefulldata = (Course) httpRequestTask.get();
+                    Intent intent = new Intent(SearchableActivity.this, CourseChooseActivity.class);
+                    intent.putExtra("API_TOKEN", api_token);
+                    intent.putExtra("COURSE_FULL_DATA", coursefulldata);
+                    finish();
+                    startActivity(intent);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                Log.i(LOG_TAG, " Clicked on Item " + position);
+            }
+        });
     }
 
-    private class HttpRequestTask extends AsyncTask<String, Void, List<Course>> {
+
+    private class HttpRequestTaskListCourses extends AsyncTask<String, Void, ArrayList<Course>> {
         @Override
-        protected List<Course> doInBackground(String... params) {
+        protected ArrayList<Course> doInBackground(String... params) {
             try {
                 String user = params[0];
-                ListCourseServices listCourseServices= new ListCourseServices();
+                ListCourseServices listCourseServices = new ListCourseServices();
                 listCourseServices.setApi_security(api_token);
                 return listCourseServices.getListCoursesBy(user);
 
@@ -89,9 +118,23 @@ public class SearchableActivity extends ListActivity {
 
             return null;
         }
-
-
     }
 
+    private class HttpRequestTaskCourseData extends AsyncTask<String, Void, Course> {
+        @Override
+        protected Course doInBackground(String... params) {
+            try {
+                String course_id = params[0];
+                CourseFullDataServices courseFullDataServices = new CourseFullDataServices();
+                courseFullDataServices.setApi_security(api_token);
+                return courseFullDataServices.getCourseBy(course_id);
+
+            } catch (Exception e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+            }
+
+            return null;
+        }
+    }
 
 }
