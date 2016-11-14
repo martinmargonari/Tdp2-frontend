@@ -29,6 +29,7 @@ import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.services.ListMyCoursesFinishedServices;
 import com.example.margonari.tdp2_frontend.services.ListMyCoursesServices;
 import com.facebook.login.LoginManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -104,18 +105,23 @@ public class MyCoursesActivity extends AppCompatActivity
         emailText.setText(userEmail);
         imageProfile.setImageDrawable(getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
 
-        if (userPicture != null)
-            Glide.with(this).load(userPicture).into(imageProfile);
+        if (userPicture != null){
+            try{
+                Picasso.with(this).load(userPicture).into(imageProfile);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+        }*/
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -183,8 +189,8 @@ public class MyCoursesActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                return MyCoursesFinishedFragment.newInstance(api_token, coursesList);
-            }
+                    return MyCoursesFinishedFragment.newInstance(api_token, coursesList);
+                }
             return null;
 
         }
@@ -206,6 +212,9 @@ public class MyCoursesActivity extends AppCompatActivity
             return null;
         }
     }
+
+
+
 
     private class HttpRequestTaskMyCoursesCurrent extends AsyncTask<String, Void, ArrayList<Course>> {
 

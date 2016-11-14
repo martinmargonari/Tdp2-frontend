@@ -25,11 +25,11 @@ public class MyCoursesCurrentFragment extends Fragment {
     private static final String LIST_CURRENTS = "LIST_CURRENTS";
 
     private String api_token;
-    private ArrayList<Course> coursesList;
+    private ArrayList<Course> courses;
 
 
     private RecyclerView coursesRecyclerView;
-    private RecyclerView.Adapter coursesAdapter;
+    private RecyclerView.Adapter coursesAdapterCurrent;
     private RecyclerView.LayoutManager coursesLayoutManager;
     private static String LOG_TAG = "MyCoursesCurrent";
 
@@ -59,7 +59,7 @@ public class MyCoursesCurrentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             api_token = getArguments().getString(API_TOKEN);
-            coursesList = (ArrayList<Course>) getArguments().getSerializable(LIST_CURRENTS);
+            courses = (ArrayList<Course>) getArguments().getSerializable(LIST_CURRENTS);
         }
     }
 
@@ -73,8 +73,8 @@ public class MyCoursesCurrentFragment extends Fragment {
         coursesLayoutManager = new LinearLayoutManager(getContext());
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
         coursesRecyclerView.setFocusable(false);
-        coursesAdapter = new CoursesAdapter(coursesList);
-        coursesRecyclerView.setAdapter(coursesAdapter);
+        coursesAdapterCurrent = new CoursesAdapter(courses);
+        coursesRecyclerView.setAdapter(coursesAdapterCurrent);
 
         return v;
     }
@@ -82,11 +82,11 @@ public class MyCoursesCurrentFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((CoursesAdapter) coursesAdapter).setOnItemClickListener(new CoursesAdapter
+        ((CoursesAdapter) coursesAdapterCurrent).setOnItemClickListener(new CoursesAdapter
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Course course = coursesList.get(position);
+                Course course = courses.get(position);
 
                 MyCoursesCurrentFragment.HttpRequestTask httpRequestTask= new MyCoursesCurrentFragment.HttpRequestTask();
                 httpRequestTask.execute(course.getId());

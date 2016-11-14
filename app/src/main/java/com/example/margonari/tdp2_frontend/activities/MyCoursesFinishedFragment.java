@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
+import com.example.margonari.tdp2_frontend.adapters.CoursesAdapterFinished;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.services.CourseFullDataServices;
 
@@ -76,7 +77,7 @@ public class MyCoursesFinishedFragment extends Fragment {
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
         coursesRecyclerView.setFocusable(false);
         if (coursesList.size() > 0) {
-            coursesAdapter = new CoursesAdapter(coursesList);
+            coursesAdapter = new CoursesAdapterFinished(coursesList);
             coursesRecyclerView.setAdapter(coursesAdapter);
         }
         return v;
@@ -86,7 +87,7 @@ public class MyCoursesFinishedFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (coursesAdapter != null)
-            ((CoursesAdapter) coursesAdapter).setOnItemClickListener(new CoursesAdapter
+            ((CoursesAdapterFinished) coursesAdapter).setOnItemClickListener(new CoursesAdapterFinished
                     .MyClickListener() {
                 @Override
                 public void onItemClick(int position, View v) {

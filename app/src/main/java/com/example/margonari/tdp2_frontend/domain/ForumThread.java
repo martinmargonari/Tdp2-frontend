@@ -22,6 +22,7 @@ public class ForumThread
     private String created_at;
     private String updated_at;
     private String deleted_at;
+    private Author author;
 
     public String getId() {
         return id;
@@ -101,5 +102,13 @@ public class ForumThread
 
     public void setDeleted_at(String deleted_at) {
         this.deleted_at = deleted_at;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }

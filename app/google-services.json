@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "487852074318-h3foq2tujju18e6qhthvba0r1gifbgh5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.margonari.tdp2_frontend",
+            "certificate_hash": "AC94C13B184C4A05F1F33398CA0EAEACAABF3D56"
+          }
+        },
+        {
           "client_id": "487852074318-ke9pmr9j83kike0ubpaikk5o7hvmkgkc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

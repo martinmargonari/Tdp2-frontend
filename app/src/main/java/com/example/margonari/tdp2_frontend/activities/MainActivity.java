@@ -46,6 +46,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -124,9 +125,13 @@ public class MainActivity extends AppCompatActivity
         emailText.setText(userEmail);
         imageProfile.setImageDrawable(getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
 
-        if (profilePicture != null)
-            Glide.with(this).load(profilePicture).into(imageProfile);
-
+        if (profilePicture != null){
+            try{
+                Picasso.with(this).load(profilePicture).into(imageProfile);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         grillaCategorias = (GridView) findViewById(R.id.grilla_categorias);
         adapterCategorias = new ImageAdapter(this);
         grillaCategorias.setAdapter(adapterCategorias);
@@ -138,25 +143,38 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
+
+
         if( requestCode == RC_SIGN_IN){
-                if ( resultCode== RESULT_OK){
-                    auth = FirebaseAuth.getInstance();
+            if ( resultCode== RESULT_OK){
+                Log.d("RESULT","On activity result");
+                Log.d("Nombre usuario",auth.getCurrentUser().getDisplayName().toString());
+                profilePicture= auth.getCurrentUser().getPhotoUrl().toString();
 
-                    InitApiTokenFromServer(auth.getCurrentUser().getEmail());
-                    userEmail=auth.getCurrentUser().getEmail();
-                    firstName=auth.getCurrentUser().getDisplayName();
-                    profilePicture= auth.getCurrentUser().getPhotoUrl().toString();
-                    if (profilePicture != null)
-
-                        Glide.with(this).load(profilePicture).into(imageProfile);
+                if (profilePicture != null){
+                    try{
+                        Picasso.with(this).load(profilePicture).into(imageProfile);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
+                userEmail=auth.getCurrentUser().getEmail();
+                InitApiTokenFromServer(userEmail);
+                firstName=auth.getCurrentUser().getDisplayName().toString();
+
+            }else{
+
+                    Log.d("AUTHS","Problema con smart lock");
+                }
+
         }else{Log.d("AUTH","User not autenticated");}
     }
 
     private void InitApiTokenFromServer(String userEmail) {
         HttpRequestTaskLogin httpRequestTask = new HttpRequestTaskLogin();
 
-        httpRequestTask.execute(userEmail, FirebaseInstanceId.getInstance().getToken(),auth.getCurrentUser().getPhotoUrl().toString());
+        httpRequestTask.execute(userEmail, FirebaseInstanceId.getInstance().getToken(),
+                auth.getCurrentUser().getPhotoUrl().toString(),auth.getCurrentUser().getDisplayName());
         try {
             Login login = (Login) httpRequestTask.get();
             api_token=login.getApi_token();
@@ -172,12 +190,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+        }*/
     }
 
     @Override
@@ -221,17 +239,20 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Log.d("AUTH", "User LOGGED OUT");
-                        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                      /*  startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
                                 .setLogo(R.drawable.ic_launcher)
                                 .setProviders(
                                         AuthUI.FACEBOOK_PROVIDER,
                                         AuthUI.GOOGLE_PROVIDER
-                        ).build(),RC_SIGN_IN);
+                        ).build(),RC_SIGN_IN);*/
+                        FirebaseAuth.getInstance().signOut();
+                        finish();
+                        startActivity(getIntent());
                     }
                 });
             }
 
-            else{
+            /*else{
                 startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
                         .setLogo(R.drawable.ic_launcher)
                         .setProviders(
@@ -239,15 +260,16 @@ public class MainActivity extends AppCompatActivity
                                 AuthUI.GOOGLE_PROVIDER
                         ).build(),RC_SIGN_IN);
 
-            }
+                finish();
+
+            }*/
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    @Override
+@Override
     public void onStart() {
         super.onStart();
         client.connect();
@@ -260,7 +282,7 @@ public class MainActivity extends AppCompatActivity
         AppIndex.AppIndexApi.start(client, viewAction);
     }
 
-    @Override
+@Override
     public void onStop() {
         super.onStop();
         Action viewAction = Action.newAction(
@@ -332,10 +354,11 @@ public class MainActivity extends AppCompatActivity
                 String user = params[0];
                 String token= params[1];
                 String image_url=params[2];
+                String name=params[3];
 
                 Log.d("tokenRequestLogin", token);
 
-                Login login=  new LoginServices().getLoginBy(user, token,image_url);
+                Login login=  new LoginServices().getLoginBy(user, token,image_url,name);
                 return login;
             } catch (Exception e) {
                 Log.e("LoginActivity", e.getMessage(), e);
@@ -412,4 +435,5 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
 }
