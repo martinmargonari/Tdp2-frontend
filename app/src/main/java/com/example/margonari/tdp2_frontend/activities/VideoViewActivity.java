@@ -106,8 +106,9 @@ public class VideoViewActivity extends Activity {
                 e.printStackTrace();
             }
 
-
-            videoview.addSubtitleSource(fis, MediaFormat.createSubtitleFormat("text/vtt", Locale.ENGLISH.getLanguage()));
+            if (!Language.equals("2")) {
+                videoview.addSubtitleSource(fis, MediaFormat.createSubtitleFormat("text/vtt", Locale.ENGLISH.getLanguage()));
+            }
 
 
         } catch (Exception e) {

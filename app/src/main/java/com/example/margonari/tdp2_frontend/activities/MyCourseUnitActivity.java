@@ -190,7 +190,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
 
-                        downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
+                        //downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -209,7 +209,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
 
                                 startActivity(intent);
                             }
-                        }, 3000);
+                        }, 2000);
 
                     }
                 });
