@@ -31,6 +31,7 @@ public class MaterialAdapter extends RecyclerView
     public static class MaterialHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView material_name;
         ImageView material_photo;
+        TextView material_duration;
         ImageButton download_button;
         Context context;
 
@@ -39,6 +40,8 @@ public class MaterialAdapter extends RecyclerView
             super(itemView);
             material_name = (TextView) itemView.findViewById(R.id.material_name);
             material_photo = (ImageView) itemView.findViewById(R.id.unit_material_pic);
+            material_duration = (TextView) itemView.findViewById(R.id.material_duration);
+
             context = itemView.getContext();
             itemView.setOnClickListener(this);
             download_button = (ImageButton) itemView.findViewById(R.id.material_download_button);
@@ -78,6 +81,7 @@ public class MaterialAdapter extends RecyclerView
         } else {
             holder.material_photo.setImageResource(R.drawable.ic_insert_drive_file_black_24dp);
             holder.download_button.setImageResource(R.drawable.ic_file_download_black_24dp);
+            holder.material_duration.setText("Lectura de " + mDataset.get(position).getDuration() + " min.");
         }
         holder.download_button.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -28,6 +28,18 @@
         android:text="Material"
         app:typeface="roboto_medium" />
 
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/material_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@id/unit_material_pic"
+        android:layout_below="@id/material_name"
+        android:textColor="@color/secondary_text"
+        android:textAppearance="@style/TextCaption"
+        app:typeface="roboto_regular"
+        app:textWeight="light"/>
+
     <ImageButton
         android:id="@+id/material_download_button"
         android:layout_width="wrap_content"

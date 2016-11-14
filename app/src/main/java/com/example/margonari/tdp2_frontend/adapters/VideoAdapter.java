@@ -31,6 +31,7 @@ public class VideoAdapter extends RecyclerView
     public static class VideoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView video_name;
         ImageView video_photo;
+        TextView video_duration;
         ImageButton download_button;
         Context context;
 
@@ -38,6 +39,7 @@ public class VideoAdapter extends RecyclerView
             super(itemView);
             video_name = (TextView) itemView.findViewById(R.id.material_name);
             video_photo = (ImageView) itemView.findViewById(R.id.unit_material_pic);
+            video_duration = (TextView) itemView.findViewById(R.id.material_duration);
             context = itemView.getContext();
             itemView.setOnClickListener(this);
             download_button = (ImageButton) itemView.findViewById(R.id.material_download_button);
@@ -76,6 +78,7 @@ public class VideoAdapter extends RecyclerView
 
         holder.video_photo.setImageResource(R.drawable.ic_slideshow_black_24dp);
         holder.download_button.setImageResource(R.drawable.ic_file_download_black_24dp);
+        holder.video_duration.setText("Video de " + mDataset.get(position).getDuration() + " min.");
 
         holder.download_button.setOnClickListener(new View.OnClickListener(){
             @Override
