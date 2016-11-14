@@ -44,6 +44,7 @@ public class UnitAdapter extends RecyclerView
         RelativeLayout expand_unit;
         TextView unit_number;
         TextView unit_name;
+        TextView unit_duration;
         ImageView expand_icon;
         ExpandableRelativeLayout expandable_description;
         TextView unit_description;
@@ -56,6 +57,7 @@ public class UnitAdapter extends RecyclerView
             expand_unit = (RelativeLayout) itemView.findViewById(R.id.expand_unit);
             unit_number = (TextView) itemView.findViewById(R.id.unit_number);
             unit_name = (TextView) itemView.findViewById(R.id.unit_name);
+            unit_duration = (TextView) itemView.findViewById(R.id.unit_duration);
             expand_icon = (ImageView) itemView.findViewById(R.id.expand_unit_icon);
             unit_description = (TextView) itemView.findViewById(R.id.unit_description);
             expandable_description = (ExpandableRelativeLayout) itemView.findViewById(R.id.expandable_unit_description);
@@ -127,6 +129,7 @@ public class UnitAdapter extends RecyclerView
         holder.unit_number.setText(Integer.toString(position + 1));
         holder.unit_name.setText(mDataset.get(position).getName());
         holder.unit_description.setText(mDataset.get(position).getDescription());
+        holder.unit_duration.setText("Duración estimada: " + mDataset.get(position).getDuration() + " min.");
     }
 
     public void addItem(Unit unit, int index) {
