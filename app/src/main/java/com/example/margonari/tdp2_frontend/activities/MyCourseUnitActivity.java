@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -181,16 +182,16 @@ public class MyCourseUnitActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position, View v) {
                 final Video video = videosList.get(position);
-                CharSequence colors[] = new CharSequence[] {"Español", "Inglés", "Ninguno"};
+                CharSequence languages[] = new CharSequence[] {"Español", "Inglés", "Ninguno"};
 
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(MyCourseUnitActivity.this);
-                builder.setTitle("Elegí un idioma");
-                builder.setItems(colors, new DialogInterface.OnClickListener() {
+                builder.setTitle(Html.fromHtml("<font color='#000000'>Elegí un idioma</font>"));
+                builder.setItems(languages, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
 
-                        downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
+                        //downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -209,7 +210,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
 
                                 startActivity(intent);
                             }
-                        }, 3000);
+                        }, 2000);
 
                     }
                 });

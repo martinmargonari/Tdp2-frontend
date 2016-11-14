@@ -126,9 +126,11 @@ public class MainActivity extends AppCompatActivity
         emailText.setText(userEmail);
         imageProfile.setImageDrawable(getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
 
+        System.out.println("Profile pic: " +profilePicture);
+
         if (profilePicture != null){
             try{
-                Picasso.with(this).load(profilePicture).into(imageProfile);
+                Glide.with(this).load(profilePicture).into(imageProfile);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -154,7 +156,7 @@ public class MainActivity extends AppCompatActivity
 
                 if (profilePicture != null){
                     try{
-                        Picasso.with(this).load(profilePicture).into(imageProfile);
+                        Glide.with(this).load(profilePicture).into(imageProfile);
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -224,7 +226,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, MyCoursesActivity.class);
             intent.putExtra(MyCoursesActivity.API_TOKEN, api_token);
             intent.putExtra(MyCoursesActivity.USER_EMAIL, userEmail);
-            intent.putExtra(MyCoursesActivity.USER_FULLNAME, firstName + " " + lastName);
+            intent.putExtra(MyCoursesActivity.USER_FULLNAME, firstName);
             intent.putExtra(MyCoursesActivity.USER_PICTURE, profilePicture);
             startActivity(intent);
         } else if (id == R.id.todos_los_cursos) {
