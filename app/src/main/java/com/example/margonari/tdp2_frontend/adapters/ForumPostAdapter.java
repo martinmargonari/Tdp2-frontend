@@ -68,6 +68,7 @@ public class ForumPostAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(final ForumPostAdapter.ForumPostHolder holder, final int position) {
         holder.post_author_pic.setImageDrawable(holder.context.getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
+        //TODO Get image from server
         holder.post_author.setText(mDataset.get(position).getAuthor_name());
         holder.post_content.setText(mDataset.get(position).getContent());
         Log.d("AuthorImageUrl", mDataset.get(position).getAuthor_image()); //Aca recibis la imagen
