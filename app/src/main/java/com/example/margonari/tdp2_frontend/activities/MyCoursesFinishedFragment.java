@@ -1,16 +1,7 @@
 package com.example.margonari.tdp2_frontend.activities;
 
-import android.app.DownloadManager;
-import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,14 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.margonari.tdp2_frontend.R;
-import com.example.margonari.tdp2_frontend.adapters.CoursesAdapter;
 import com.example.margonari.tdp2_frontend.adapters.CoursesAdapterFinished;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.services.CourseFullDataServices;
+import com.example.margonari.tdp2_frontend.services.DownloadCertificateServices;
 
-import org.apache.commons.io.FilenameUtils;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -101,7 +89,17 @@ public class MyCoursesFinishedFragment extends Fragment {
                 @Override
                 public void onItemClick(int position, View v) {
                     Course course = coursesList.get(position);
+                    HttpRequestTaskFinish httpRequestTaskFinish= new HttpRequestTaskFinish();
+                    httpRequestTaskFinish.execute(course.getSession_id());
 
+                    try {
+                        ((MyCoursesActivity)getActivity()).downloadFile(
+                                httpRequestTaskFinish.get(), "certificado.pdf");
+                    } catch (InterruptedException e) {
+
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
 
                 }
         });
@@ -115,6 +113,25 @@ public class MyCoursesFinishedFragment extends Fragment {
                 CourseFullDataServices courseFullDataServices= new CourseFullDataServices();
                 courseFullDataServices.setApi_security(api_token);
                 return courseFullDataServices.getCourseBy(course_id);
+
+            } catch (Exception e) {
+                Log.e("MyCoursesFinished", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+
+    }
+
+    private class HttpRequestTaskFinish extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                String session_id = params[0];
+                DownloadCertificateServices downloadCertificateServices= new DownloadCertificateServices();
+                downloadCertificateServices.setApi_security(api_token);
+                return downloadCertificateServices.getQueryBy(session_id);
 
             } catch (Exception e) {
                 Log.e("MyCoursesFinished", e.getMessage(), e);

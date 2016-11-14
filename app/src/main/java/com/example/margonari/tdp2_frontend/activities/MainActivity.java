@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult(
                     AuthUI.getInstance().createSignInIntentBuilder()
                             .setLogo(R.drawable.ic_launcher)
+                            .setIsSmartLockEnabled(false)
                             .setProviders(
                     AuthUI.FACEBOOK_PROVIDER,
                     AuthUI.GOOGLE_PROVIDER
