@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_new_topic"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,42 +9,50 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.example.margonari.tdp2_frontend.activities.NewTopicActivity">
 
-    <TextView
-        android:layout_width="match_parent"
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/lable_title_new_topic"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/label_title_new_topic"
-        android:textColor="@android:color/black"
-        android:text="Título"
         android:layout_marginTop="20dp"
-        />
+        android:layout_marginBottom="10dp"
+        android:text="Título"
+        android:textAppearance="@style/TextCaption"
+        app:typeface="roboto_bold" />
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:id="@+id/new_topic_title"
-        android:layout_marginBottom="30dp"
-        />
+        android:textColor="@android:color/black"
+        android:layout_gravity="center"
+        android:hint="  Escribe un título para el tópico..."
+        android:background="@drawable/border" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/new_topic_content"
-        />
+        android:textColor="@android:color/black"
+        android:layout_marginTop="20dp"
+        android:hint="  Ingresa una pregunta descriptiva..."
+        android:background="@drawable/border"
+        android:gravity="top|center_vertical" />
 
     <Button
         android:id="@+id/button_create_topic"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal|center"
-        android:text="CREAR TOPICO"
-        android:textColor="#ffffff"
-        android:backgroundTint="#3146cc"
-        android:elevation="0dp" />
-
+        android:text="CREAR TÓPICO"
+        android:textColor="@color/buttonTextColor"
+        android:textAppearance="@style/TextBody"
+        android:backgroundTint="@color/accent"
+        android:onClick="inscribirse"/>
 
 </LinearLayout>
