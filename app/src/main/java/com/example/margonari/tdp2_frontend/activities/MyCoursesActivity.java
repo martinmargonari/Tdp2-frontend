@@ -107,7 +107,7 @@ public class MyCoursesActivity extends AppCompatActivity
 
         if (userPicture != null){
             try{
-                Picasso.with(this).load(userPicture).into(imageProfile);
+                Glide.with(this).load(userPicture).into(imageProfile);
             }catch (Exception e){
                 e.printStackTrace();
             }
