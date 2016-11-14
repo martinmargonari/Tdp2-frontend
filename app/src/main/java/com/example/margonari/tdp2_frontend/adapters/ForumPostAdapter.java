@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
@@ -28,17 +29,21 @@ public class ForumPostAdapter extends RecyclerView
     private Context mCOntext;
 
     public static class ForumPostHolder extends RecyclerView.ViewHolder {
+        ImageView post_author_pic;
         TextView post_author;
         TextView post_content;
-        Button boton_adjuntos;
+        TextView post_attachment;
+        TextView post_date;
 
         Context context;
 
         public ForumPostHolder(View itemView) {
             super(itemView);
+            post_author_pic = (ImageView) itemView.findViewById(R.id.forum_post_author_pic);
             post_author = (TextView) itemView.findViewById(R.id.forum_post_author);
             post_content = (TextView) itemView.findViewById(R.id.forum_post_content);
-            boton_adjuntos= (Button) itemView.findViewById(R.id.button_files);
+            post_attachment = (TextView) itemView.findViewById(R.id.forum_post_attachment);
+            post_date = (TextView) itemView.findViewById(R.id.forum_post_creation_date);
 
             context = itemView.getContext();
 
@@ -62,28 +67,28 @@ public class ForumPostAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(final ForumPostAdapter.ForumPostHolder holder, final int position) {
+        holder.post_author_pic.setImageDrawable(holder.context.getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
         holder.post_author.setText(mDataset.get(position).getAuthor_name());
         holder.post_content.setText(mDataset.get(position).getContent());
         Log.d("AuthorImageUrl", mDataset.get(position).getAuthor_image()); //Aca recibis la imagen
-        if(mDataset.get(position).getAttachments().length==0) {
-            holder.boton_adjuntos.setVisibility(View.GONE);
+        if(mDataset.get(position).getAttachments().length == 0) {
+            holder.post_attachment.setVisibility(View.GONE);
         }else {
-            holder.boton_adjuntos.setText(mDataset.get(position).getAttachments()[0].getName());
+            holder.post_attachment.setText(mDataset.get(position).getAttachments()[0].getName());
         }
-        holder.boton_adjuntos.setOnClickListener(new View.OnClickListener(){
+        holder.post_attachment.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
-                AttachFile[] arrayOfAttachments= mDataset.get(position).getAttachments();
+                AttachFile[] arrayOfAttachments = mDataset.get(position).getAttachments();
                 if(mDataset.get(position).getAttachments().length!=0) {
-
                     ((MyCourseForumThreadPostsActivity)mCOntext).downloadFile(mDataset.get(position).getAttachments()[0].getFile_path(),mDataset.get(position).getAttachments()[0].getName());
-
                 }
 
             }
         });
-    };
+
+        holder.post_date.setText(mDataset.get(position).getCreated_at());
+    }
 
     public void addItem(ForumPost forumThread, int index) {
         mDataset.add(index, forumThread);
