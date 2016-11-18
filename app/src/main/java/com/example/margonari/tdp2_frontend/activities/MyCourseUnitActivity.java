@@ -26,10 +26,8 @@ import android.widget.Toast;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.MaterialAdapter;
 import com.example.margonari.tdp2_frontend.adapters.VideoAdapter;
-import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Material;
 import com.example.margonari.tdp2_frontend.domain.Question;
-import com.example.margonari.tdp2_frontend.domain.Unit;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
 import com.example.margonari.tdp2_frontend.domain.Video;
 import com.example.margonari.tdp2_frontend.domain.VideoSubtitle;
@@ -60,8 +58,8 @@ public class MyCourseUnitActivity extends AppCompatActivity {
     private RecyclerView.Adapter videoAdapter;
     private ArrayList<Video> videosList;
     private static String LOG_TAG = "MyCourseUnitActivity";
-    private String subtitleNameFile;
-
+    private String subtitileUrl;
+    private String nameSubtitleFile;
 
     private DownloadManager downloadManager;
     public String filenameManager;
@@ -213,9 +211,10 @@ public class MyCourseUnitActivity extends AppCompatActivity {
 
 //                        downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
 
+
                         if (which != (languages.length-1)) {
 
-                            subtitleNameFile=subtitleArray[which].getFull_path();
+                            String subtitleNameFile=subtitleArray[which].getFull_path();
 
                             String sdcard = Environment.getExternalStorageDirectory().getPath();
                             String url = "";
@@ -229,7 +228,6 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                             }
 
                         }
-
 
 
                         new Handler().postDelayed(new Runnable() {
