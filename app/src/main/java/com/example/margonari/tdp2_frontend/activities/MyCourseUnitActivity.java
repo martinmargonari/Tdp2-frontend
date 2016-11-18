@@ -32,12 +32,14 @@ import com.example.margonari.tdp2_frontend.domain.Question;
 import com.example.margonari.tdp2_frontend.domain.Unit;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
 import com.example.margonari.tdp2_frontend.domain.Video;
+import com.example.margonari.tdp2_frontend.domain.VideoSubtitle;
 import com.squareup.picasso.Picasso;
 
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MyCourseUnitActivity extends AppCompatActivity {
 
@@ -58,6 +60,7 @@ public class MyCourseUnitActivity extends AppCompatActivity {
     private RecyclerView.Adapter videoAdapter;
     private ArrayList<Video> videosList;
     private static String LOG_TAG = "MyCourseUnitActivity";
+    private String subtitleNameFile;
 
 
     private DownloadManager downloadManager;
@@ -182,7 +185,18 @@ public class MyCourseUnitActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position, View v) {
                 final Video video = videosList.get(position);
-                CharSequence languages[] = new CharSequence[] {"Español", "Inglés", "Ninguno"};
+                final ArrayList<String> aux_string_subtitle=new ArrayList<String>();
+                final VideoSubtitle[] subtitleArray=video.getVideo_subtitles();
+                if(video.getVideo_subtitles()!=null) {
+
+                    for (int i = 0; i < video.getVideo_subtitles().length; i++) {
+                        aux_string_subtitle.add(video.getVideo_subtitles()[i].getLanguage_code().toString());
+                    }
+                }
+                final CharSequence[] languages = aux_string_subtitle.toArray(new CharSequence[aux_string_subtitle.size()]);
+                Log.d("Subtitulos",Arrays.toString(languages)); // [foo, bar, waa]
+
+               // CharSequence languages[] = new CharSequence[] {"Español", "Inglés", "Ninguno"};
 
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(MyCourseUnitActivity.this);
@@ -191,7 +205,9 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
 
-                        //downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
+//                        downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
+                        subtitleNameFile=subtitleArray[which].getFull_path();
+                       downloadFile(subtitleNameFile,languages[which].toString()+".vtt");
 
                         new Handler().postDelayed(new Runnable() {
                             @Override

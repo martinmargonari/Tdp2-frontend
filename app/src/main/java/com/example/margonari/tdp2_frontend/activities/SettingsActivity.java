@@ -1,14 +1,21 @@
 package com.example.margonari.tdp2_frontend.activities;
 
+import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
 
 import com.example.margonari.tdp2_frontend.R;
+import com.example.margonari.tdp2_frontend.domain.ForumPost;
+import com.example.margonari.tdp2_frontend.services.ForumMakePostServices;
+import com.example.margonari.tdp2_frontend.services.NotificationsOnOffServices;
+
+import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -30,13 +37,18 @@ public class SettingsActivity extends AppCompatActivity {
                 boolean on = ((Switch) v).isChecked();
                 if(on)
                 {
-                    //Do something when switch is on/checked
-                   //TODO recibir notificaciones
+                    HttpRequestTaskNotificationsOnOff httpRequestTaskNotificationsOnOff= new HttpRequestTaskNotificationsOnOff();
+                    httpRequestTaskNotificationsOnOff.execute("1");
+                    Log.d("Notificaciones:", "ON");
                 }
                 else
                 {
-                    //Do something when switch is off/unchecked
-                   //TODO Cancelar notifiaciones
+
+                    HttpRequestTaskNotificationsOnOff httpRequestTaskNotificationsOnOff= new HttpRequestTaskNotificationsOnOff();
+                    httpRequestTaskNotificationsOnOff.execute("0");
+
+                    Log.d("Notificaciones:", "OFF");
+
                 }
             }
         });
@@ -51,6 +63,27 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class HttpRequestTaskNotificationsOnOff extends AsyncTask<String, Void, Boolean> {
+
+        ArrayList<ForumPost> listPost;
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+                String has_notifications = params[0];
+
+                NotificationsOnOffServices notificationsOnOffServices= new NotificationsOnOffServices();
+                notificationsOnOffServices.setApi_security(CourselandApp.getApi_token());
+                Boolean is_make=   notificationsOnOffServices.setNotification(has_notifications);
+                Log.d("ResultadoMakePost", is_make.toString());
+            } catch (Exception e) {
+                Log.e("MyCoourseForumThread", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
     }
 
 }
