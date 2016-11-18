@@ -190,9 +190,15 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                 if(video.getVideo_subtitles()!=null) {
 
                     for (int i = 0; i < video.getVideo_subtitles().length; i++) {
-                        aux_string_subtitle.add(video.getVideo_subtitles()[i].getLanguage_code().toString());
+                        String lang = video.getVideo_subtitles()[i].getLanguage_code().toString();
+                        String complete;
+                        if (lang.equals("en")) complete = "Inglés";
+                        else if (lang.equals("es")) complete = "Español";
+                        else complete = lang;
+                        aux_string_subtitle.add(complete);
                     }
                 }
+                aux_string_subtitle.add("Ninguno");
                 final CharSequence[] languages = aux_string_subtitle.toArray(new CharSequence[aux_string_subtitle.size()]);
                 Log.d("Subtitulos",Arrays.toString(languages)); // [foo, bar, waa]
 
@@ -206,8 +212,25 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, final int which) {
 
 //                        downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
-                        subtitleNameFile=subtitleArray[which].getFull_path();
-                       downloadFile(subtitleNameFile,languages[which].toString()+".vtt");
+
+                        if (which != (languages.length-1)) {
+
+                            subtitleNameFile=subtitleArray[which].getFull_path();
+
+                            String sdcard = Environment.getExternalStorageDirectory().getPath();
+                            String url = "";
+                            final String localPath = languages[which].toString() + ".vtt";
+
+                            url = sdcard + "/download/" + localPath;
+
+                            File file = new File(url);
+                            if(!file.exists()){
+                                downloadFile(subtitleNameFile,localPath);
+                            }
+
+                        }
+
+
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -216,12 +239,9 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MyCourseUnitActivity.this, VideoViewActivity.class);
                                 intent.putExtra("VIDEO_URL",video.getFull_path());
                                 intent.putExtra("VIDEO_NAME",video.getName());
-                                if (which == 0) {
-                                    intent.putExtra("IDIOMA",String.valueOf(0));
-                                } else if (which == 1) {
-                                    intent.putExtra("IDIOMA",String.valueOf(1));
-                                } else {
-                                    intent.putExtra("IDIOMA",String.valueOf(2));
+                                if (which == (languages.length -1)) intent.putExtra("IDIOMA","N");
+                                else {
+                                    intent.putExtra("IDIOMA",languages[which].toString() + ".vtt");
                                 }
 
                                 startActivity(intent);
