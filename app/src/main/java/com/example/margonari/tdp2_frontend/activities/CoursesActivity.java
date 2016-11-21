@@ -42,34 +42,40 @@ public class CoursesActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new CoursesAdapter(coursesList);
+        if (coursesList != null) {
+            mAdapter = new CoursesAdapter(coursesList);
+        } else {
+            mAdapter = new CoursesAdapter(new ArrayList<Course>());
+        }
         mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ((CoursesAdapter) mAdapter).setOnItemClickListener(new CoursesAdapter
-                .MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                Course course = coursesList.get(position);
-                HttpRequestTask httpRequestTask= new HttpRequestTask();
-                httpRequestTask.execute(course.getId());
-                try {
-                    Course coursefulldata= (Course)httpRequestTask.get();
-                    Intent intent = new Intent(CoursesActivity.this, CourseChooseActivity.class);
-                    intent.putExtra("API_TOKEN", api_token);
-                    intent.putExtra("COURSE_FULL_DATA", coursefulldata);
-                    startActivity( intent);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                Log.i(LOG_TAG, " Clicked on Item " + position);
-            }
-        });
+
+                ((CoursesAdapter) mAdapter).setOnItemClickListener(new CoursesAdapter
+                        .MyClickListener() {
+                    @Override
+                    public void onItemClick(int position, View v) {
+                        Course course = coursesList.get(position);
+                        HttpRequestTask httpRequestTask = new HttpRequestTask();
+                        httpRequestTask.execute(course.getId());
+                        try {
+                            Course coursefulldata = (Course) httpRequestTask.get();
+                            Intent intent = new Intent(CoursesActivity.this, CourseChooseActivity.class);
+                            intent.putExtra("API_TOKEN", api_token);
+                            intent.putExtra("COURSE_FULL_DATA", coursefulldata);
+                            startActivity(intent);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                        Log.i(LOG_TAG, " Clicked on Item " + position);
+                    }
+                });
+
     }
 
 

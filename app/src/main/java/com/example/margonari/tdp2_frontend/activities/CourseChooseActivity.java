@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +31,10 @@ import com.squareup.picasso.Target;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class CourseChooseActivity extends AppCompatActivity {
@@ -47,6 +51,7 @@ public class CourseChooseActivity extends AppCompatActivity {
     private  ArrayList<Unit> unitsList;
     private String api_token;
     private Course courseFullData;
+    private Button inscriptionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,9 @@ public class CourseChooseActivity extends AppCompatActivity {
         TextView nameCourseTextView = (TextView)findViewById(R.id.name_course_choose);
         nameCourseTextView.setText(courseFullData.getName());
 
+        TextView durationCourseTextView = (TextView)findViewById(R.id.duration_course_choose);
+        durationCourseTextView.setText("Duración estimada del curso: " + courseFullData.getDuration() + " min.");
+
         TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
         descriptionTextView.setText(courseFullData.getDescription());
 
@@ -94,6 +102,18 @@ public class CourseChooseActivity extends AppCompatActivity {
         professorsRecyclerView.setFocusable(false);
         professorsAdapter = new ProfessorAdapter((ArrayList)courseFullData.getUsers());
         professorsRecyclerView.setAdapter(professorsAdapter);
+        String dateStart = courseFullData.getNext_sessions().get(0).getStart();
+        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date dateFormat1 = null;
+        try {
+            dateFormat1 = dt.parse(dateStart);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat dateFormatFinal = new SimpleDateFormat("dd/MM/yyyy");
+        inscriptionButton = (Button) findViewById(R.id.button_inscribirse);
+        inscriptionButton.setText("INSCRIBIRSE (Comienza el " + dateFormatFinal.format(dateFormat1) + ")");
+
     }
 
     private ArrayList<Unit> getDataSetUnits() {
@@ -130,6 +150,8 @@ public class CourseChooseActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        finish();
     }
 
     private class HttpRequestTask extends AsyncTask<String, Void, Boolean> {
