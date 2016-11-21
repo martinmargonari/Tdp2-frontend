@@ -1,6 +1,10 @@
 package com.example.margonari.tdp2_frontend.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,8 +15,15 @@ import android.widget.TextView;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.ForumThread;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -79,12 +90,46 @@ public class ForumThreadAdapter extends RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(ForumThreadAdapter.ForumThreadHolder holder, int position) {
+    public void onBindViewHolder(final ForumThreadAdapter.ForumThreadHolder holder, int position) {
         holder.thread_author.setText(mDataset.get(position).getAuthor().getName());
-        Picasso.with(mCOntext).load( mDataset.get(position).getAuthor_image()).into(holder.thread_author_pic);
+        Picasso.with(mCOntext).load( R.drawable.profile_pic_user).into(holder.thread_author_pic);
 
-        //holder.thread_author_pic.setImageDrawable(holder.context.getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
-        //holder.thread_author_pic.setImageDrawable(holder.context.getDrawable(R.drawable.com_facebook_profile_picture_blank_portrait));
+        Picasso.Builder builder = new Picasso.Builder(this.mCOntext);
+        builder.listener(new Picasso.Listener()
+        {
+            @Override
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+            {
+                exception.printStackTrace();
+            }
+        });
+        builder.build().load(mDataset.get(position).getAuthor_image()).into(
+
+                new Target() {
+                    @Override
+                    public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
+
+                        holder.thread_author_pic.setImageBitmap(bitmap);
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        Picasso.with(mCOntext).load( R.drawable.profile_pic_user).into(holder.thread_author_pic);
+
+                    }
+                }
+        );
+
+
+
+
 
         //TODO Nombre de autor e imagen de autor
         holder.thread_title.setText(mDataset.get(position).getTitle());

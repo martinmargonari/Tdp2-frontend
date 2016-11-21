@@ -2,9 +2,12 @@ package com.example.margonari.tdp2_frontend.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,11 +44,23 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -66,6 +82,7 @@ public class MainActivity extends AppCompatActivity
     private Context context;
     private TextView userNameText;
     private TextView emailText;
+    private Uri photo_storage_url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +96,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Key: " + key + " Value: " + value);
             }
         }
+
 
 
 
@@ -137,6 +155,9 @@ public class MainActivity extends AppCompatActivity
         auth = FirebaseAuth.getInstance();
 
         if(imageProfile!=null &auth!=null & auth.getCurrentUser()!=null){
+            userEmail = auth.getCurrentUser().getEmail();
+            firstName = auth.getCurrentUser().getDisplayName().toString();
+
             if(auth.getCurrentUser().getPhotoUrl()!=null){
                 profilePicture = auth.getCurrentUser().getPhotoUrl().toString();
                 if (profilePicture != null) {
@@ -151,32 +172,85 @@ public class MainActivity extends AppCompatActivity
                                 exception.printStackTrace();
                             }
                         });
-                        builder.build().load(profilePicture).into(imageProfile);
-                        //Picasso.with(this).load(profilePicture).into(imageProfile);
+                        builder.build().load(profilePicture).into(
+                                new Target() {
+                                    @Override
+                                    public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
+
+                                        imageProfile.setImageBitmap(bitmap);
+                                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                                        byte[] dataBAOS = baos.toByteArray();
+
+                                        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://courseland-143207.appspot.com");
+                                        StorageReference imagesRef = storageRef.child(userEmail);
+
+                                        UploadTask uploadTask = imagesRef.putBytes(dataBAOS);
+                                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception exception) {
+                                                // Handle unsuccessful uploads
+                                            }
+                                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                                                 photo_storage_url = taskSnapshot.getDownloadUrl();
+                                                Log.d("PhotoUrl", String.valueOf(photo_storage_url));
+                                                InitApiTokenFromServer(userEmail,String.valueOf(photo_storage_url));
+
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onPrepareLoad(Drawable placeHolderDrawable) {}
+
+                                    @Override
+                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                        InitApiTokenFromServer(userEmail,String.valueOf(photo_storage_url));
+
+                                    }
+                                }
+                        );
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
+
         }
-        userEmail = auth.getCurrentUser().getEmail();
-        InitApiTokenFromServer(userEmail);
-        firstName = auth.getCurrentUser().getDisplayName().toString();
+
+
+
+
     }
 
-    private void InitApiTokenFromServer(String userEmail) {
-        HttpRequestTaskLogin httpRequestTask = new HttpRequestTaskLogin();
+    public void encodeBitmapAndSaveToFirebase(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("imageUrl").child(auth.getCurrentUser().getDisplayName()+1);
+        ref.setValue(imageEncoded);
+    }
 
-        httpRequestTask.execute(userEmail, FirebaseInstanceId.getInstance().getToken(),
-                auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName());
-        try {
-            Login login = (Login) httpRequestTask.get();
-            api_token = login.getApi_token();
-            CourselandApp.setApi_token(api_token);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+    private void InitApiTokenFromServer(String userEmail,String photo) {
+        if(auth.getCurrentUser()!=null) {
+            HttpRequestTaskLogin httpRequestTask = new HttpRequestTaskLogin();
+
+            httpRequestTask.execute(userEmail, FirebaseInstanceId.getInstance().getToken(),
+                    photo, auth.getCurrentUser().getDisplayName());
+            //Log.d("PhotoUrl: ", photo_storage_url.toString());
+            try {
+                Login login = (Login) httpRequestTask.get();
+                api_token = login.getApi_token();
+                CourselandApp.setApi_token(api_token);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -293,6 +367,18 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("API_TOKEN", api_token);
         }
         super.startActivity(intent);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initMenu();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initMenu();
     }
 
     @Override
