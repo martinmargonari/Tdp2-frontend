@@ -186,4 +186,12 @@ public class VideoViewActivity extends Activity {
     }
 
 
+    @Override
+    public void onBackPressed()
+    {
+        videoview.stopPlayback();
+        finish();
+    }
+
+
 }
