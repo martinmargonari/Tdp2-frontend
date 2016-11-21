@@ -83,6 +83,7 @@ public class MyCoursesActivity extends AppCompatActivity
     private DownloadManager downloadManager;
     public String filenameManager;
     private long q;
+    private String has_notifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,8 +158,13 @@ public class MyCoursesActivity extends AppCompatActivity
             intent.putExtra("API_TOKEN", api_token);
             startActivity(intent);
         } else if (id == R.id.ajustes) {
-            Intent intent = new Intent(MyCoursesActivity.this, SettingsActivity.class);
+
+            Log.d("HAS_NOTIF AJUS",CourselandApp.getHas_notifications());
+
+            Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra("HAS_NOTIFICATIONS", CourselandApp.getHas_notifications());
             startActivity(intent);
+
         } else if (id == R.id.cerrar_sesion) {
                 AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

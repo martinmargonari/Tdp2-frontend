@@ -245,6 +245,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 Login login = (Login) httpRequestTask.get();
                 has_notifications=login.getHas_notifications();
+                CourselandApp.setHas_notifications(has_notifications);
                 Log.d("HAS_NOTIF",has_notifications);
                 api_token = login.getApi_token();
                 CourselandApp.setApi_token(api_token);

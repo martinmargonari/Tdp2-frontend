@@ -12,7 +12,7 @@ import com.google.firebase.FirebaseOptions;
  */
 public class CourselandApp extends Application {
     private static String api_token;
-
+    private static String  has_notifications;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -33,5 +33,13 @@ public class CourselandApp extends Application {
 
     public static void setApi_token(String api_token) {
         CourselandApp.api_token = api_token;
+    }
+
+    public static String getHas_notifications() {
+        return has_notifications;
+    }
+
+    public static void setHas_notifications(String has_notifications) {
+        CourselandApp.has_notifications = has_notifications;
     }
 }
