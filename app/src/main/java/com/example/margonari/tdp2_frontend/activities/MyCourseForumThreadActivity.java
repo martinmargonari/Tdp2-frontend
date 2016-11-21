@@ -53,6 +53,9 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
         forumThreadsRecyclerView.setFocusable(false);
         forumThreadArrayList = getDataSetForumThreads();
         forumThreadsAdapter = new ForumThreadAdapter(forumThreadArrayList,this);
+        forumThreadsAdapter.notifyDataSetChanged();
+        forumThreadsAdapter.notifyDataSetChanged();
+
         forumThreadsRecyclerView.setAdapter(forumThreadsAdapter);
         buttonNewTopic = (FloatingActionButton) findViewById(R.id.button_new_topic);
         buttonNewTopic.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +68,7 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
@@ -102,7 +106,16 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
 
     }
 
+    public void resetActivity(){
 
+        try {
+            wait(1000);
+            finish();
+            startActivity(getIntent());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onResume() {
@@ -125,9 +138,18 @@ public class MyCourseForumThreadActivity extends AppCompatActivity {
             }
         });
 
+        forumThreadsAdapter.notifyDataSetChanged();
 
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        forumThreadsAdapter.notifyDataSetChanged();
+
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {

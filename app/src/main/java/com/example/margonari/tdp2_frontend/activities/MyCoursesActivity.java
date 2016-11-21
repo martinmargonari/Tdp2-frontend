@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,6 +38,10 @@ import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.services.ListMyCoursesFinishedServices;
 import com.example.margonari.tdp2_frontend.services.ListMyCoursesServices;
 import com.facebook.login.LoginManager;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import org.apache.commons.io.FilenameUtils;
@@ -121,7 +126,7 @@ public class MyCoursesActivity extends AppCompatActivity
 
         if (userPicture != null){
             try{
-                Glide.with(this).load(userPicture).into(imageProfile);
+                Picasso.with(this).load(userPicture).into(imageProfile);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -155,8 +160,19 @@ public class MyCoursesActivity extends AppCompatActivity
             Intent intent = new Intent(MyCoursesActivity.this, SettingsActivity.class);
             startActivity(intent);
         } else if (id == R.id.cerrar_sesion) {
-            LoginManager.getInstance().logOut();
-            //goToLoginScreen();
+                AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d("AUTH", "User LOGGED OUT");
+                        FirebaseAuth.getInstance().signOut();
+
+                    }
+                });
+
+            finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
