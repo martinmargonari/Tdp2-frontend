@@ -44,14 +44,16 @@ public class CoursesActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         if (coursesList != null) {
             mAdapter = new CoursesAdapter(coursesList);
-            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter = new CoursesAdapter(new ArrayList<Course>());
         }
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-            if (coursesList != null) {
+
                 ((CoursesAdapter) mAdapter).setOnItemClickListener(new CoursesAdapter
                         .MyClickListener() {
                     @Override
@@ -73,7 +75,7 @@ public class CoursesActivity extends AppCompatActivity {
                         Log.i(LOG_TAG, " Clicked on Item " + position);
                     }
                 });
-            }
+
     }
 
 
