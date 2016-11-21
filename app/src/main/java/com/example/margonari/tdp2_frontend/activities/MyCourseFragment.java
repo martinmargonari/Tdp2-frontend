@@ -17,9 +17,12 @@ import android.widget.TextView;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.MyCourseUnitAdapter;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.domain.MyCourseSessionBox;
 import com.example.margonari.tdp2_frontend.domain.Professor;
 import com.example.margonari.tdp2_frontend.domain.Unit;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
+import com.example.margonari.tdp2_frontend.services.CourseFullDataServices;
+import com.example.margonari.tdp2_frontend.services.CourseFullDataServicesWithUnits;
 import com.example.margonari.tdp2_frontend.services.UnitServices;
 import com.squareup.picasso.Picasso;
 
@@ -70,6 +73,7 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
         if (getArguments() != null) {
             api_token = getArguments().getString(API_TOKEN);
             courseFullData = (Course) getArguments().getSerializable(COURSE_FULL_DATA);
+
         }
 
     }
@@ -78,8 +82,34 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ArrayList<Unit> visibleUnits= new ArrayList<>();
 
-        unitArrayList= (ArrayList)courseFullData.getUnities();
+        //Log.d("IS_enable",unitArrayList.get(0).getIs_enabled());
+        Log.d("SessionId",courseFullData.getSession_id());
+
+        if (courseFullData.getSession_id()!=null){
+
+            HttpRequestTaskWithUnits httpRequestTaskWithUnits = new HttpRequestTaskWithUnits();
+            httpRequestTaskWithUnits.execute(courseFullData.getId(), courseFullData.getSession_id());
+            try {
+                Course course= ((MyCourseSessionBox)httpRequestTaskWithUnits.get()).getCourse();
+                for(Unit unit:course.getUnities()){
+                    if (unit.getIs_enabled()!=null & unit.getIs_enabled()=="true"){
+                        visibleUnits.add(unit);
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            unitArrayList=visibleUnits;
+        }else{
+            unitArrayList= (ArrayList)courseFullData.getUnities();
+
+
+        }
+
         View v = inflater.inflate(R.layout.fragment_my_course, container, false);
 
         ImageView imageCourse = (ImageView) v.findViewById(R.id.image_course);
@@ -101,17 +131,15 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
         unitsLayoutManager = new LinearLayoutManager(getContext());
         unitsRecyclerView.setLayoutManager(unitsLayoutManager);
         unitsRecyclerView.setFocusable(false);
-        unitsAdapter = new MyCourseUnitAdapter(getDataSetUnits(),this.getContext());
+        unitsAdapter = new MyCourseUnitAdapter(unitArrayList,this.getContext());
         unitsRecyclerView.setAdapter(unitsAdapter);
 
-
-
         Button b = (Button) v.findViewById(R.id.button_download_certificate);
-        b.setOnClickListener(this);
+        b.setVisibility(View.GONE);
         return v;
-
-
     }
+
+
     @Override
     public void onClick(View view) {
         //TODO Communication to make POST
@@ -173,6 +201,23 @@ public class MyCourseFragment extends Fragment implements View.OnClickListener {
         }
 
     }
+    private class HttpRequestTaskWithUnits extends AsyncTask<String, Void, MyCourseSessionBox> {
+        @Override
+        protected MyCourseSessionBox doInBackground(String... params) {
+            try {
+                String course_id = params[0];
+                String session_id=params[1];
+                CourseFullDataServicesWithUnits courseFullDataServices= new CourseFullDataServicesWithUnits();
+                courseFullDataServices.setApi_security(api_token);
+                return courseFullDataServices.getCourseBy(course_id,session_id);
 
+            } catch (Exception e) {
+                Log.e("MyCoursesCurrent", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+    }
 
 }

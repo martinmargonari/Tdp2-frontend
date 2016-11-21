@@ -89,33 +89,36 @@ public class MyCourseUnitAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(final UnitHolder holder, int position) {
-        holder.unit_name.setText(mDataset.get(position).getName());
-        String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
-        Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
+       // if(Boolean.getBoolean(mDataset.get(position).getIs_enabled())) {
+            holder.unit_name.setText(mDataset.get(position).getName());
+            String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getCourse_id() + "." + mDataset.get(position).getFile_extension();
+            Picasso.with(holder.context).load(urlImage).into(holder.unit_photo);
 
-        String urlImage_unity=null;
-        String urlImage_course=null;
+            String urlImage_unity = null;
+            String urlImage_course = null;
 
-        Course course=((MyCourseParentActivity)mContext).getCourseFullData();
-        if((course)!=null && course.getUnities()!=null){
-            Unit unit= course.getUnities().get(position);
-            if (unit!=null & unit.getFull_image()!=null)
-            urlImage_unity = unit.getFull_image();
+            Course course = ((MyCourseParentActivity) mContext).getCourseFullData();
+            if ((course) != null && course.getUnities() != null) {
+                Unit unit = course.getUnities().get(position);
+                if (unit != null & unit.getFull_image() != null)
+                    urlImage_unity = unit.getFull_image();
 
-        } else{
-            urlImage_course = course.getFull_image();
-        }
+            } else {
+                urlImage_course = course.getFull_image();
+            }
 
-        if(urlImage_unity!=null) {
-            Picasso.with(holder.context).load(urlImage_unity).into(holder.unit_photo);
-            Log.d("URL_IMAGE_UNIT", urlImage_unity);
+            if (urlImage_unity != null) {
+                Picasso.with(holder.context).load(urlImage_unity).into(holder.unit_photo);
+                Log.d("URL_IMAGE_UNIT", urlImage_unity);
 
-        }else if(urlImage_course!=null){
-            Log.d("URL_IMAGE_COURSE", urlImage_course);
-            Picasso.with(holder.context).load(urlImage_course).into(holder.unit_photo);
-        }
-        holder.week_number.setText("SEMANA " + Integer.toString(position+1));
-        holder.week_limit.setText(mDataset.get(position).getExam_deadline().substring(0,10));
+            } else if (urlImage_course != null) {
+                Log.d("URL_IMAGE_COURSE", urlImage_course);
+                Picasso.with(holder.context).load(urlImage_course).into(holder.unit_photo);
+            }
+            holder.week_number.setText("SEMANA " + Integer.toString(position + 1));
+            holder.week_limit.setText(mDataset.get(position).getExam_deadline().substring(0, 10));
+
+        //}
     }
 
     public void addItem(Unit unit, int index) {

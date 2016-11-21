@@ -25,6 +25,7 @@ public class Unit implements java.io.Serializable {
     private String description;
     private String minimum_score;
     private String  duration;
+    private String is_enabled;
 
     public Unit() {
     }
@@ -142,5 +143,13 @@ public class Unit implements java.io.Serializable {
     public String toString() {
         //TODO
         return "";
+    }
+
+    public String getIs_enabled() {
+        return is_enabled;
+    }
+
+    public void setIs_enabled(String is_enabled) {
+        this.is_enabled = is_enabled;
     }
 }

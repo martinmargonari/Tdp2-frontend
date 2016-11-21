@@ -63,7 +63,7 @@ public class MyCourseParentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         api_token = getIntent().getStringExtra("API_TOKEN");
         courseFullData = (Course) intent.getSerializableExtra("COURSE_FULL_DATA");
-
+        Log.d("SessionID", courseFullData.getSession_id());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -221,21 +221,5 @@ public class MyCourseParentActivity extends AppCompatActivity {
         registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
-    private class HttpRequestTaskWithUnits extends AsyncTask<String, Void, Course> {
-        @Override
-        protected Course doInBackground(String... params) {
-            try {
-                String course_id = params[0];
-                CourseFullDataServices courseFullDataServices= new CourseFullDataServices();
-                courseFullDataServices.setApi_security(api_token);
-                return courseFullDataServices.getCourseBy(course_id);
 
-            } catch (Exception e) {
-                Log.e("MyCoursesCurrent", e.getMessage(), e);
-            }
-
-            return null;
-        }
-
-    }
 }
