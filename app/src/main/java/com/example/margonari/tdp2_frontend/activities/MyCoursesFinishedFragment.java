@@ -73,7 +73,7 @@ public class MyCoursesFinishedFragment extends Fragment {
         coursesLayoutManager = new LinearLayoutManager(getContext());
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
         coursesRecyclerView.setFocusable(false);
-        if (coursesList.size() > 0) {
+        if (coursesList != null) {
             coursesAdapter = new CoursesAdapterFinished(coursesList);
             coursesRecyclerView.setAdapter(coursesAdapter);
         }
