@@ -121,23 +121,7 @@ public class MainActivity extends AppCompatActivity
             if (resultCode == RESULT_OK) {
                 Log.d("RESULT", "On activity result");
                 Log.d("Nombre usuario", auth.getCurrentUser().getDisplayName().toString());
-                auth = FirebaseAuth.getInstance();
-
-                if(imageProfile!=null &auth!=null & auth.getCurrentUser()!=null){
-                    if(auth.getCurrentUser().getPhotoUrl()!=null){
-                        profilePicture = auth.getCurrentUser().getPhotoUrl().toString();
-                        if (profilePicture != null) {
-                            try {
-                                Picasso.with(this).load(profilePicture).into(imageProfile);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-                userEmail = auth.getCurrentUser().getEmail();
-                InitApiTokenFromServer(userEmail);
-                firstName = auth.getCurrentUser().getDisplayName().toString();
+                initMenu();
 
             } else {
 
@@ -147,6 +131,37 @@ public class MainActivity extends AppCompatActivity
         } else {
             Log.d("AUTH", "User not autenticated");
         }
+    }
+
+    private void initMenu() {
+        auth = FirebaseAuth.getInstance();
+
+        if(imageProfile!=null &auth!=null & auth.getCurrentUser()!=null){
+            if(auth.getCurrentUser().getPhotoUrl()!=null){
+                profilePicture = auth.getCurrentUser().getPhotoUrl().toString();
+                if (profilePicture != null) {
+                    try {
+
+                        Picasso.Builder builder = new Picasso.Builder(this);
+                        builder.listener(new Picasso.Listener()
+                        {
+                            @Override
+                            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+                            {
+                                exception.printStackTrace();
+                            }
+                        });
+                        builder.build().load(profilePicture).into(imageProfile);
+                        //Picasso.with(this).load(profilePicture).into(imageProfile);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        userEmail = auth.getCurrentUser().getEmail();
+        InitApiTokenFromServer(userEmail);
+        firstName = auth.getCurrentUser().getDisplayName().toString();
     }
 
     private void InitApiTokenFromServer(String userEmail) {
@@ -240,9 +255,10 @@ public class MainActivity extends AppCompatActivity
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             Log.d("AUTH", "User LOGGED IN");
-            userEmail = auth.getCurrentUser().getEmail();
-            firstName = auth.getCurrentUser().getDisplayName();
-            InitApiTokenFromServer(userEmail);
+            //userEmail = auth.getCurrentUser().getEmail();
+            //firstName = auth.getCurrentUser().getDisplayName();
+            //InitApiTokenFromServer(userEmail);
+            initMenu();
         } else {
             startActivityForResult(
                     AuthUI.getInstance().createSignInIntentBuilder()
