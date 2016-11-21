@@ -26,18 +26,18 @@ import android.widget.Toast;
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.adapters.MaterialAdapter;
 import com.example.margonari.tdp2_frontend.adapters.VideoAdapter;
-import com.example.margonari.tdp2_frontend.domain.Course;
 import com.example.margonari.tdp2_frontend.domain.Material;
 import com.example.margonari.tdp2_frontend.domain.Question;
-import com.example.margonari.tdp2_frontend.domain.Unit;
 import com.example.margonari.tdp2_frontend.domain.UnityInfo;
 import com.example.margonari.tdp2_frontend.domain.Video;
+import com.example.margonari.tdp2_frontend.domain.VideoSubtitle;
 import com.squareup.picasso.Picasso;
 
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MyCourseUnitActivity extends AppCompatActivity {
 
@@ -58,7 +58,8 @@ public class MyCourseUnitActivity extends AppCompatActivity {
     private RecyclerView.Adapter videoAdapter;
     private ArrayList<Video> videosList;
     private static String LOG_TAG = "MyCourseUnitActivity";
-
+    private String subtitileUrl;
+    private String nameSubtitleFile;
 
     private DownloadManager downloadManager;
     public String filenameManager;
@@ -182,7 +183,24 @@ public class MyCourseUnitActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position, View v) {
                 final Video video = videosList.get(position);
-                CharSequence languages[] = new CharSequence[] {"Español", "Inglés", "Ninguno"};
+                final ArrayList<String> aux_string_subtitle=new ArrayList<String>();
+                final VideoSubtitle[] subtitleArray=video.getVideo_subtitles();
+                if(video.getVideo_subtitles()!=null) {
+
+                    for (int i = 0; i < video.getVideo_subtitles().length; i++) {
+                        String lang = video.getVideo_subtitles()[i].getLanguage_code().toString();
+                        String complete;
+                        if (lang.equals("en")) complete = "Inglés";
+                        else if (lang.equals("es")) complete = "Español";
+                        else complete = lang;
+                        aux_string_subtitle.add(complete);
+                    }
+                }
+                aux_string_subtitle.add("Ninguno");
+                final CharSequence[] languages = aux_string_subtitle.toArray(new CharSequence[aux_string_subtitle.size()]);
+                Log.d("Subtitulos",Arrays.toString(languages)); // [foo, bar, waa]
+
+               // CharSequence languages[] = new CharSequence[] {"Español", "Inglés", "Ninguno"};
 
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(MyCourseUnitActivity.this);
@@ -191,7 +209,26 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
 
-                        //downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
+//                        downloadFile("http://ec2-54-68-222-103.us-west-2.compute.amazonaws.com/course_materials/6/14.vtt","test_new.vtt");
+
+
+                        if (which != (languages.length-1)) {
+
+                            String subtitleNameFile=subtitleArray[which].getFull_path();
+
+                            String sdcard = Environment.getExternalStorageDirectory().getPath();
+                            String url = "";
+                            final String localPath = languages[which].toString() + ".vtt";
+
+                            url = sdcard + "/download/" + localPath;
+
+                            File file = new File(url);
+                            if(!file.exists()){
+                                downloadFile(subtitleNameFile,localPath);
+                            }
+
+                        }
+
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -200,12 +237,9 @@ public class MyCourseUnitActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MyCourseUnitActivity.this, VideoViewActivity.class);
                                 intent.putExtra("VIDEO_URL",video.getFull_path());
                                 intent.putExtra("VIDEO_NAME",video.getName());
-                                if (which == 0) {
-                                    intent.putExtra("IDIOMA",String.valueOf(0));
-                                } else if (which == 1) {
-                                    intent.putExtra("IDIOMA",String.valueOf(1));
-                                } else {
-                                    intent.putExtra("IDIOMA",String.valueOf(2));
+                                if (which == (languages.length -1)) intent.putExtra("IDIOMA","N");
+                                else {
+                                    intent.putExtra("IDIOMA",languages[which].toString() + ".vtt");
                                 }
 
                                 startActivity(intent);

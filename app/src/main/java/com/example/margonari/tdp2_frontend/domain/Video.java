@@ -19,7 +19,7 @@ public class Video implements Serializable {
     private String video_extension;
     private String full_path;
     private String duration;
-
+    private VideoSubtitle[] video_subtitles;
 
     public String getId() {
         return id;
@@ -59,5 +59,13 @@ public class Video implements Serializable {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public VideoSubtitle[] getVideo_subtitles() {
+        return video_subtitles;
+    }
+
+    public void setVideo_subtitles(VideoSubtitle[] video_subtitles) {
+        this.video_subtitles = video_subtitles;
     }
 }

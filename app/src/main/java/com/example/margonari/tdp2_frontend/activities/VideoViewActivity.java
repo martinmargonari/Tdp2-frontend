@@ -89,12 +89,9 @@ public class VideoViewActivity extends Activity {
             //        MediaFormat.createSubtitleFormat("text/vtt", Locale.ENGLISH.getLanguage()));
 
             String sdcard = Environment.getExternalStorageDirectory().getPath();
-            String url = "";
-            if (Objects.equals(Language, "0")){
-                url = sdcard + "/download/test_esp.vtt";
-            } else if (Language.equals("1")) {
-                url = sdcard + "/download/test_eng.vtt";
-            }
+            String url;
+
+            url = sdcard + "/download/" + Language;
 
             System.out.println("La ruta es: " + url);
 
@@ -106,7 +103,8 @@ public class VideoViewActivity extends Activity {
                 e.printStackTrace();
             }
 
-            if (!Language.equals("2")) {
+            if (!Language.equals("N")) {
+                System.out.println("Entre a agregar subtitulos");
                 videoview.addSubtitleSource(fis, MediaFormat.createSubtitleFormat("text/vtt", Locale.ENGLISH.getLanguage()));
             }
 
