@@ -41,6 +41,18 @@
         app:typeface="roboto_regular" />
 
     <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/course_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/course_photo"
+        android:layout_below="@+id/course_description"
+        android:padding="10dp"
+        android:textColor="@color/secondary_text"
+        android:textAppearance="@style/TextCaption"
+        app:typeface="roboto_regular"
+        app:textWeight="light"/>
+
+    <com.devspark.robototextview.widget.RobotoTextView
         android:id="@+id/course_next_session"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

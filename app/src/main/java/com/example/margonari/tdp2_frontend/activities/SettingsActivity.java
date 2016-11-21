@@ -40,17 +40,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
-        //TODO Leer desde el servidor y setear el isChecked del switch
-
-        // Restore preferences
-      //  SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        // hasNotifications = settings.getBoolean("hasNotifications", true);
-
-
-
-        //Set a Click Listener for Switch Button
         switchNotifications.setOnClickListener(new View.OnClickListener(){
 
 
@@ -79,7 +68,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 finish();
                 return true;
@@ -111,14 +99,9 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onStop(){
         super.onStop();
-
-        // We need an Editor object to make preference changes.
-        // All objects are from android.context.Context
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("hasNotifications", has_Notifications);
-
-        // Commit the edits!
         editor.commit();
     }
 

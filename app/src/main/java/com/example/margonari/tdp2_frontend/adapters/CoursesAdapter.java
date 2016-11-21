@@ -13,6 +13,8 @@ import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Course;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 
@@ -33,6 +35,7 @@ public class CoursesAdapter extends RecyclerView
         TextView course_description;
         ImageView course_photo;
         TextView course_session_start;
+        TextView course_duration;
         Context context;
 
         public CourseHolder(View itemView) {
@@ -41,6 +44,7 @@ public class CoursesAdapter extends RecyclerView
             course_description = (TextView) itemView.findViewById(R.id.course_description);
             course_photo = (ImageView) itemView.findViewById(R.id.course_photo);
             course_session_start = (TextView) itemView.findViewById(R.id.course_next_session);
+            course_duration = (TextView) itemView.findViewById(R.id.course_duration);
             context = itemView.getContext();
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
@@ -77,6 +81,8 @@ public class CoursesAdapter extends RecyclerView
 
         String urlImage = holder.context.getResources().getString(R.string.imagesURL) + mDataset.get(position).getId() + "." + mDataset.get(position).getFile_extension();
         Picasso.with(holder.context).load(urlImage).into(holder.course_photo);
+
+        //holder.course_duration.setText("Duración estimada del curso: " + mDataset.get(position).getDuration() + " min.");
 
         // older.course_session_start.setText("El curso inicia: " + mDataset.get(position).getCurrent_sessions().get(0).getStart().substring(0,10));
     }
