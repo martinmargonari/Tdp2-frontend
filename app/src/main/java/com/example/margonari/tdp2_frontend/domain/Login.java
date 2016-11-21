@@ -15,6 +15,7 @@ public class Login {
     public String api_token;
     public String email;
     public String password;
+    public String has_notifications;
 
     public String getId() {
         return id;
@@ -46,5 +47,13 @@ public class Login {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getHas_notifications() {
+        return has_notifications;
+    }
+
+    public void setHas_notifications(String has_notifications) {
+        this.has_notifications = has_notifications;
     }
 }

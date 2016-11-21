@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity
     private TextView userNameText;
     private TextView emailText;
     private Uri photo_storage_url;
+    private String has_notifications;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,6 +245,8 @@ public class MainActivity extends AppCompatActivity
             //Log.d("PhotoUrl: ", photo_storage_url.toString());
             try {
                 Login login = (Login) httpRequestTask.get();
+                has_notifications=login.getHas_notifications();
+                Log.d("HAS_NOTIF",has_notifications);
                 api_token = login.getApi_token();
                 CourselandApp.setApi_token(api_token);
             } catch (InterruptedException e) {
@@ -291,7 +294,10 @@ public class MainActivity extends AppCompatActivity
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.ajustes) {
+            Log.d("HAS_NOTIF AJUS",has_notifications);
+
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            intent.putExtra("HAS_NOTIFICATIONS", has_notifications);
             startActivity(intent);
         } else {
             if (id == R.id.cerrar_sesion) {

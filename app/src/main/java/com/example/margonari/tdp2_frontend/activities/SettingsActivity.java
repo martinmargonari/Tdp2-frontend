@@ -1,5 +1,6 @@
 package com.example.margonari.tdp2_frontend.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
@@ -20,24 +21,34 @@ import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "MyPrefsFile";
-    boolean hasNotifications;
+    boolean has_Notifications;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-
+        Intent intent = getIntent();
+        Switch switchNotifications = (Switch) findViewById(R.id.switch_notifications);
+        String hasNotifications= getIntent().getStringExtra("HAS_NOTIFICATIONS");
+        if ( hasNotifications!=null & !hasNotifications.isEmpty()){
+             if(hasNotifications.equals("0")){
+                 switchNotifications.setChecked(false);
+                 has_Notifications=false;
+             }else if (hasNotifications.equals("1")){
+                 switchNotifications.setChecked(true);
+                 has_Notifications=true;
+             }else{ Log.d("ERRROR NOTIFICAT","Hubo un error seteando notificactiones");}
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Switch switchNotifications = (Switch) findViewById(R.id.switch_notifications);
+
 
         //TODO Leer desde el servidor y setear el isChecked del switch
 
         // Restore preferences
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-         hasNotifications = settings.getBoolean("hasNotifications", true);
+      //  SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        // hasNotifications = settings.getBoolean("hasNotifications", true);
 
-        switchNotifications.setChecked(hasNotifications);
+
 
         //Set a Click Listener for Switch Button
         switchNotifications.setOnClickListener(new View.OnClickListener(){
@@ -105,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
         // All objects are from android.context.Context
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("hasNotifications", hasNotifications);
+        editor.putBoolean("hasNotifications", has_Notifications);
 
         // Commit the edits!
         editor.commit();
