@@ -76,6 +76,9 @@ public class CourseChooseActivity extends AppCompatActivity {
         TextView nameCourseTextView = (TextView)findViewById(R.id.name_course_choose);
         nameCourseTextView.setText(courseFullData.getName());
 
+        TextView durationCourseTextView = (TextView)findViewById(R.id.duration_course_choose);
+        durationCourseTextView.setText("Duración estimada del curso: " + courseFullData.getDuration() + " min.");
+
         TextView descriptionTextView = (TextView)findViewById(R.id.course_choose_description);
         descriptionTextView.setText(courseFullData.getDescription());
 
@@ -130,6 +133,8 @@ public class CourseChooseActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        finish();
     }
 
     private class HttpRequestTask extends AsyncTask<String, Void, Boolean> {
