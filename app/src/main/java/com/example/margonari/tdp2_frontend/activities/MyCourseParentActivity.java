@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.TabLayout;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 
 import com.example.margonari.tdp2_frontend.R;
 import com.example.margonari.tdp2_frontend.domain.Course;
+import com.example.margonari.tdp2_frontend.services.CourseFullDataServices;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -217,5 +219,23 @@ public class MyCourseParentActivity extends AppCompatActivity {
             }
         };
         registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+    }
+
+    private class HttpRequestTaskWithUnits extends AsyncTask<String, Void, Course> {
+        @Override
+        protected Course doInBackground(String... params) {
+            try {
+                String course_id = params[0];
+                CourseFullDataServices courseFullDataServices= new CourseFullDataServices();
+                courseFullDataServices.setApi_security(api_token);
+                return courseFullDataServices.getCourseBy(course_id);
+
+            } catch (Exception e) {
+                Log.e("MyCoursesCurrent", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
     }
 }

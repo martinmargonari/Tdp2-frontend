@@ -224,7 +224,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
     }
 
     public void encodeBitmapAndSaveToFirebase(Bitmap bitmap) {
@@ -335,9 +334,6 @@ public class MainActivity extends AppCompatActivity
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             Log.d("AUTH", "User LOGGED IN");
-            //userEmail = auth.getCurrentUser().getEmail();
-            //firstName = auth.getCurrentUser().getDisplayName();
-            //InitApiTokenFromServer(userEmail);
             initMenu();
         } else {
             startActivityForResult(
